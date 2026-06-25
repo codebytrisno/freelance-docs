@@ -1,36 +1,140 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# FreelanceDocs - Generator Dokumen Project Freelance
 
-## Getting Started
+Website generator dokumen profesional untuk freelancer Indonesia. Bikin Quotation, Timeline, BAST, dan Kontrak dalam hitungan menit.
 
-First, run the development server:
+## 🚀 Tech Stack
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- **Next.js 15** (App Router)
+- **TypeScript**
+- **Tailwind CSS v4**
+- **Material Design 3** (Color System + Icons)
+- **Google Fonts** (Inter + Noto Serif)
+
+## 📁 Struktur Project
+
+```
+freelance-docs/
+├── app/
+│   ├── components/          # Shared components
+│   │   ├── Header.tsx       # Navigation bar dengan dropdown
+│   │   ├── Footer.tsx       # Footer dengan links
+│   │   ├── HeroSection.tsx  # Hero section untuk home
+│   │   ├── FeatureBento.tsx # 4 kartu fitur dokumen
+│   │   ├── PreviewSection.tsx
+│   │   ├── QuotationForm.tsx    # Form + state management
+│   │   ├── QuotationPreview.tsx # Live preview dokumen
+│   │   ├── TimelineForm.tsx
+│   │   ├── TimelinePreview.tsx
+│   │   ├── KontrakForm.tsx
+│   │   ├── KontrakPreview.tsx
+│   │   ├── BastForm.tsx
+│   │   └── BastPreview.tsx
+│   ├── quotation/
+│   │   └── page.tsx         # Quotation generator page
+│   ├── timeline/
+│   │   └── page.tsx         # Timeline generator page
+│   ├── kontrak/
+│   │   └── page.tsx         # Kontrak generator page
+│   ├── bast/
+│   │   └── page.tsx         # BAST generator page
+│   ├── globals.css          # Global styles + Material Design 3 colors
+│   ├── layout.tsx           # Root layout dengan fonts
+│   └── page.tsx             # Home page
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🎨 Fitur
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### ✅ Home Page
+- Hero section dengan animasi floating cards
+- 4 kartu fitur dokumen (Quotation, Timeline, Kontrak, BAST)
+- Preview section dengan screenshot
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### ✅ Quotation Generator
+- Form: data klien, item pekerjaan (dynamic rows), pembayaran
+- Live preview: format surat penawaran profesional
+- Kalkulasi otomatis: total, DP, subtotal
 
-## Learn More
+### ✅ Timeline Generator
+- Form: info project, fase kerja (add/remove dynamic)
+- Live preview: timeline visual dengan status icons
+- Status tracking: Selesai, Dalam Proses, Belum Mulai
 
-To learn more about Next.js, take a look at the following resources:
+### ✅ Kontrak Generator
+- Form: identitas pihak, lingkup kerja, durasi, pembayaran
+- Klausul: hak cipta, kerahasiaan, revisi (checkbox)
+- Live preview: format surat perjanjian resmi
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### ✅ BAST Generator
+- Form: freelancer, klien, project, deliverables
+- Live preview: berita acara serah terima resmi
+- Format: sesuai standar Indonesia
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 🎯 Cara Pakai
 
-## Deploy on Vercel
+### Development
+```bash
+npm run dev
+```
+Server jalan di: http://localhost:3000
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Build Production
+```bash
+npm run build
+npm start
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### Lint & Type Check
+```bash
+npm run lint
+```
+
+## 🎨 Design System
+
+### Colors (Material Design 3)
+- **Primary**: #3525cd (Indigo/Purple)
+- **Secondary**: #712ae2 (Purple)
+- **Tertiary**: #7e3000 (Orange)
+- **Surface**: #f8f9ff (Light gray-blue)
+- **Error**: #ba1a1a (Red)
+
+### Typography
+- **Sans-serif**: Inter (UI, body text)
+- **Serif**: Noto Serif (document preview)
+- **Icons**: Material Symbols Outlined
+
+### Spacing Scale
+- xs: 4px
+- sm: 8px
+- md: 16px
+- lg: 24px
+- xl: 40px
+- gutter: 24px
+- section: 80px
+
+## 📝 Fitur Yang Bisa Ditambah (Future)
+
+- [ ] PDF Export (jsPDF / react-pdf)
+- [ ] Save to LocalStorage / Backend
+- [ ] User Authentication (optional)
+- [ ] Template Library
+- [ ] Dark Mode
+- [ ] Multi-language (EN)
+- [ ] Email Integration
+- [ ] Digital Signature (e-signature)
+- [ ] Invoice Generator
+
+## 📱 Responsive
+
+- ✅ Mobile-friendly (responsive grid, flex)
+- ✅ Tablet optimized
+- ✅ Desktop-first approach
+
+## 🙏 Credits
+
+Created by **Trisno Sanjaya** © 2026
+
+Based on PRD: freelance_docs MVP
+
+---
+
+**Happy Generating! 🚀📄**
