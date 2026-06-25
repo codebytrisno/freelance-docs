@@ -1,10 +1,11 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import QuotationForm, { QuotationData } from "../components/QuotationForm";
 import QuotationPreview from "../components/QuotationPreview";
+import { saveDraft, loadDraft } from "../lib/storage";
 
 export default function QuotationPage() {
   const [quotationData, setQuotationData] = useState<QuotationData>({
@@ -15,6 +16,23 @@ export default function QuotationPage() {
     dpPercent: 50,
     payMethod: "Transfer Bank",
   });
+
+  // Load draft on mount
+  useEffect(() => {
+    const draft = loadDraft<QuotationData>("quotation");
+    if (draft) {
+      setQuotationData(draft);
+    }
+  }, []);
+
+  // Auto-save on data change (debounced)
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      saveDraft("quotation", quotationData);
+    }, 1000);
+
+    return () => clearTimeout(timer);
+  }, [quotationData]);
 
   return (
     <>

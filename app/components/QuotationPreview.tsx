@@ -1,18 +1,41 @@
 "use client";
 
+import { useState } from "react";
 import { QuotationData } from "./QuotationForm";
+import { copyToClipboard, formatDocumentText } from "../lib/clipboard";
+import { exportDocumentToPDF } from "../lib/pdf";
 
 interface QuotationPreviewProps {
   data: QuotationData;
 }
 
 export default function QuotationPreview({ data }: QuotationPreviewProps) {
+  const [copySuccess, setCopySuccess] = useState(false);
+  const [printing, setPrinting] = useState(false);
   const total = data.items.reduce((sum, item) => sum + item.price, 0);
   const dpAmount = (total * data.dpPercent) / 100;
 
-  const handleCopy = () => {
-    // Copy functionality
-    alert("Teks dokumen berhasil disalin!");
+  const handleCopy = async () => {
+    const documentElement = document.querySelector(".document-canvas");
+    if (!documentElement) return;
+
+    const text = formatDocumentText(documentElement as HTMLElement);
+    const success = await copyToClipboard(text);
+
+    if (success) {
+      setCopySuccess(true);
+      setTimeout(() => setCopySuccess(false), 2000);
+    }
+  };
+
+  const handlePrint = async () => {
+    setPrinting(true);
+    const success = await exportDocumentToPDF("quotation");
+    setPrinting(false);
+    
+    if (!success) {
+      alert("Gagal export PDF. Silakan coba lagi.");
+    }
   };
 
   return (
@@ -25,14 +48,26 @@ export default function QuotationPreview({ data }: QuotationPreviewProps) {
         <div className="flex gap-[8px]">
           <button
             onClick={handleCopy}
-            className="flex items-center gap-[4px] px-[16px] py-[8px] rounded-full bg-white border border-outline-variant hover:bg-surface-container transition-colors text-[14px] leading-[1.4] tracking-[0.05em] font-medium"
+            className={`flex items-center gap-[4px] px-[16px] py-[8px] rounded-full border transition-all text-[14px] leading-[1.4] tracking-[0.05em] font-medium ${
+              copySuccess
+                ? "bg-secondary text-white border-secondary"
+                : "bg-white border-outline-variant hover:bg-surface-container"
+            }`}
           >
-            <span className="material-symbols-outlined text-[18px]">content_copy</span>
-            Salin Teks
+            <span className="material-symbols-outlined text-[18px]">
+              {copySuccess ? "check" : "content_copy"}
+            </span>
+            {copySuccess ? "Tersalin!" : "Salin Teks"}
           </button>
-          <button className="flex items-center gap-[4px] px-[16px] py-[8px] rounded-full bg-white border border-outline-variant hover:bg-surface-container transition-colors text-[14px] leading-[1.4] tracking-[0.05em] font-medium">
-            <span className="material-symbols-outlined text-[18px]">print</span>
-            Cetak
+          <button
+            onClick={handlePrint}
+            disabled={printing}
+            className="flex items-center gap-[4px] px-[16px] py-[8px] rounded-full bg-white border border-outline-variant hover:bg-surface-container transition-colors text-[14px] leading-[1.4] tracking-[0.05em] font-medium disabled:opacity-50"
+          >
+            <span className="material-symbols-outlined text-[18px]">
+              {printing ? "hourglass_empty" : "print"}
+            </span>
+            {printing ? "Memproses..." : "Cetak PDF"}
           </button>
         </div>
       </div>

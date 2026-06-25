@@ -1,12 +1,41 @@
 "use client";
 
+import { useState } from "react";
 import { KontrakData } from "./KontrakForm";
+import { copyToClipboard, formatDocumentText } from "../lib/clipboard";
+import { exportDocumentToPDF } from "../lib/pdf";
 
 interface KontrakPreviewProps {
   data: KontrakData;
 }
 
 export default function KontrakPreview({ data }: KontrakPreviewProps) {
+  const [copySuccess, setCopySuccess] = useState(false);
+  const [printing, setPrinting] = useState(false);
+
+  const handleCopy = async () => {
+    const documentElement = document.querySelector(".document-canvas");
+    if (!documentElement) return;
+
+    const text = formatDocumentText(documentElement as HTMLElement);
+    const success = await copyToClipboard(text);
+
+    if (success) {
+      setCopySuccess(true);
+      setTimeout(() => setCopySuccess(false), 2000);
+    }
+  };
+
+  const handlePrint = async () => {
+    setPrinting(true);
+    const success = await exportDocumentToPDF("kontrak");
+    setPrinting(false);
+    
+    if (!success) {
+      alert("Gagal export PDF. Silakan coba lagi.");
+    }
+  };
+
   const today = new Date().toLocaleDateString("id-ID", {
     day: "numeric",
     month: "long",
@@ -31,6 +60,29 @@ export default function KontrakPreview({ data }: KontrakPreviewProps) {
           </span>
         </div>
         <div className="flex items-center gap-[16px]">
+          <button
+            onClick={handleCopy}
+            className={`flex items-center gap-[4px] px-[12px] py-[6px] rounded-full border transition-all text-[12px] font-medium ${
+              copySuccess
+                ? "bg-secondary text-white border-secondary"
+                : "bg-white border-outline-variant hover:bg-surface-container"
+            }`}
+          >
+            <span className="material-symbols-outlined text-[16px]">
+              {copySuccess ? "check" : "content_copy"}
+            </span>
+            {copySuccess ? "Tersalin!" : "Salin"}
+          </button>
+          <button
+            onClick={handlePrint}
+            disabled={printing}
+            className="flex items-center gap-[4px] px-[12px] py-[6px] rounded-full border transition-all text-[12px] font-medium bg-white border-outline-variant hover:bg-surface-container disabled:opacity-50"
+          >
+            <span className="material-symbols-outlined text-[16px]">
+              {printing ? "hourglass_empty" : "picture_as_pdf"}
+            </span>
+            {printing ? "Proses..." : "PDF"}
+          </button>
           <button className="p-[8px] rounded-full hover:bg-white/50 transition-colors">
             <span className="material-symbols-outlined">zoom_in</span>
           </button>

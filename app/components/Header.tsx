@@ -1,10 +1,19 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useTheme } from "./ThemeProvider";
 
 export default function Header() {
   const pathname = usePathname();
+  const { theme, toggleTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  // Prevent SSR mismatch
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const isActive = (path: string) => {
     if (path === "/") {
@@ -77,6 +86,17 @@ export default function Header() {
           </div>
         </div>
         <div className="flex items-center gap-[16px]">
+          {mounted && (
+            <button
+              onClick={toggleTheme}
+              className="p-[8px] rounded-full hover:bg-surface-container transition-colors"
+              aria-label="Toggle theme"
+            >
+              <span className="material-symbols-outlined text-primary">
+                {theme === "dark" ? "light_mode" : "dark_mode"}
+              </span>
+            </button>
+          )}
           <Link
             href="/quotation"
             className="bg-primary text-on-primary px-[24px] py-[8px] rounded-lg text-[14px] leading-[1.4] tracking-[0.05em] font-semibold hover:opacity-90 active:scale-95 transition-all"

@@ -1,10 +1,11 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import BastForm, { BastData } from "../components/BastForm";
 import BastPreview from "../components/BastPreview";
+import { saveDraft, loadDraft } from "../lib/storage";
 
 export default function BastPage() {
   const [bastData, setBastData] = useState<BastData>({
@@ -18,6 +19,23 @@ export default function BastPage() {
     deliverables: "",
     notes: "",
   });
+
+  // Load draft on mount
+  useEffect(() => {
+    const draft = loadDraft<BastData>("bast");
+    if (draft) {
+      setBastData(draft);
+    }
+  }, []);
+
+  // Auto-save on data change (debounced)
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      saveDraft("bast", bastData);
+    }, 1000);
+
+    return () => clearTimeout(timer);
+  }, [bastData]);
 
   return (
     <>

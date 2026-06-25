@@ -1,12 +1,41 @@
 "use client";
 
+import { useState } from "react";
 import { BastData } from "./BastForm";
+import { copyToClipboard, formatDocumentText } from "../lib/clipboard";
+import { exportDocumentToPDF } from "../lib/pdf";
 
 interface BastPreviewProps {
   data: BastData;
 }
 
 export default function BastPreview({ data }: BastPreviewProps) {
+  const [copySuccess, setCopySuccess] = useState(false);
+  const [printing, setPrinting] = useState(false);
+
+  const handleCopy = async () => {
+    const documentElement = document.querySelector(".document-canvas");
+    if (!documentElement) return;
+
+    const text = formatDocumentText(documentElement as HTMLElement);
+    const success = await copyToClipboard(text);
+
+    if (success) {
+      setCopySuccess(true);
+      setTimeout(() => setCopySuccess(false), 2000);
+    }
+  };
+
+  const handlePrint = async () => {
+    setPrinting(true);
+    const success = await exportDocumentToPDF("bast");
+    setPrinting(false);
+    
+    if (!success) {
+      alert("Gagal export PDF. Silakan coba lagi.");
+    }
+  };
+
   const completionDateFormatted = data.completionDate
     ? new Date(data.completionDate).toLocaleDateString("id-ID", {
         day: "numeric",
@@ -27,6 +56,29 @@ export default function BastPreview({ data }: BastPreviewProps) {
           PREVIEW DOKUMEN
         </span>
         <div className="flex gap-[8px]">
+          <button
+            onClick={handleCopy}
+            className={`flex items-center gap-[4px] px-[12px] py-[6px] rounded-full border transition-all text-[12px] font-medium ${
+              copySuccess
+                ? "bg-secondary text-white border-secondary"
+                : "bg-white border-outline-variant hover:bg-surface-container"
+            }`}
+          >
+            <span className="material-symbols-outlined text-[16px]">
+              {copySuccess ? "check" : "content_copy"}
+            </span>
+            {copySuccess ? "Tersalin!" : "Salin"}
+          </button>
+          <button
+            onClick={handlePrint}
+            disabled={printing}
+            className="flex items-center gap-[4px] px-[12px] py-[6px] rounded-full border transition-all text-[12px] font-medium bg-white border-outline-variant hover:bg-surface-container disabled:opacity-50"
+          >
+            <span className="material-symbols-outlined text-[16px]">
+              {printing ? "hourglass_empty" : "picture_as_pdf"}
+            </span>
+            {printing ? "Proses..." : "PDF"}
+          </button>
           <button className="p-[4px] hover:bg-surface-bright rounded-md text-on-surface-variant">
             <span className="material-symbols-outlined text-[20px]">zoom_in</span>
           </button>

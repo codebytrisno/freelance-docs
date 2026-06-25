@@ -1,10 +1,11 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import TimelineForm, { TimelineData } from "../components/TimelineForm";
 import TimelinePreview from "../components/TimelinePreview";
+import { saveDraft, loadDraft } from "../lib/storage";
 
 export default function TimelinePage() {
   const [timelineData, setTimelineData] = useState<TimelineData>({
@@ -17,6 +18,23 @@ export default function TimelinePage() {
       { name: "", description: "", timeframe: "Minggu 3", status: "Dalam Proses" },
     ],
   });
+
+  // Load draft on mount
+  useEffect(() => {
+    const draft = loadDraft<TimelineData>("timeline");
+    if (draft) {
+      setTimelineData(draft);
+    }
+  }, []);
+
+  // Auto-save on data change (debounced)
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      saveDraft("timeline", timelineData);
+    }, 1000);
+
+    return () => clearTimeout(timer);
+  }, [timelineData]);
 
   return (
     <>
