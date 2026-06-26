@@ -1,30 +1,40 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import BastForm, { BastData } from "../components/BastForm";
 import BastPreview from "../components/BastPreview";
 import { saveDraft, loadDraft } from "../lib/storage";
+import DraftControls from "../components/DraftControls";
+
+const emptyData: BastData = {
+  bastNo: "",
+  bastDate: "",
+  freelancerName: "",
+  freelancerAddress: "",
+  clientName: "",
+  clientCompany: "",
+  clientAddress: "",
+  projectName: "",
+  quotationNo: "",
+  quotationDate: "",
+  systemUrl: "",
+  appUrl: "",
+  warrantyPeriod: 30,
+  notes: "",
+};
 
 export default function BastPage() {
-  const [bastData, setBastData] = useState<BastData>({
-    freelancerName: "",
-    freelancerAddress: "",
-    clientName: "",
-    clientCompany: "",
-    projectName: "",
-    contractNumber: "",
-    completionDate: "",
-    deliverables: "",
-    notes: "",
-  });
+  const router = useRouter();
+  const [bastData, setBastData] = useState<BastData>(emptyData);
 
   // Load draft on mount
   useEffect(() => {
     const draft = loadDraft<BastData>("bast");
     if (draft) {
-      setBastData(draft);
+      setBastData(prev => ({ ...prev, ...draft }));
     }
   }, []);
 
@@ -41,6 +51,9 @@ export default function BastPage() {
     <>
       <Header />
       <main className="min-h-screen flex flex-col">
+        <div className="fixed bottom-[24px] right-[24px] z-50">
+          <DraftControls type="bast" data={bastData} onReset={() => setBastData(emptyData)} />
+        </div>
         {/* Breadcrumbs & Header */}
         <section className="w-full max-w-[1280px] mx-auto px-[24px] pt-[24px]">
           <nav className="flex items-center gap-[8px] text-on-surface-variant mb-[16px]">
@@ -51,13 +64,15 @@ export default function BastPage() {
               BAST
             </span>
           </nav>
-          <h1 className="text-[32px] leading-[1.3] font-bold text-on-surface">
-            Buat Berita Acara Serah Terima
-          </h1>
-          <p className="text-[16px] leading-[1.5] text-on-surface-variant max-w-2xl mt-[4px]">
-            Dokumentasikan penyelesaian proyek Anda secara profesional untuk perlindungan hukum
-            dan kejelasan administrasi.
-          </p>
+          <div>
+            <h1 className="text-[32px] leading-[1.3] font-bold text-on-surface">
+              Buat Berita Acara Serah Terima
+            </h1>
+            <p className="text-[16px] leading-[1.5] text-on-surface-variant max-w-2xl mt-[4px]">
+              Dokumentasikan penyelesaian proyek Anda secara profesional untuk perlindungan hukum
+              dan kejelasan administrasi.
+            </p>
+          </div>
         </section>
 
         {/* Main Content Area: Split Screen */}
@@ -65,6 +80,18 @@ export default function BastPage() {
           <BastForm onUpdate={setBastData} />
           <BastPreview data={bastData} />
         </section>
+
+        <div className="max-w-[1280px] mx-auto px-[24px] pb-[40px]">
+          <div className="p-[24px] bg-surface border-t border-outline-variant flex justify-between items-center rounded-lg">
+            <button
+              onClick={() => router.push("/timeline")}
+              className="flex items-center gap-[8px] text-primary font-medium hover:underline"
+            >
+              <span className="material-symbols-outlined text-[18px]">arrow_back</span>
+              Kembali ke Timeline
+            </button>
+          </div>
+        </div>
       </main>
       <Footer />
     </>

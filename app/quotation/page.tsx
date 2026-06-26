@@ -6,39 +6,58 @@ import Footer from "../components/Footer";
 import QuotationForm, { QuotationData } from "../components/QuotationForm";
 import QuotationPreview from "../components/QuotationPreview";
 import { saveDraft, loadDraft } from "../lib/storage";
+import DraftControls from "../components/DraftControls";
+
+const emptyData: QuotationData = {
+  quotationNo: "",
+  date: new Date().toISOString().split("T")[0],
+  projectName: "",
+  clientName: "",
+  clientCompany: "",
+  freelancerName: "",
+  validUntil: "",
+  platforms: [
+    {
+      name: "",
+      items: [{ title: "", estimatedHours: 0, details: "" }],
+    },
+  ],
+  technology: "",
+  hourlyRate: 0,
+  workHoursPerDay: 8,
+  paymentTerms: "",
+  maintenance: "",
+  bonus: "",
+};
 
 export default function QuotationPage() {
-  const [quotationData, setQuotationData] = useState<QuotationData>({
-    clientName: "",
-    clientEmail: "",
-    projectName: "",
-    items: [{ service: "", description: "", price: 0 }],
-    dpPercent: 50,
-    payMethod: "Transfer Bank",
-  });
+  const [quotationData, setQuotationData] = useState<QuotationData>(emptyData);
 
-  // Load draft on mount
   useEffect(() => {
     const draft = loadDraft<QuotationData>("quotation");
     if (draft) {
-      setQuotationData(draft);
+      setQuotationData(prev => ({ ...prev, ...draft }));
     }
   }, []);
 
-  // Auto-save on data change (debounced)
   useEffect(() => {
     const timer = setTimeout(() => {
       saveDraft("quotation", quotationData);
     }, 1000);
-
     return () => clearTimeout(timer);
   }, [quotationData]);
+
+  const handleImport = (data: QuotationData) => {
+    setQuotationData(data);
+  };
 
   return (
     <>
       <Header />
       <main className="flex-grow flex flex-col">
-        {/* Breadcrumbs & Title */}
+        <div className="fixed bottom-[24px] right-[24px] z-50">
+          <DraftControls type="quotation" data={quotationData} onReset={() => setQuotationData(emptyData)} />
+        </div>
         <section className="w-full max-w-[1280px] mx-auto px-[24px] py-[16px]">
           <nav className="flex items-center gap-[4px] text-on-surface-variant mb-[4px]">
             <span className="text-[12px] leading-[1.4]">Home</span>
@@ -47,18 +66,19 @@ export default function QuotationPage() {
               Quotation
             </span>
           </nav>
-          <h1 className="text-[24px] leading-[1.4] font-semibold text-on-surface">
-            Buat Penawaran Baru
-          </h1>
-          <p className="text-[16px] leading-[1.5] text-on-surface-variant">
-            Mari buat dokumen Anda dengan mudah dan profesional.
-          </p>
+          <div>
+            <h1 className="text-[24px] leading-[1.4] font-semibold text-on-surface">
+              Buat Penawaran Baru
+            </h1>
+            <p className="text-[16px] leading-[1.5] text-on-surface-variant">
+              Mari buat dokumen Anda dengan mudah dan profesional.
+            </p>
+          </div>
         </section>
 
-        {/* Split Screen Layout */}
         <div className="flex-grow flex flex-col lg:flex-row w-full max-w-[1280px] mx-auto px-[24px] pb-[40px] gap-[40px] items-start">
-          <QuotationForm onUpdate={setQuotationData} />
-          <QuotationPreview data={quotationData} />
+          <QuotationForm onUpdate={setQuotationData} data={quotationData} />
+          <QuotationPreview data={quotationData} onImport={handleImport} />
         </div>
       </main>
       <Footer />

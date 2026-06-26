@@ -1,27 +1,66 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
+import { useRouter } from "next/navigation";
 import { QuotationData } from "./QuotationForm";
 import { copyToClipboard, formatDocumentText } from "../lib/clipboard";
 import { exportDocumentToPDF } from "../lib/pdf";
+import { exportToExcel, importFromExcel } from "../lib/excel";
+import { downloadPrd } from "../lib/prd";
 
 interface QuotationPreviewProps {
   data: QuotationData;
+  onImport?: (data: QuotationData) => void;
 }
 
-export default function QuotationPreview({ data }: QuotationPreviewProps) {
+function formatDate(dateStr: string) {
+  if (!dateStr) return "-";
+  const d = new Date(dateStr + "T00:00:00");
+  return d.toLocaleDateString("id-ID", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  });
+}
+
+export default function QuotationPreview({ data, onImport }: QuotationPreviewProps) {
+  const router = useRouter();
   const [copySuccess, setCopySuccess] = useState(false);
   const [printing, setPrinting] = useState(false);
-  const total = data.items.reduce((sum, item) => sum + item.price, 0);
-  const dpAmount = (total * data.dpPercent) / 100;
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const totalHours = data.platforms.reduce(
+    (s, p) => s + p.items.reduce((s2, it) => s2 + (it.estimatedHours || 0), 0),
+    0
+  );
+  const totalHarga = totalHours * data.hourlyRate;
+  const estimatedDays = data.workHoursPerDay > 0 ? Math.ceil(totalHours / data.workHoursPerDay) : 0;
+
+  const handleExportExcel = () => {
+    exportToExcel(data);
+  };
+
+  const handleImportClick = () => {
+    fileInputRef.current?.click();
+  };
+
+  const handleImportFile = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    try {
+      const imported = await importFromExcel(file);
+      onImport?.(imported);
+    } catch (err) {
+      alert("Gagal import file. Pastikan format file sesuai.");
+    }
+    e.target.value = "";
+  };
 
   const handleCopy = async () => {
-    const documentElement = document.querySelector(".document-canvas");
-    if (!documentElement) return;
-
-    const text = formatDocumentText(documentElement as HTMLElement);
+    const el = document.querySelector(".document-canvas");
+    if (!el) return;
+    const text = formatDocumentText(el as HTMLElement);
     const success = await copyToClipboard(text);
-
     if (success) {
       setCopySuccess(true);
       setTimeout(() => setCopySuccess(false), 2000);
@@ -32,26 +71,36 @@ export default function QuotationPreview({ data }: QuotationPreviewProps) {
     setPrinting(true);
     const success = await exportDocumentToPDF("quotation");
     setPrinting(false);
-    
-    if (!success) {
-      alert("Gagal export PDF. Silakan coba lagi.");
-    }
+    if (!success) alert("Gagal export PDF. Silakan coba lagi.");
   };
 
   return (
     <div className="w-full lg:w-7/12 flex flex-col gap-[16px]">
-      {/* Preview Header */}
       <div className="flex items-center justify-between">
         <h3 className="text-[14px] leading-[1.4] tracking-[0.05em] font-medium text-on-surface-variant uppercase">
           Preview Dokumen
         </h3>
-        <div className="flex gap-[8px]">
+        <div className="flex gap-[8px] flex-wrap">
+          <button
+            onClick={handleImportClick}
+            className="flex items-center gap-[4px] px-[16px] py-[8px] rounded-full bg-surface-container-lowest border border-outline-variant hover:bg-surface-container transition-colors text-[14px] leading-[1.4] tracking-[0.05em] font-medium"
+          >
+            <span className="material-symbols-outlined text-[18px]">upload_file</span>
+            Import Excel
+          </button>
+          <button
+            onClick={handleExportExcel}
+            className="flex items-center gap-[4px] px-[16px] py-[8px] rounded-full bg-surface-container-lowest border border-outline-variant hover:bg-surface-container transition-colors text-[14px] leading-[1.4] tracking-[0.05em] font-medium"
+          >
+            <span className="material-symbols-outlined text-[18px]">download</span>
+            Download Excel
+          </button>
           <button
             onClick={handleCopy}
             className={`flex items-center gap-[4px] px-[16px] py-[8px] rounded-full border transition-all text-[14px] leading-[1.4] tracking-[0.05em] font-medium ${
               copySuccess
-                ? "bg-secondary text-white border-secondary"
-                : "bg-white border-outline-variant hover:bg-surface-container"
+                ? "bg-secondary text-on-secondary border-secondary"
+                : "bg-surface-container-lowest border-outline-variant hover:bg-surface-container"
             }`}
           >
             <span className="material-symbols-outlined text-[18px]">
@@ -60,150 +109,182 @@ export default function QuotationPreview({ data }: QuotationPreviewProps) {
             {copySuccess ? "Tersalin!" : "Salin Teks"}
           </button>
           <button
+            onClick={() => downloadPrd(data)}
+            className="flex items-center gap-[4px] px-[16px] py-[8px] rounded-full bg-surface-container-lowest border border-outline-variant hover:bg-surface-container transition-colors text-[14px] leading-[1.4] tracking-[0.05em] font-medium"
+          >
+            <span className="material-symbols-outlined text-[18px]">description</span>
+            Generate PRD
+          </button>
+          <button
             onClick={handlePrint}
             disabled={printing}
-            className="flex items-center gap-[4px] px-[16px] py-[8px] rounded-full bg-white border border-outline-variant hover:bg-surface-container transition-colors text-[14px] leading-[1.4] tracking-[0.05em] font-medium disabled:opacity-50"
+            className="flex items-center gap-[4px] px-[16px] py-[8px] rounded-full bg-surface-container-lowest border border-outline-variant hover:bg-surface-container transition-colors text-[14px] leading-[1.4] tracking-[0.05em] font-medium disabled:opacity-50"
           >
             <span className="material-symbols-outlined text-[18px]">
               {printing ? "hourglass_empty" : "print"}
             </span>
             {printing ? "Memproses..." : "Cetak PDF"}
           </button>
+          <button
+            onClick={() => router.push("/kontrak")}
+            className="flex items-center gap-[4px] px-[16px] py-[8px] rounded-full bg-primary text-on-primary border border-primary hover:opacity-90 transition-all text-[14px] leading-[1.4] tracking-[0.05em] font-medium"
+          >
+            <span className="material-symbols-outlined text-[18px]">arrow_forward</span>
+            Lanjut ke Kontrak
+          </button>
         </div>
+        <input
+          ref={fileInputRef}
+          type="file"
+          accept=".xlsx"
+          className="hidden"
+          onChange={handleImportFile}
+        />
       </div>
 
-      {/* Paper Container */}
-      <div className="document-canvas bg-white w-full p-[40px] md:p-[60px] flex flex-col overflow-hidden relative border border-outline-variant/20 rounded-sm">
-        {/* Letterhead */}
-        <div className="flex justify-between items-start mb-[40px]">
-          <div>
-            <div className="font-serif italic font-bold text-[24px] leading-[1.4] text-primary mb-[4px]">
-              QUOTATION
-            </div>
-            <div className="text-[12px] leading-[1.4] tracking-[0.05em] font-medium text-on-surface-variant">
-              #QTN-2024-001
-            </div>
+      <div className="document-canvas bg-surface-container-lowest w-full p-[40px] md:p-[60px] flex flex-col overflow-hidden relative border border-outline-variant/20 rounded-sm">
+        {/* Header Title */}
+        <div className="text-center mb-[32px]">
+          <div className="font-serif italic font-bold text-[22px] leading-[1.4] text-primary uppercase tracking-[0.02em]">
+            SYSTEM DEVELOPMENT QUOTATION
           </div>
-          <div className="text-right">
-            <div className="font-bold text-[16px] leading-[1.5]">Seno Freelance</div>
-            <div className="text-[12px] leading-[1.4] text-on-surface-variant">
-              Jakarta, Indonesia
-            </div>
-          </div>
+
         </div>
 
-        {/* Client Info */}
-        <div className="mb-[40px] grid grid-cols-2 gap-[24px]">
-          <div>
-            <p className="text-[12px] leading-[1.4] font-bold uppercase text-on-surface-variant mb-[4px]">
-              Kepada:
-            </p>
-            <div className="font-bold text-[16px] leading-[1.5]">
-              {data.clientName || "PT. Sukses Selalu"}
-            </div>
-            <div className="text-[16px] leading-[1.5] text-on-surface-variant">
-              {data.clientEmail || "hello@client.com"}
-            </div>
-          </div>
-          <div className="text-right">
-            <p className="text-[12px] leading-[1.4] font-bold uppercase text-on-surface-variant mb-[4px]">
-              Tanggal:
-            </p>
-            <div className="text-[16px] leading-[1.5]">
-              {new Date().toLocaleDateString("id-ID", {
-                day: "numeric",
-                month: "long",
-                year: "numeric",
-              })}
-            </div>
-          </div>
-        </div>
+        {/* Info Section */}
+        <table className="w-full mb-[32px] text-[12px] leading-[1.5]">
+          <tbody>
+            <tr>
+              <td className="font-bold text-on-surface-variant w-[140px] align-top">Nomor</td>
+              <td className="text-on-surface">: {data.quotationNo || "-"}</td>
+            </tr>
+            <tr>
+              <td className="font-bold text-on-surface-variant align-top">Tanggal</td>
+              <td className="text-on-surface">: {data.date ? formatDate(data.date) : "-"}</td>
+            </tr>
+            <tr>
+              <td className="font-bold text-on-surface-variant align-top">Nama Project</td>
+              <td className="text-on-surface">: {data.projectName || "-"}</td>
+            </tr>
+            <tr>
+              <td className="font-bold text-on-surface-variant align-top">Developer</td>
+              <td className="text-on-surface">: {data.freelancerName || "-"}</td>
+            </tr>
+            <tr>
+              <td className="font-bold text-on-surface-variant align-top">Perusahaan</td>
+              <td className="text-on-surface">: {data.clientCompany || "-"}</td>
+            </tr>
+            <tr>
+              <td className="font-bold text-on-surface-variant align-top">Diwakili oleh</td>
+              <td className="text-on-surface">: {data.clientName || "-"}</td>
+            </tr>
+            <tr>
+              <td className="font-bold text-on-surface-variant align-top">Masa Berlaku</td>
+              <td className="text-on-surface">: {data.validUntil ? formatDate(data.validUntil) : "-"}</td>
+            </tr>
+          </tbody>
+        </table>
 
-        {/* Project Title */}
-        <div className="mb-[24px]">
-          <p className="text-[12px] leading-[1.4] font-bold uppercase text-on-surface-variant mb-[4px]">
-            Project:
-          </p>
-          <div className="font-bold text-[24px] leading-[1.4] font-serif">
-            {data.projectName || "Desain Website E-Commerce"}
-          </div>
-        </div>
-
-        {/* Table */}
-        <div className="flex-grow">
-          <table className="w-full border-collapse">
+        {/* Feature Table */}
+        {data.platforms.some((p) => p.items.length > 0) && (
+          <table className="w-full border-collapse mb-[32px] text-[11px] leading-[1.5]">
             <thead>
-              <tr className="border-b-2 border-primary">
-                <th className="text-left py-[8px] font-bold text-[12px] leading-[1.4] uppercase">
-                  Deskripsi Pekerjaan
+              <tr className="bg-surface-container border-y-2 border-primary">
+                <th className="text-left py-[8px] px-[8px] font-bold uppercase w-[120px]">
+                  Platform
                 </th>
-                <th className="text-right py-[8px] font-bold text-[12px] leading-[1.4] uppercase">
-                  Harga (IDR)
+                <th className="text-left py-[8px] px-[8px] font-bold uppercase">
+                  Fitur Utama
+                </th>
+                <th className="text-center py-[8px] px-[8px] font-bold uppercase w-[60px]">
+                  Estimasi Waktu (Jam)
+                </th>
+                <th className="text-left py-[8px] px-[8px] font-bold uppercase">
+                  Fitur Detail
                 </th>
               </tr>
             </thead>
             <tbody>
-              {data.items.length === 0 || data.items.every(item => !item.service) ? (
-                <tr className="border-b border-outline-variant/30">
-                  <td className="py-[16px]">
-                    <div className="font-bold text-[16px] leading-[1.5]">UI Design</div>
-                    <div className="text-[12px] leading-[1.4] text-on-surface-variant italic">
-                      High-fidelity design untuk 10 halaman mobile & desktop
-                    </div>
-                  </td>
-                  <td className="py-[16px] text-right text-[16px] leading-[1.5]">
-                    Rp 5.000.000
-                  </td>
-                </tr>
-              ) : (
-                data.items.map((item, index) => (
-                  <tr key={index} className="border-b border-outline-variant/30">
-                    <td className="py-[16px]">
-                      <div className="font-bold text-[16px] leading-[1.5]">
-                        {item.service || "Tanpa Nama"}
-                      </div>
-                      <div className="text-[12px] leading-[1.4] text-on-surface-variant italic">
-                        {item.description || ""}
-                      </div>
-                    </td>
-                    <td className="py-[16px] text-right text-[16px] leading-[1.5]">
-                      Rp {item.price.toLocaleString("id-ID")}
-                    </td>
-                  </tr>
-                ))
+              {data.platforms.map((platform, pi) =>
+                platform.items.map((item, ii) => {
+                  const details = item.details
+                    ? item.details.split("\n").filter((d) => d.trim())
+                    : [];
+                  const isFirst = ii === 0;
+                  return (
+                    <tr key={`${pi}-${ii}`} className="border-b border-outline-variant/20">
+                      {isFirst && (
+                        <td
+                          rowSpan={platform.items.length}
+                          className="py-[8px] px-[8px] font-bold text-on-surface align-top text-[12px]"
+                        >
+                          {platform.name}
+                        </td>
+                      )}
+                      <td className="py-[8px] px-[8px] text-on-surface font-medium">
+                        {item.title}
+                      </td>
+                      <td className="py-[8px] px-[8px] text-center text-on-surface">
+                        {item.estimatedHours || 0}
+                      </td>
+                      <td className="py-[8px] px-[8px] text-on-surface-variant align-top">
+                        {details.length > 0 ? (
+                          <div className="space-y-[2px]">
+                            {details.map((d, di) => (
+                              <div key={di}>{d}</div>
+                            ))}
+                          </div>
+                        ) : (
+                          <span className="italic text-on-surface-variant/50">-</span>
+                        )}
+                      </td>
+                    </tr>
+                  );
+                })
               )}
             </tbody>
+            {/* Total Row */}
+            <tfoot>
+              <tr className="bg-surface-container border-t-2 border-primary">
+                <td colSpan={2} className="py-[8px] px-[8px] font-bold text-right text-[12px]">
+                  Total
+                </td>
+                <td className="py-[8px] px-[8px] text-center font-bold text-[12px]">
+                  {totalHours}
+                </td>
+                <td></td>
+              </tr>
+            </tfoot>
           </table>
-        </div>
+        )}
 
-        {/* Totals */}
-        <div className="mt-[40px] space-y-[8px] pt-[24px] border-t-2 border-outline-variant">
-          <div className="flex justify-between items-center">
-            <span className="text-[16px] leading-[1.5]">Total Penawaran</span>
-            <span className="font-bold text-[24px] leading-[1.4] text-primary">
-              Rp {total.toLocaleString("id-ID")}
+        {/* Ringkasan Penawaran */}
+        <div className="border border-outline-variant/30 rounded-sm p-[16px] space-y-[6px] text-[12px] leading-[1.5]">
+          <div className="font-bold text-[14px] text-primary mb-[8px]">Penawaran</div>
+          <div className="grid grid-cols-[140px_1fr] gap-x-[16px]">
+            <span className="font-semibold text-on-surface-variant">Teknologi</span>
+            <span className="text-on-surface">: {data.technology || "-"}</span>
+
+            <span className="font-semibold text-on-surface-variant">Durasi Kerja</span>
+            <span className="text-on-surface">: {estimatedDays} hari</span>
+
+            <span className="font-semibold text-on-surface-variant">Harga (Rp)</span>
+            <span className="text-on-surface font-bold text-[14px]">
+              : Rp {totalHarga.toLocaleString("id-ID")}
             </span>
+
+            <span className="font-semibold text-on-surface-variant">Termin Pembayaran</span>
+            <span className="text-on-surface">: {data.paymentTerms || "-"}</span>
+
+            <span className="font-semibold text-on-surface-variant">Maintenance</span>
+            <span className="text-on-surface">: {data.maintenance || "-"}</span>
+
+            <span className="font-semibold text-on-surface-variant">Bonus</span>
+            <span className="text-on-surface">: {data.bonus || "-"}</span>
           </div>
-          <div className="flex justify-between items-center text-on-surface-variant">
-            <span className="text-[12px] leading-[1.4]">
-              Down Payment (DP) {data.dpPercent}%
-            </span>
-            <span className="font-medium text-[16px] leading-[1.5]">
-              Rp {dpAmount.toLocaleString("id-ID")}
-            </span>
-          </div>
         </div>
 
-        {/* Terms */}
-        <div className="mt-[40px] text-[12px] leading-[1.4] italic text-on-surface-variant">
-          <p>
-            * Metode Pembayaran:{" "}
-            <span className="font-bold not-italic text-on-surface">{data.payMethod}</span>
-          </p>
-          <p>* Penawaran ini berlaku selama 14 hari sejak tanggal diterbitkan.</p>
-        </div>
-
-        {/* Decorative Background element */}
+        {/* Decorative Background */}
         <div className="absolute bottom-[-10px] right-[-10px] opacity-[0.03] select-none pointer-events-none">
           <span
             className="material-symbols-outlined text-[200px]"

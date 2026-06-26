@@ -26,6 +26,15 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     } else if (prefersDark) {
       setTheme("dark");
     }
+
+    const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
+    const handleChange = (e: MediaQueryListEvent) => {
+      if (!localStorage.getItem("theme")) {
+        setTheme(e.matches ? "dark" : "light");
+      }
+    };
+    mediaQuery.addEventListener("change", handleChange);
+    return () => mediaQuery.removeEventListener("change", handleChange);
   }, []);
 
   // Apply theme to document

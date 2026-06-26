@@ -1,0 +1,2128 @@
+<!-- Home Dashboard (Animated) - freelance_docs -->
+<!DOCTYPE html><html class="dark" lang="id" style=""><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>freelance_docs - Home Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(229, 231, 235, 0.5);
+        }
+        .doc-preview-shadow {
+            box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.05);
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0) rotate(var(--base-rotate, 0deg));
+            }
+            50% {
+                transform: translateY(-10px) rotate(var(--base-rotate, 0deg));
+            }
+        }
+
+        .animate-float-1 {
+            --base-rotate: -6deg;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .animate-float-2 {
+            --base-rotate: 3deg;
+            animation: float 8s ease-in-out infinite;
+            animation-delay: -2s;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .animate-float-1, .animate-float-2 {
+                animation: none !important;
+            }
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-primary": "#ffffff",
+                        "on-secondary": "#ffffff",
+                        "tertiary": "#7e3000",
+                        "primary-fixed-dim": "#c3c0ff",
+                        "secondary": "#712ae2",
+                        "secondary-fixed-dim": "#d2bbff",
+                        "surface-dim": "#d1dbec",
+                        "surface-bright": "#f8f9ff",
+                        "primary": "#3525cd",
+                        "on-error-container": "#93000a",
+                        "surface-container-low": "#eef4ff",
+                        "tertiary-fixed-dim": "#ffb695",
+                        "error-container": "#ffdad6",
+                        "tertiary-fixed": "#ffdbcc",
+                        "on-secondary-container": "#fffbff",
+                        "error": "#ba1a1a",
+                        "on-tertiary-container": "#ffd2be",
+                        "inverse-primary": "#c3c0ff",
+                        "on-secondary-fixed": "#25005a",
+                        "primary-fixed": "#e2dfff",
+                        "on-primary-container": "#dad7ff",
+                        "surface-container-high": "#dfe9fa",
+                        "surface-container": "#e5eeff",
+                        "outline-variant": "#c7c4d8",
+                        "inverse-surface": "#27313e",
+                        "on-tertiary-fixed-variant": "#7b2f00",
+                        "surface-container-lowest": "#ffffff",
+                        "on-primary-fixed-variant": "#3323cc",
+                        "on-surface": "#121c28",
+                        "on-error": "#ffffff",
+                        "surface-container-highest": "#d9e3f4",
+                        "on-surface-variant": "#464555",
+                        "on-tertiary-fixed": "#351000",
+                        "secondary-fixed": "#eaddff",
+                        "surface-variant": "#d9e3f4",
+                        "background": "#f8f9ff",
+                        "on-background": "#121c28",
+                        "outline": "#777587",
+                        "on-secondary-fixed-variant": "#5a00c6",
+                        "tertiary-container": "#a44100",
+                        "secondary-container": "#8a4cfc",
+                        "primary-container": "#4f46e5",
+                        "on-primary-fixed": "#0f0069",
+                        "surface-tint": "#4d44e3",
+                        "on-tertiary": "#ffffff",
+                        "surface": "#f8f9ff",
+                        "inverse-on-surface": "#eaf1ff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "lg": "24px",
+                        "gutter": "24px",
+                        "xs": "4px",
+                        "container-max": "1280px",
+                        "sm": "8px",
+                        "base": "4px",
+                        "md": "16px",
+                        "xl": "40px",
+                        "section": "80px"
+                    },
+                    "fontFamily": {
+                        "body-lg": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "label-md": ["Inter"],
+                        "body-md": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "caption": ["Inter"],
+                        "display-lg": ["Inter"],
+                        "headline-lg-mobile": ["Inter"]
+                    },
+                    "fontSize": {
+                        "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                        "headline-lg": ["32px", {"lineHeight": "1.3", "fontWeight": "700"}],
+                        "label-md": ["14px", {"lineHeight": "1.4", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                        "body-md": ["16px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                        "headline-md": ["24px", {"lineHeight": "1.4", "fontWeight": "600"}],
+                        "caption": ["12px", {"lineHeight": "1.4", "fontWeight": "400"}],
+                        "display-lg": ["48px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "headline-lg-mobile": ["24px", {"lineHeight": "1.3", "fontWeight": "700"}]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-background dark:bg-[#121c28] text-on-background dark:text-[#eaf1ff] font-body-md min-h-screen flex flex-col">
+<!-- TopNavBar -->
+<header class="bg-surface dark:bg-[#1a2332] shadow-sm sticky top-0 z-50 border-b border-transparent dark:border-[#27313e]">
+<nav class="flex justify-between items-center w-full px-lg md:px-xl py-md max-w-container-max mx-auto">
+<div class="font-headline-md text-headline-md font-bold text-primary dark:text-[#c3c0ff]">FreelanceDocs</div>
+<div class="hidden md:flex items-center gap-xl">
+<a class="text-primary dark:text-[#c3c0ff] border-b-2 border-primary dark:border-[#c3c0ff] pb-1 font-semibold font-label-md text-label-md" href="#">Home</a>
+<a class="text-on-surface-variant dark:text-[#b0b8c8] hover:text-primary dark:hover:text-[#c3c0ff] transition-colors duration-200 font-label-md text-label-md" href="#">Dokumen</a>
+<a class="text-on-surface-variant dark:text-[#b0b8c8] hover:text-primary dark:hover:text-[#c3c0ff] transition-colors duration-200 font-label-md text-label-md" href="#">Bantuan</a>
+</div>
+<div class="flex items-center gap-md">
+<button onclick="toggleDarkMode()" class="p-sm rounded-full hover:bg-surface-container dark:hover:bg-[#27313e] transition-colors" title="Toggle dark mode">
+<span class="material-symbols-outlined text-primary dark:text-[#c3c0ff]">dark_mode</span>
+</button>
+<button class="bg-primary dark:bg-[#4f46e5] text-on-primary px-lg py-sm rounded-lg font-label-md text-label-md font-semibold hover:opacity-90 active:scale-95 transition-all">
+                    Mulai Buat
+                </button>
+<button class="md:hidden flex items-center p-sm">
+<span class="material-symbols-outlined text-primary dark:text-[#c3c0ff]">menu</span>
+</button>
+</div>
+</nav>
+</header>
+<main class="flex-grow">
+<!-- Hero Section -->
+<section class="relative overflow-hidden py-section bg-gradient-to-br from-surface dark:from-[#1a2332] to-surface-container-low dark:to-[#1f2937]">
+<div class="max-w-container-max mx-auto px-lg flex flex-col md:flex-row items-center gap-xl">
+<div class="flex-1 text-center md:text-left z-10">
+<h1 class="font-display-lg text-display-lg md:text-display-lg text-on-surface dark:text-[#eaf1ff] leading-tight mb-md">
+                        Bikin dokumen project freelance dalam <span class="text-primary dark:text-[#c3c0ff]">hitungan menit.</span>
+</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant dark:text-[#b0b8c8] mb-xl max-w-2xl">
+                        Quotation, Timeline, BAST, dan Kontrak yang rapi dan profesional. Fokus pada karya Anda, biar kami yang urus administrasinya.
+                    </p>
+<div class="flex flex-col sm:flex-row gap-md justify-center md:justify-start">
+<button class="bg-primary dark:bg-[#4f46e5] text-on-primary px-xl py-md rounded-xl font-label-md text-label-md font-bold shadow-lg hover:shadow-xl transition-all">
+                            Buat Dokumen Sekarang
+                        </button>
+<button class="border border-outline dark:border-[#555f70] text-primary dark:text-[#c3c0ff] px-xl py-md rounded-xl font-label-md text-label-md font-bold hover:bg-surface-container dark:hover:bg-[#27313e] transition-all">
+                            Lihat Contoh
+                        </button>
+</div>
+</div>
+<div class="flex-1 relative w-full aspect-square md:aspect-auto h-[400px]">
+<!-- Abstract document preview graphics -->
+<div class="absolute inset-0 flex items-center justify-center">
+<div class="w-64 h-80 bg-white dark:bg-[#27313e] rounded-lg shadow-xl transform translate-x-12 translate-y-8 z-0 opacity-40 animate-float-1"></div>
+<div class="w-64 h-80 bg-white dark:bg-[#1f2937] rounded-lg shadow-2xl transform z-10 flex flex-col p-md border border-outline-variant dark:border-[#3d4a5c] animate-float-2">
+<div class="h-4 w-1/2 bg-surface-container-highest dark:bg-[#3d4a5c] rounded mb-md"></div>
+<div class="space-y-sm mb-lg">
+<div class="h-2 w-full bg-surface-container dark:bg-[#2a3544] rounded"></div>
+<div class="h-2 w-full bg-surface-container dark:bg-[#2a3544] rounded"></div>
+<div class="h-2 w-3/4 bg-surface-container dark:bg-[#2a3544] rounded"></div>
+</div>
+<div class="mt-auto flex justify-between items-center">
+<div class="h-8 w-8 rounded-full bg-primary-container dark:bg-[#4f46e5] opacity-20"></div>
+<div class="h-4 w-20 bg-secondary-container dark:bg-[#8a4cfc] opacity-20 rounded"></div>
+</div>
+</div>
+</div>
+<!-- Decorative elements -->
+<div class="absolute top-1/4 right-0 w-24 h-24 bg-secondary dark:bg-[#8a4cfc] opacity-10 rounded-full blur-3xl"></div>
+<div class="absolute bottom-1/4 left-0 w-32 h-32 bg-primary dark:bg-[#4f46e5] opacity-10 rounded-full blur-3xl"></div>
+</div>
+</div>
+<!-- Background Shape -->
+<div class="absolute -bottom-24 -left-24 w-96 h-96 bg-primary opacity-5 rounded-full blur-3xl"></div>
+</section>
+<!-- Feature Bento Grid -->
+<section class="py-section bg-background dark:bg-[#0f1621]">
+<div class="max-w-container-max mx-auto px-lg">
+<div class="text-center mb-xl">
+<h2 class="font-headline-lg text-headline-lg text-on-surface dark:text-[#eaf1ff] mb-sm">Pilih Dokumen yang Ingin Dibuat</h2>
+<p class="font-body-md text-body-md text-on-surface-variant dark:text-[#b0b8c8]">Dokumen standar industri yang siap pakai dalam sekejap.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-gutter">
+<!-- Quotation Card -->
+<div class="group flex flex-col bg-white dark:bg-[#1a2332] p-lg rounded-xl border border-outline-variant dark:border-[#27313e] hover:border-primary dark:hover:border-[#c3c0ff] hover:shadow-xl transition-all duration-300">
+<div class="w-12 h-12 rounded-lg bg-primary-container dark:bg-[#4f46e5] flex items-center justify-center mb-md group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-on-primary">request_quote</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-surface dark:text-[#eaf1ff] mb-sm">Quotation</h3>
+<p class="font-body-md text-body-md text-on-surface-variant dark:text-[#b0b8c8] flex-grow mb-xl">
+                            Buat penawaran harga yang jelas untuk klien. Hitung otomatis pajak dan diskon untuk transparansi penuh.
+                        </p>
+<button class="w-full bg-surface-container-low dark:bg-[#27313e] text-primary dark:text-[#c3c0ff] py-sm rounded-lg font-label-md text-label-md font-bold group-hover:bg-primary dark:group-hover:bg-[#4f46e5] group-hover:text-on-primary transition-colors">
+                            Mulai Buat
+                        </button>
+</div>
+<!-- Timeline Card -->
+<div class="group flex flex-col bg-white dark:bg-[#1a2332] p-lg rounded-xl border border-outline-variant dark:border-[#27313e] hover:border-primary dark:hover:border-[#c3c0ff] hover:shadow-xl transition-all duration-300">
+<div class="w-12 h-12 rounded-lg bg-secondary-container dark:bg-[#8a4cfc] flex items-center justify-center mb-md group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-on-secondary">schedule</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-surface dark:text-[#eaf1ff] mb-sm">Timeline</h3>
+<p class="font-body-md text-body-md text-on-surface-variant dark:text-[#b0b8c8] flex-grow mb-xl">
+                            Atur fase kerja dan deadline dengan terstruktur. Pastikan klien paham kapan project akan selesai.
+                        </p>
+<button class="w-full bg-surface-container-low dark:bg-[#27313e] text-primary dark:text-[#c3c0ff] py-sm rounded-lg font-label-md text-label-md font-bold group-hover:bg-primary dark:group-hover:bg-[#4f46e5] group-hover:text-on-primary transition-colors">
+                            Mulai Buat
+                        </button>
+</div>
+<!-- Kontrak Card -->
+<div class="group flex flex-col bg-white dark:bg-[#1a2332] p-lg rounded-xl border border-outline-variant dark:border-[#27313e] hover:border-primary dark:hover:border-[#c3c0ff] hover:shadow-xl transition-all duration-300"><div class="w-12 h-12 rounded-lg bg-on-secondary-fixed-variant dark:bg-[#7b2f00] flex items-center justify-center mb-md group-hover:scale-110 transition-transform"><span class="material-symbols-outlined text-on-primary">gavel</span></div><h3 class="font-headline-md text-headline-md text-on-surface dark:text-[#eaf1ff] mb-sm">Surat Kontrak</h3><p class="font-body-md text-body-md text-on-surface-variant dark:text-[#b0b8c8] flex-grow mb-xl">Surat perjanjian kerja dasar untuk keamanan legal. Atur hak cipta dan ketentuan pembayaran dengan aman.</p><button class="w-full bg-surface-container-low dark:bg-[#27313e] text-primary dark:text-[#c3c0ff] py-sm rounded-lg font-label-md text-label-md font-bold group-hover:bg-primary dark:group-hover:bg-[#4f46e5] group-hover:text-on-primary transition-colors">Mulai Buat</button></div><div class="group flex flex-col bg-white dark:bg-[#1a2332] p-lg rounded-xl border border-outline-variant dark:border-[#27313e] hover:border-primary dark:hover:border-[#c3c0ff] hover:shadow-xl transition-all duration-300">
+<div class="w-12 h-12 rounded-lg bg-tertiary-container dark:bg-[#a44100] flex items-center justify-center mb-md group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-on-tertiary">fact_check</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-surface dark:text-[#eaf1ff] mb-sm">BAST</h3>
+<p class="font-body-md text-body-md text-on-surface-variant dark:text-[#b0b8c8] flex-grow mb-xl">
+                            Berita acara serah terima untuk bukti kerja selesai. Lindungi diri Anda dengan tanda tangan serah terima resmi.
+                        </p>
+<button class="w-full bg-surface-container-low dark:bg-[#27313e] text-primary dark:text-[#c3c0ff] py-sm rounded-lg font-label-md text-label-md font-bold group-hover:bg-primary dark:group-hover:bg-[#4f46e5] group-hover:text-on-primary transition-colors">
+                            Mulai Buat
+                        </button>
+</div>
+<!-- Kontrak Card -->
+
+</div>
+</div>
+</section>
+<!-- Preview Section (Visual Interest) -->
+<section class="py-section bg-surface-container-lowest dark:bg-[#1a2332]">
+<div class="max-w-container-max mx-auto px-lg">
+<div class="flex flex-col lg:flex-row gap-xl items-center">
+<div class="lg:w-1/2 space-y-md">
+<span class="text-primary dark:text-[#c3c0ff] font-label-md text-label-md font-bold tracking-wider">PREVIEW REAL-TIME</span>
+<h2 class="font-headline-lg text-headline-lg text-on-surface dark:text-[#eaf1ff]">Lihat Dokumen Saat Anda Mengetik</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant dark:text-[#b0b8c8]">
+                            Editor kami dirancang khusus untuk freelancer. Tak perlu lagi bingung dengan format Word yang berantakan. Isinya formulir, lihat hasilnya seketika.
+                        </p>
+<ul class="space-y-sm">
+<li class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-primary dark:text-[#c3c0ff]" style="font-variation-settings: &quot;FILL&quot; 1;">check_circle</span>
+<span class="font-body-md text-body-md text-on-surface dark:text-[#eaf1ff]">Format PDF siap cetak &amp; kirim</span>
+</li>
+<li class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-primary dark:text-[#c3c0ff]" style="font-variation-settings: &quot;FILL&quot; 1;">check_circle</span>
+<span class="font-body-md text-body-md text-on-surface dark:text-[#eaf1ff]">Template bahasa Indonesia yang baku</span>
+</li>
+<li class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-primary dark:text-[#c3c0ff]" style="font-variation-settings: &quot;FILL&quot; 1;">check_circle</span>
+<span class="font-body-md text-body-md text-on-surface dark:text-[#eaf1ff]">Simpan draft untuk diedit nanti</span>
+</li>
+</ul>
+</div>
+<div class="lg:w-1/2 w-full">
+<div class="relative rounded-2xl overflow-hidden shadow-2xl">
+<div class="bg-cover bg-center w-full aspect-video" data-alt="A clean and professional digital interface showing a split-screen document editor. On the left, a minimalist form with blue input highlights. On the right, a realistic A4 document preview featuring a modern invoice layout with serif typography. The lighting is soft and airy, conveying a sense of productivity and professional clarity in a light mode aesthetic." style="background-image: url(&quot;https://lh3.googleusercontent.com/aida-public/AB6AXuCG-iRLarH63NFIuYM2UL0M3yhQqwQfbQxXMqay3Oa-OBCGEK9RgMviDxA_IibstZk9HwdgnVQGetjQDRNvyou29HjiRGyGBzkGTQl3slbtFSc96gowATUq0hefzMYJsXSQBTRhVES4b1Fhuvo_HUrZcxCPwneSnwliXFSbOOjrZA_tx-Rx_dEADUoV7M4rGfWovKq40YyTdlvU6sXDElcNLBrkn4eL88CpIlC7S0JSKr8Gofb2cgPwkBarP9Qwb3EcnGluyLabNeQ&quot;);"></div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-surface-container-lowest dark:bg-[#1a2332] border-t border-outline-variant dark:border-[#27313e]">
+<div class="flex flex-col md:flex-row justify-between items-center w-full px-lg py-xl max-w-container-max mx-auto gap-md">
+<div class="flex flex-col items-center md:items-start gap-sm">
+<div class="font-headline-md text-headline-md font-bold text-primary dark:text-[#c3c0ff]">FreelanceDocs</div>
+<p class="font-body-md text-body-md text-on-surface-variant dark:text-[#b0b8c8] text-center md:text-left max-w-xs">@ 2026 Created By Trisno Sanjaya</p>
+</div>
+<div class="flex flex-wrap justify-center gap-lg">
+<a class="text-on-surface-variant dark:text-[#b0b8c8] hover:text-primary dark:hover:text-[#c3c0ff] transition-colors font-body-md text-body-md" href="#">Kebijakan Privasi</a>
+<a class="text-on-surface-variant dark:text-[#b0b8c8] hover:text-primary dark:hover:text-[#c3c0ff] transition-colors font-body-md text-body-md" href="#">Syarat &amp; Ketentuan</a>
+<a class="text-on-surface-variant dark:text-[#b0b8c8] hover:text-primary dark:hover:text-[#c3c0ff] transition-colors font-body-md text-body-md" href="#">Kontak Kami</a>
+</div>
+<div class="flex gap-md">
+<a class="w-10 h-10 rounded-full bg-surface-container dark:bg-[#27313e] flex items-center justify-center text-on-surface-variant dark:text-[#b0b8c8] hover:text-primary dark:hover:text-[#c3c0ff] transition-colors" href="#">
+<span class="material-symbols-outlined">share</span>
+</a>
+<a class="w-10 h-10 rounded-full bg-surface-container dark:bg-[#27313e] flex items-center justify-center text-on-surface-variant dark:text-[#b0b8c8] hover:text-primary dark:hover:text-[#c3c0ff] transition-colors" href="#">
+<span class="material-symbols-outlined">help</span>
+</a>
+</div>
+</div>
+</footer>
+<script>
+        // Dark mode toggle
+        function toggleDarkMode() {
+            const html = document.documentElement;
+            if (html.classList.contains('dark')) {
+                html.classList.remove('dark');
+                html.classList.add('light');
+                localStorage.setItem('theme', 'light');
+            } else {
+                html.classList.remove('light');
+                html.classList.add('dark');
+                localStorage.setItem('theme', 'dark');
+            }
+        }
+
+        // Load saved theme on page load
+        window.addEventListener('DOMContentLoaded', () => {
+            const savedTheme = localStorage.getItem('theme') || 'dark';
+            document.documentElement.classList.remove('light', 'dark');
+            document.documentElement.classList.add(savedTheme);
+        });
+
+        // Micro-interactions
+        document.querySelectorAll('button').forEach(button => {
+            button.addEventListener('mousedown', () => {
+                button.classList.add('scale-95', 'opacity-90');
+            });
+            button.addEventListener('mouseup', () => {
+                button.classList.remove('scale-95', 'opacity-90');
+            });
+            button.addEventListener('mouseleave', () => {
+                button.classList.remove('scale-95', 'opacity-90');
+            });
+        });
+    </script>
+
+
+
+
+
+
+</body></html>
+
+<!-- Quotation Generator - freelance_docs -->
+<!DOCTYPE html><html class="dark" lang="id"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Quotation Generator - freelance_docs</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Noto+Serif:ital,wght@0,400;0,700;1,400&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-primary": "#ffffff",
+                        "on-secondary": "#ffffff",
+                        "tertiary": "#7e3000",
+                        "primary-fixed-dim": "#c3c0ff",
+                        "secondary": "#712ae2",
+                        "secondary-fixed-dim": "#d2bbff",
+                        "surface-dim": "#d1dbec",
+                        "surface-bright": "#f8f9ff",
+                        "primary": "#3525cd",
+                        "on-error-container": "#93000a",
+                        "surface-container-low": "#eef4ff",
+                        "tertiary-fixed-dim": "#ffb695",
+                        "error-container": "#ffdad6",
+                        "tertiary-fixed": "#ffdbcc",
+                        "on-secondary-container": "#fffbff",
+                        "error": "#ba1a1a",
+                        "on-tertiary-container": "#ffd2be",
+                        "inverse-primary": "#c3c0ff",
+                        "on-secondary-fixed": "#25005a",
+                        "primary-fixed": "#e2dfff",
+                        "on-primary-container": "#dad7ff",
+                        "surface-container-high": "#dfe9fa",
+                        "surface-container": "#e5eeff",
+                        "outline-variant": "#c7c4d8",
+                        "inverse-surface": "#27313e",
+                        "on-tertiary-fixed-variant": "#7b2f00",
+                        "surface-container-lowest": "#ffffff",
+                        "on-primary-fixed-variant": "#3323cc",
+                        "on-surface": "#121c28",
+                        "on-error": "#ffffff",
+                        "surface-container-highest": "#d9e3f4",
+                        "on-surface-variant": "#464555",
+                        "on-tertiary-fixed": "#351000",
+                        "secondary-fixed": "#eaddff",
+                        "surface-variant": "#d9e3f4",
+                        "background": "#f8f9ff",
+                        "on-background": "#121c28",
+                        "outline": "#777587",
+                        "on-secondary-fixed-variant": "#5a00c6",
+                        "tertiary-container": "#a44100",
+                        "secondary-container": "#8a4cfc",
+                        "primary-container": "#4f46e5",
+                        "on-primary-fixed": "#0f0069",
+                        "surface-tint": "#4d44e3",
+                        "on-tertiary": "#ffffff",
+                        "surface": "#f8f9ff",
+                        "inverse-on-surface": "#eaf1ff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "lg": "24px",
+                        "gutter": "24px",
+                        "xs": "4px",
+                        "container-max": "1280px",
+                        "sm": "8px",
+                        "base": "4px",
+                        "md": "16px",
+                        "xl": "40px",
+                        "section": "80px"
+                    },
+                    "fontFamily": {
+                        "body-lg": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "label-md": ["Inter"],
+                        "body-md": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "caption": ["Inter"],
+                        "display-lg": ["Inter"],
+                        "headline-lg-mobile": ["Inter"],
+                        "noto-serif": ["Noto Serif", "serif"]
+                    },
+                    "fontSize": {
+                        "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                        "headline-lg": ["32px", {"lineHeight": "1.3", "fontWeight": "700"}],
+                        "label-md": ["14px", {"lineHeight": "1.4", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                        "body-md": ["16px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                        "headline-md": ["24px", {"lineHeight": "1.4", "fontWeight": "600"}],
+                        "caption": ["12px", {"lineHeight": "1.4", "fontWeight": "400"}],
+                        "display-lg": ["48px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "headline-lg-mobile": ["24px", {"lineHeight": "1.3", "fontWeight": "700"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .document-canvas {
+            aspect-ratio: 1 / 1.414; /* A4 Ratio */
+            box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.05);
+        }
+        .scrollbar-hide::-webkit-scrollbar { display: none; }
+        .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+</head>
+<body class="bg-background dark:bg-[#121c28] text-on-background dark:text-[#eaf1ff] font-body-md min-h-screen flex flex-col">
+<!-- TopNavBar -->
+<header class="bg-surface dark:bg-[#1a2332] shadow-sm sticky top-0 z-50 border-b border-transparent dark:border-[#27313e]">
+<div class="flex justify-between items-center w-full px-lg md:px-xl py-md max-w-container-max mx-auto">
+<div class="font-headline-md text-headline-md font-bold text-primary dark:text-[#c3c0ff]">FreelanceDocs</div>
+<nav class="hidden md:flex items-center gap-xl">
+<a class="font-label-md text-label-md text-on-surface-variant dark:text-[#b0b8c8] hover:text-primary dark:hover:text-[#c3c0ff] transition-colors duration-200" href="#">Home</a>
+<a class="font-label-md text-label-md text-primary dark:text-[#c3c0ff] border-b-2 border-primary dark:border-[#c3c0ff] pb-1 font-semibold" href="#">Dokumen</a>
+<a class="font-label-md text-label-md text-on-surface-variant dark:text-[#b0b8c8] hover:text-primary dark:hover:text-[#c3c0ff] transition-colors duration-200" href="#">Bantuan</a>
+</nav>
+<button class="bg-primary-container dark:bg-[#4f46e5] text-on-primary-container dark:text-white px-lg py-sm rounded-full font-label-md text-label-md hover:bg-opacity-90 transition-all active:scale-95">
+                Mulai Buat
+            </button>
+</div>
+</header>
+<main class="flex-grow flex flex-col">
+<!-- Breadcrumbs & Title -->
+<section class="w-full max-w-container-max mx-auto px-lg py-md">
+<nav class="flex items-center gap-xs text-on-surface-variant dark:text-[#b0b8c8] mb-xs">
+<span class="font-caption text-caption">Home</span>
+<span class="material-symbols-outlined text-[16px]">chevron_right</span>
+<span class="font-caption text-caption font-semibold text-primary dark:text-[#c3c0ff]">Quotation</span>
+</nav>
+<h1 class="font-headline-md text-headline-md text-on-surface dark:text-[#eaf1ff]">Buat Penawaran Baru</h1>
+<p class="font-body-md text-body-md text-on-surface-variant dark:text-[#b0b8c8]">Mari buat dokumen Anda dengan mudah dan profesional.</p>
+</section>
+<!-- Split Screen Layout -->
+<div class="flex-grow flex flex-col lg:flex-row w-full max-w-container-max mx-auto px-lg pb-xl gap-xl items-start">
+<!-- LEFT: Form (5 Columns equivalent) -->
+<div class="w-full lg:w-5/12 bg-surface-container-lowest dark:bg-[#1a2332] rounded-xl border border-outline-variant dark:border-[#27313e] p-lg space-y-xl sticky top-[100px]">
+<!-- Section 1: Data Klien -->
+<div class="space-y-md">
+<div class="flex items-center gap-sm text-primary dark:text-[#c3c0ff]">
+<span class="material-symbols-outlined">person</span>
+<h2 class="font-headline-md text-[18px] text-on-surface dark:text-[#eaf1ff]">Data Klien &amp; Project</h2>
+</div>
+<div class="grid grid-cols-1 gap-md">
+<div class="flex flex-col gap-xs">
+<label class="font-label-md text-label-md text-on-surface-variant dark:text-[#b0b8c8]">Nama Klien</label>
+<input class="rounded-lg border-outline-variant dark:border-[#3d4a5c] dark:bg-[#27313e] dark:text-[#eaf1ff] focus:border-primary focus:ring-primary-container font-body-md py-sm" id="clientName" placeholder="cth: PT. Sukses Selalu" type="text">
+</div>
+<div class="flex flex-col gap-xs">
+<label class="font-label-md text-label-md text-on-surface-variant dark:text-[#b0b8c8]">Email Klien</label>
+<input class="rounded-lg border-outline-variant dark:border-[#3d4a5c] dark:bg-[#27313e] dark:text-[#eaf1ff] focus:border-primary focus:ring-primary-container font-body-md py-sm" id="clientEmail" placeholder="cth: hello@client.com" type="email">
+</div>
+<div class="flex flex-col gap-xs">
+<label class="font-label-md text-label-md text-on-surface-variant dark:text-[#b0b8c8]">Nama Project</label>
+<input class="rounded-lg border-outline-variant dark:border-[#3d4a5c] dark:bg-[#27313e] dark:text-[#eaf1ff] focus:border-primary focus:ring-primary-container font-body-md py-sm" id="projectName" placeholder="cth: Desain Website E-Commerce" type="text">
+</div>
+</div>
+</div>
+<!-- Section 2: Item Pekerjaan -->
+<div class="space-y-md">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-sm text-primary dark:text-[#c3c0ff]">
+<span class="material-symbols-outlined">list_alt</span>
+<h2 class="font-headline-md text-[18px] text-on-surface dark:text-[#eaf1ff]">Item Pekerjaan</h2>
+</div>
+<button class="text-primary dark:text-[#c3c0ff] font-label-md text-label-md flex items-center gap-xs hover:underline" id="addRow">
+<span class="material-symbols-outlined text-[18px]">add_circle</span>
+                            Tambah Baris
+                        </button>
+</div>
+<div class="space-y-md" id="itemRows">
+<div class="grid grid-cols-12 gap-sm items-start p-md bg-surface-container-low dark:bg-[#27313e] rounded-lg border border-outline-variant/30 dark:border-[#3d4a5c]">
+<div class="col-span-12 md:col-span-5 flex flex-col gap-xs">
+<label class="font-caption text-caption text-on-surface-variant dark:text-[#b0b8c8]">Layanan</label>
+<input class="row-service rounded-lg border-outline-variant dark:border-[#3d4a5c] dark:bg-[#1a2332] dark:text-[#eaf1ff] text-[14px] py-xs" placeholder="cth: UI Design" type="text">
+</div>
+<div class="col-span-12 md:col-span-4 flex flex-col gap-xs">
+<label class="font-caption text-caption text-on-surface-variant dark:text-[#b0b8c8]">Harga (Rp)</label>
+<input class="row-price rounded-lg border-outline-variant dark:border-[#3d4a5c] dark:bg-[#1a2332] dark:text-[#eaf1ff] text-[14px] py-xs" placeholder="0" type="number">
+</div>
+<div class="col-span-12 md:col-span-3 pt-md flex justify-end">
+<button class="text-error dark:text-[#ffb4ab] hover:bg-error-container/20 dark:hover:bg-[#93000a]/20 p-xs rounded">
+<span class="material-symbols-outlined">delete</span>
+</button>
+</div>
+<div class="col-span-12 flex flex-col gap-xs">
+<label class="font-caption text-caption text-on-surface-variant dark:text-[#b0b8c8]">Deskripsi</label>
+<textarea class="row-desc rounded-lg border-outline-variant dark:border-[#3d4a5c] dark:bg-[#1a2332] dark:text-[#eaf1ff] text-[14px] py-xs h-16" placeholder="Detail pekerjaan..."></textarea>
+</div>
+</div>
+</div>
+</div>
+<!-- Section 3: Pembayaran -->
+<div class="space-y-md">
+<div class="flex items-center gap-sm text-primary dark:text-[#c3c0ff]">
+<span class="material-symbols-outlined">payments</span>
+<h2 class="font-headline-md text-[18px] text-on-surface dark:text-[#eaf1ff]">Metode &amp; DP</h2>
+</div>
+<div class="grid grid-cols-2 gap-md">
+<div class="flex flex-col gap-xs">
+<label class="font-label-md text-label-md text-on-surface-variant dark:text-[#b0b8c8]">Down Payment (%)</label>
+<input class="rounded-lg border-outline-variant dark:border-[#3d4a5c] dark:bg-[#27313e] dark:text-[#eaf1ff] focus:border-primary focus:ring-primary-container font-body-md py-sm" id="dpPercent" type="number" value="50">
+</div>
+<div class="flex flex-col gap-xs">
+<label class="font-label-md text-label-md text-on-surface-variant dark:text-[#b0b8c8]">Metode</label>
+<select class="rounded-lg border-outline-variant dark:border-[#3d4a5c] dark:bg-[#27313e] dark:text-[#eaf1ff] focus:border-primary focus:ring-primary-container font-body-md py-sm" id="payMethod">
+<option>Transfer Bank</option>
+<option>E-Wallet</option>
+<option>Lainnya</option>
+</select>
+</div>
+</div>
+</div>
+<div class="pt-md">
+<button class="w-full bg-primary dark:bg-[#4f46e5] text-on-primary py-md rounded-xl font-label-md text-headline-md hover:bg-opacity-90 transition-all flex items-center justify-center gap-md">
+<span class="material-symbols-outlined">save</span>
+                        Simpan Penawaran
+                    </button>
+</div>
+</div>
+<!-- RIGHT: Document Preview (7 Columns equivalent) -->
+<div class="w-full lg:w-7/12 flex flex-col gap-md">
+<div class="flex items-center justify-between">
+<h3 class="font-label-md text-label-md text-on-surface-variant dark:text-[#b0b8c8] uppercase tracking-widest">Preview Dokumen</h3>
+<div class="flex gap-sm">
+<button class="flex items-center gap-xs px-md py-sm rounded-full bg-white dark:bg-[#27313e] border border-outline-variant dark:border-[#3d4a5c] hover:bg-surface-container dark:hover:bg-[#2a3544] transition-colors text-label-md font-label-md text-on-surface dark:text-[#eaf1ff]" id="copyBtn">
+<span class="material-symbols-outlined text-[18px]">content_copy</span>
+                            Salin Teks
+                        </button>
+<button class="flex items-center gap-xs px-md py-sm rounded-full bg-white dark:bg-[#27313e] border border-outline-variant dark:border-[#3d4a5c] hover:bg-surface-container dark:hover:bg-[#2a3544] transition-colors text-label-md font-label-md text-on-surface dark:text-[#eaf1ff]">
+<span class="material-symbols-outlined text-[18px]">print</span>
+                            Cetak
+                        </button>
+</div>
+</div>
+<!-- Paper Container -->
+<div class="document-canvas bg-white w-full p-xl md:p-[60px] flex flex-col overflow-hidden relative border border-outline-variant/20 rounded-sm">
+<!-- Letterhead/Logo -->
+<div class="flex justify-between items-start mb-xl">
+<div>
+<div class="font-noto-serif italic font-bold text-headline-md text-primary mb-xs">QUOTATION</div>
+<div class="text-caption font-label-md text-on-surface-variant">#QTN-2024-001</div>
+</div>
+<div class="text-right">
+<div class="font-bold text-body-md">Seno Freelance</div>
+<div class="text-caption text-on-surface-variant">Jakarta, Indonesia</div>
+</div>
+</div>
+<!-- Client Info -->
+<div class="mb-xl grid grid-cols-2 gap-lg">
+<div>
+<p class="text-caption font-bold uppercase text-on-surface-variant mb-xs">Kepada:</p>
+<div class="font-bold text-body-md" id="previewClient">PT. Sukses Selalu</div>
+<div class="text-body-md text-on-surface-variant" id="previewEmail">hello@client.com</div>
+</div>
+<div class="text-right">
+<p class="text-caption font-bold uppercase text-on-surface-variant mb-xs">Tanggal:</p>
+<div class="text-body-md">24 Mei 2024</div>
+</div>
+</div>
+<div class="mb-lg">
+<p class="text-caption font-bold uppercase text-on-surface-variant mb-xs">Project:</p>
+<div class="font-bold text-headline-md font-noto-serif" id="previewProject">Desain Website E-Commerce</div>
+</div>
+<!-- Table -->
+<div class="flex-grow">
+<table class="w-full border-collapse">
+<thead>
+<tr class="border-b-2 border-primary">
+<th class="text-left py-sm font-bold text-caption uppercase">Deskripsi Pekerjaan</th>
+<th class="text-right py-sm font-bold text-caption uppercase">Harga (IDR)</th>
+</tr>
+</thead>
+<tbody id="previewItems">
+<tr class="border-b border-outline-variant/30">
+<td class="py-md">
+<div class="font-bold text-body-md">UI Design</div>
+<div class="text-caption text-on-surface-variant italic">High-fidelity design untuk 10 halaman mobile &amp; desktop</div>
+</td>
+<td class="py-md text-right font-body-md">Rp 5.000.000</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Totals -->
+<div class="mt-xl space-y-sm pt-lg border-t-2 border-outline-variant">
+<div class="flex justify-between items-center">
+<span class="text-body-md">Total Penawaran</span>
+<span class="font-bold text-headline-md text-primary" id="previewTotal">Rp 5.000.000</span>
+</div>
+<div class="flex justify-between items-center text-on-surface-variant">
+<span class="text-caption">Down Payment (DP) <span id="previewDpLabel" class="">50</span>%</span>
+<span class="font-medium text-body-md" id="previewDpAmount">Rp 2.500.000</span>
+</div>
+</div>
+<!-- Terms -->
+<div class="mt-xl text-caption italic text-on-surface-variant">
+<p class="">* Metode Pembayaran: <span class="font-bold not-italic text-on-surface" id="previewMethod">Transfer Bank</span></p>
+<p class="">* Penawaran ini berlaku selama 14 hari sejak tanggal diterbitkan.</p>
+</div>
+<!-- Decorative Background element -->
+<div class="absolute bottom-[-10px] right-[-10px] opacity-[0.03] select-none pointer-events-none">
+<span class="material-symbols-outlined text-[200px]" style="font-variation-settings: 'FILL' 1;">description</span>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Footer -->
+<footer class="bg-surface-container-lowest dark:bg-[#1a2332] border-t border-outline-variant dark:border-[#27313e]">
+<div class="flex flex-col md:flex-row justify-between items-center w-full px-lg py-xl max-w-container-max mx-auto gap-md">
+<div class="flex flex-col gap-xs items-center md:items-start">
+<div class="font-headline-md text-headline-md font-bold text-primary dark:text-[#c3c0ff]">FreelanceDocs</div>
+<p class="font-caption text-caption text-on-surface-variant dark:text-[#b0b8c8]">@ 2026 Created By Trisno Sanjaya</p>
+</div>
+<div class="flex gap-lg">
+<a class="font-body-md text-body-md text-on-surface-variant dark:text-[#b0b8c8] hover:text-primary dark:hover:text-[#c3c0ff] transition-colors" href="#">Kebijakan Privasi</a>
+<a class="font-body-md text-body-md text-on-surface-variant dark:text-[#b0b8c8] hover:text-primary dark:hover:text-[#c3c0ff] transition-colors" href="#">Syarat &amp; Ketentuan</a>
+<a class="font-body-md text-body-md text-on-surface-variant dark:text-[#b0b8c8] hover:text-primary dark:hover:text-[#c3c0ff] transition-colors" href="#">Kontak Kami</a>
+</div>
+</div>
+</footer>
+<script>
+        // Simple Real-time Update Logic
+        const inputs = ['clientName', 'clientEmail', 'projectName', 'dpPercent', 'payMethod'];
+        const previews = ['previewClient', 'previewEmail', 'previewProject', 'previewDpLabel', 'previewMethod'];
+
+        inputs.forEach((id, index) => {
+            document.getElementById(id).addEventListener('input', (e) => {
+                document.getElementById(previews[index]).innerText = e.target.value || '-';
+                calculateTotals();
+            });
+        });
+
+        // Add Row Logic
+        document.getElementById('addRow').addEventListener('click', () => {
+            const container = document.getElementById('itemRows');
+            const newRow = document.createElement('div');
+            newRow.className = 'grid grid-cols-12 gap-sm items-start p-md bg-surface-container-low rounded-lg border border-outline-variant/30';
+            newRow.innerHTML = `
+                <div class="col-span-12 md:col-span-5 flex flex-col gap-xs">
+                    <label class="font-caption text-caption text-on-surface-variant">Layanan</label>
+                    <input type="text" class="row-service rounded-lg border-outline-variant text-[14px] py-xs" placeholder="cth: Branding">
+                </div>
+                <div class="col-span-12 md:col-span-4 flex flex-col gap-xs">
+                    <label class="font-caption text-caption text-on-surface-variant">Harga (Rp)</label>
+                    <input type="number" class="row-price rounded-lg border-outline-variant text-[14px] py-xs" placeholder="0">
+                </div>
+                <div class="col-span-12 md:col-span-3 pt-md flex justify-end">
+                    <button class="text-error hover:bg-error-container/20 p-xs rounded remove-row">
+                        <span class="material-symbols-outlined">delete</span>
+                    </button>
+                </div>
+                <div class="col-span-12 flex flex-col gap-xs">
+                    <label class="font-caption text-caption text-on-surface-variant">Deskripsi</label>
+                    <textarea class="row-desc rounded-lg border-outline-variant text-[14px] py-xs h-16" placeholder="Detail pekerjaan..."></textarea>
+                </div>
+            `;
+            container.appendChild(newRow);
+            attachListeners();
+        });
+
+        function attachListeners() {
+            document.querySelectorAll('.row-service, .row-price, .row-desc').forEach(input => {
+                input.addEventListener('input', updateTable);
+            });
+            document.querySelectorAll('.remove-row').forEach(btn => {
+                btn.onclick = (e) => {
+                    e.currentTarget.closest('.grid').remove();
+                    updateTable();
+                };
+            });
+        }
+
+        function updateTable() {
+            const previewItems = document.getElementById('previewItems');
+            previewItems.innerHTML = '';
+            let total = 0;
+
+            document.querySelectorAll('#itemRows > div').forEach(row => {
+                const service = row.querySelector('.row-service').value || 'Tanpa Nama';
+                const price = parseFloat(row.querySelector('.row-price').value) || 0;
+                const desc = row.querySelector('.row-desc').value || '';
+                total += price;
+
+                const tr = document.createElement('tr');
+                tr.className = 'border-b border-outline-variant/30';
+                tr.innerHTML = `
+                    <td class="py-md">
+                        <div class="font-bold text-body-md">${service}</div>
+                        <div class="text-caption text-on-surface-variant italic">${desc}</div>
+                    </td>
+                    <td class="py-md text-right font-body-md">Rp ${price.toLocaleString('id-ID')}</td>
+                `;
+                previewItems.appendChild(tr);
+            });
+
+            calculateTotals(total);
+        }
+
+        function calculateTotals(passedTotal) {
+            const total = passedTotal !== undefined ? passedTotal : getTotalFromRows();
+            const dp = parseFloat(document.getElementById('dpPercent').value) || 0;
+            const dpAmount = (total * dp) / 100;
+
+            document.getElementById('previewTotal').innerText = `Rp ${total.toLocaleString('id-ID')}`;
+            document.getElementById('previewDpAmount').innerText = `Rp ${dpAmount.toLocaleString('id-ID')}`;
+        }
+
+        function getTotalFromRows() {
+            let total = 0;
+            document.querySelectorAll('.row-price').forEach(input => {
+                total += parseFloat(input.value) || 0;
+            });
+            return total;
+        }
+
+        // Copy Text Interaction
+        document.getElementById('copyBtn').addEventListener('click', function() {
+            const btn = this;
+            const originalContent = btn.innerHTML;
+            btn.innerHTML = '<span class="material-symbols-outlined text-[18px]">check</span> Berhasil!';
+            btn.classList.add('bg-green-100', 'text-green-700');
+
+            setTimeout(() => {
+                btn.innerHTML = originalContent;
+                btn.classList.remove('bg-green-100', 'text-green-700');
+            }, 2000);
+        });
+
+        attachListeners();
+    </script>
+
+
+
+
+</body></html>
+
+<!-- Timeline Generator - freelance_docs -->
+<!DOCTYPE html><html class="dark" lang="id"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Timeline Generator | freelance_docs</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Noto+Serif:ital,wght@0,400;0,700;1,400&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-primary": "#ffffff",
+                    "on-secondary": "#ffffff",
+                    "tertiary": "#7e3000",
+                    "primary-fixed-dim": "#c3c0ff",
+                    "secondary": "#712ae2",
+                    "secondary-fixed-dim": "#d2bbff",
+                    "surface-dim": "#d1dbec",
+                    "surface-bright": "#f8f9ff",
+                    "primary": "#3525cd",
+                    "on-error-container": "#93000a",
+                    "surface-container-low": "#eef4ff",
+                    "tertiary-fixed-dim": "#ffb695",
+                    "error-container": "#ffdad6",
+                    "tertiary-fixed": "#ffdbcc",
+                    "on-secondary-container": "#fffbff",
+                    "error": "#ba1a1a",
+                    "on-tertiary-container": "#ffd2be",
+                    "inverse-primary": "#c3c0ff",
+                    "on-secondary-fixed": "#25005a",
+                    "primary-fixed": "#e2dfff",
+                    "on-primary-container": "#dad7ff",
+                    "surface-container-high": "#dfe9fa",
+                    "surface-container": "#e5eeff",
+                    "outline-variant": "#c7c4d8",
+                    "inverse-surface": "#27313e",
+                    "on-tertiary-fixed-variant": "#7b2f00",
+                    "surface-container-lowest": "#ffffff",
+                    "on-primary-fixed-variant": "#3323cc",
+                    "on-surface": "#121c28",
+                    "on-error": "#ffffff",
+                    "surface-container-highest": "#d9e3f4",
+                    "on-surface-variant": "#464555",
+                    "on-tertiary-fixed": "#351000",
+                    "secondary-fixed": "#eaddff",
+                    "surface-variant": "#d9e3f4",
+                    "background": "#f8f9ff",
+                    "on-background": "#121c28",
+                    "outline": "#777587",
+                    "on-secondary-fixed-variant": "#5a00c6",
+                    "tertiary-container": "#a44100",
+                    "secondary-container": "#8a4cfc",
+                    "primary-container": "#4f46e5",
+                    "on-primary-fixed": "#000000",
+                    "surface-tint": "#4d44e3",
+                    "on-tertiary": "#ffffff",
+                    "surface": "#f8f9ff",
+                    "inverse-on-surface": "#eaf1ff"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "lg": "24px",
+                    "gutter": "24px",
+                    "xs": "4px",
+                    "container-max": "1280px",
+                    "sm": "8px",
+                    "base": "4px",
+                    "md": "16px",
+                    "xl": "40px",
+                    "section": "80px"
+            },
+            "fontFamily": {
+                    "body-lg": ["Inter"],
+                    "headline-lg": ["Inter"],
+                    "label-md": ["Inter"],
+                    "body-md": ["Inter"],
+                    "headline-md": ["Inter"],
+                    "caption": ["Inter"],
+                    "display-lg": ["Inter"],
+                    "headline-lg-mobile": ["Inter"],
+                    "serif": ["Noto Serif", "serif"]
+            },
+            "fontSize": {
+                    "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                    "headline-lg": ["32px", {"lineHeight": "1.3", "fontWeight": "700"}],
+                    "label-md": ["14px", {"lineHeight": "1.4", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                    "body-md": ["16px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                    "headline-md": ["24px", {"lineHeight": "1.4", "fontWeight": "600"}],
+                    "caption": ["12px", {"lineHeight": "1.4", "fontWeight": "400"}],
+                    "display-lg": ["48px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "headline-lg-mobile": ["24px", {"lineHeight": "1.3", "fontWeight": "700"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .document-canvas {
+            min-height: 842px; /* A4 aspect ratio proxy */
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
+        }
+        .glass-header {
+            backdrop-filter: blur(8px);
+            background-color: rgba(248, 249, 255, 0.8);
+        }
+        .timeline-line::before {
+            content: '';
+            position: absolute;
+            left: 11px;
+            top: 24px;
+            bottom: 0;
+            width: 2px;
+            background-color: #E5E7EB;
+        }
+        .timeline-item:last-child .timeline-line::before {
+            display: none;
+        }
+    </style>
+</head>
+<body class="bg-background dark:bg-[#121c28] text-on-background dark:text-[#eaf1ff] font-body-md selection:bg-primary-container selection:text-white">
+<!-- TopNavBar -->
+<header class="fixed top-0 left-0 right-0 z-50 glass-header dark:bg-[#1a2332]/80 border-b border-outline-variant/30 dark:border-[#27313e]">
+<div class="flex justify-between items-center w-full px-lg md:px-xl py-md max-w-container-max mx-auto">
+<div class="flex items-center gap-md">
+<span class="font-headline-md text-headline-md font-bold text-primary dark:text-[#c3c0ff]">FreelanceDocs</span>
+<nav class="hidden md:flex gap-lg ml-xl">
+<a class="font-label-md text-label-md text-on-surface-variant dark:text-[#b0b8c8] hover:text-primary dark:hover:text-[#c3c0ff] transition-colors" href="#">Home</a>
+<a class="font-label-md text-label-md text-primary dark:text-[#c3c0ff] border-b-2 border-primary dark:border-[#c3c0ff] pb-1 font-semibold" href="#">Dokumen</a>
+<a class="font-label-md text-label-md text-on-surface-variant dark:text-[#b0b8c8] hover:text-primary dark:hover:text-[#c3c0ff] transition-colors" href="#">Bantuan</a>
+</nav>
+</div>
+<button class="bg-primary dark:bg-[#4f46e5] text-on-primary px-lg py-sm rounded-lg font-label-md text-label-md hover:opacity-90 active:scale-95 transition-all">
+                Mulai Buat
+            </button>
+</div>
+</header>
+<main class="pt-24 pb-12 px-lg md:px-xl max-w-container-max mx-auto">
+<!-- Breadcrumbs -->
+<nav class="flex items-center gap-sm mb-lg text-on-surface-variant dark:text-[#b0b8c8]">
+<a class="font-label-md text-label-md hover:text-primary dark:hover:text-[#c3c0ff]" href="#">Home</a>
+<span class="material-symbols-outlined text-[18px]">chevron_right</span>
+<span class="font-label-md text-label-md font-semibold text-primary dark:text-[#c3c0ff]">Timeline</span>
+</nav>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-xl">
+<!-- Left: Form Section -->
+<section class="lg:col-span-5 space-y-xl">
+<header>
+<h1 class="font-headline-lg text-headline-lg text-on-surface dark:text-[#eaf1ff] mb-xs">Buat Timeline Proyek</h1>
+<p class="text-on-surface-variant dark:text-[#b0b8c8]">Mari buat dokumen timeline profesional untuk klien Anda.</p>
+</header>
+<form class="space-y-lg" id="timelineForm">
+<!-- Project Info Card -->
+<div class="bg-surface-container-lowest dark:bg-[#1a2332] border border-outline-variant dark:border-[#27313e] p-lg rounded-xl shadow-sm">
+<h2 class="font-headline-md text-headline-md mb-md flex items-center gap-sm text-on-surface dark:text-[#eaf1ff]">
+<span class="material-symbols-outlined text-primary dark:text-[#c3c0ff]">info</span>
+                            Informasi Proyek
+                        </h2>
+<div class="space-y-md">
+<div class="flex flex-col gap-xs">
+<label class="font-label-md text-label-md text-on-surface-variant dark:text-[#b0b8c8]">Nama Proyek</label>
+<input class="w-full rounded-lg border-outline-variant dark:border-[#3d4a5c] dark:bg-[#27313e] dark:text-[#eaf1ff] focus:border-primary focus:ring-4 focus:ring-primary/10" id="projectNameInput" placeholder="cth: Jasa Desain UI/UX Mobile App" type="text">
+</div>
+<div class="grid grid-cols-2 gap-md">
+<div class="flex flex-col gap-xs">
+<label class="font-label-md text-label-md text-on-surface-variant dark:text-[#b0b8c8]">Tanggal Mulai</label>
+<input class="w-full rounded-lg border-outline-variant dark:border-[#3d4a5c] dark:bg-[#27313e] dark:text-[#eaf1ff] focus:border-primary focus:ring-4 focus:ring-primary/10" id="startDateInput" type="date">
+</div>
+<div class="flex flex-col gap-xs">
+<label class="font-label-md text-label-md text-on-surface-variant dark:text-[#b0b8c8]">Estimasi Selesai</label>
+<input class="w-full rounded-lg border-outline-variant dark:border-[#3d4a5c] dark:bg-[#27313e] dark:text-[#eaf1ff] focus:border-primary focus:ring-4 focus:ring-primary/10" id="endDateInput" type="date">
+</div>
+</div>
+</div>
+</div>
+<!-- Phases Section -->
+<div class="bg-surface-container-lowest dark:bg-[#1a2332] border border-outline-variant dark:border-[#27313e] p-lg rounded-xl shadow-sm">
+<div class="flex justify-between items-center mb-md">
+<h2 class="font-headline-md text-headline-md flex items-center gap-sm text-on-surface dark:text-[#eaf1ff]">
+<span class="material-symbols-outlined text-primary dark:text-[#c3c0ff]">list_alt</span>
+                                Fase Kerja
+                            </h2>
+</div>
+<div class="space-y-md" id="phaseContainer">
+<!-- Phase Item Template -->
+<div class="phase-item p-md border border-outline-variant dark:border-[#3d4a5c] rounded-lg bg-surface dark:bg-[#27313e] relative group">
+<button class="absolute -top-2 -right-2 bg-error text-on-error w-6 h-6 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity" onclick="removePhase(this)" type="button">
+<span class="material-symbols-outlined text-[16px]">close</span>
+</button>
+<div class="grid grid-cols-1 gap-md">
+<input class="phase-name-input w-full rounded-lg border-outline-variant dark:border-[#3d4a5c] dark:bg-[#1a2332] dark:text-[#eaf1ff] focus:border-primary text-body-md" placeholder="Nama Fase (cth: Research &amp; Briefing)" type="text">
+<textarea class="phase-desc-input w-full rounded-lg border-outline-variant dark:border-[#3d4a5c] dark:bg-[#1a2332] dark:text-[#eaf1ff] focus:border-primary text-body-md h-20 resize-none" placeholder="Deskripsi singkat kegiatan..."></textarea>
+<div class="grid grid-cols-2 gap-md">
+<input class="phase-time-input w-full rounded-lg border-outline-variant dark:border-[#3d4a5c] dark:bg-[#1a2332] dark:text-[#eaf1ff] focus:border-primary text-body-md" placeholder="Waktu (cth: Minggu 1)" type="text">
+<select class="phase-status-input w-full rounded-lg border-outline-variant dark:border-[#3d4a5c] dark:bg-[#1a2332] dark:text-[#eaf1ff] focus:border-primary text-body-md">
+<option value="Selesai">Selesai</option>
+<option selected="" value="Dalam Proses">Dalam Proses</option>
+<option value="Belum Mulai">Belum Mulai</option>
+</select>
+</div>
+</div>
+</div>
+<div class="phase-item p-md border border-outline-variant rounded-lg bg-surface relative group transition-all hover:shadow-md">
+                <button type="button" onclick="removePhase(this)" class="absolute -top-2 -right-2 bg-error text-on-error w-6 h-6 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                    <span class="material-symbols-outlined text-[16px]">close</span>
+                </button>
+                <div class="grid grid-cols-1 gap-md">
+                    <input type="text" placeholder="Nama Fase (cth: Research &amp; Briefing)" class="phase-name-input w-full rounded-lg border-outline-variant focus:border-primary text-body-md" oninput="updatePreview()">
+                    <textarea placeholder="Deskripsi singkat kegiatan..." class="phase-desc-input w-full rounded-lg border-outline-variant focus:border-primary text-body-md h-20 resize-none" oninput="updatePreview()"></textarea>
+                    <div class="grid grid-cols-2 gap-md">
+                        <input type="text" placeholder="Waktu (cth: Minggu 1)" class="phase-time-input w-full rounded-lg border-outline-variant focus:border-primary text-body-md" oninput="updatePreview()">
+                        <select class="phase-status-input w-full rounded-lg border-outline-variant focus:border-primary text-body-md" onchange="updatePreview()">
+                            <option value="Selesai">Selesai</option>
+                            <option value="Dalam Proses" selected="">Dalam Proses</option>
+                            <option value="Belum Mulai">Belum Mulai</option>
+                        </select>
+                    </div>
+                </div>
+            </div><div class="phase-item p-md border border-outline-variant rounded-lg bg-surface relative group transition-all hover:shadow-md">
+                <button type="button" onclick="removePhase(this)" class="absolute -top-2 -right-2 bg-error text-on-error w-6 h-6 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                    <span class="material-symbols-outlined text-[16px]">close</span>
+                </button>
+                <div class="grid grid-cols-1 gap-md">
+                    <input type="text" placeholder="Nama Fase (cth: Research &amp; Briefing)" class="phase-name-input w-full rounded-lg border-outline-variant focus:border-primary text-body-md" oninput="updatePreview()">
+                    <textarea placeholder="Deskripsi singkat kegiatan..." class="phase-desc-input w-full rounded-lg border-outline-variant focus:border-primary text-body-md h-20 resize-none" oninput="updatePreview()"></textarea>
+                    <div class="grid grid-cols-2 gap-md">
+                        <input type="text" placeholder="Waktu (cth: Minggu 1)" class="phase-time-input w-full rounded-lg border-outline-variant focus:border-primary text-body-md" oninput="updatePreview()">
+                        <select class="phase-status-input w-full rounded-lg border-outline-variant focus:border-primary text-body-md" onchange="updatePreview()">
+                            <option value="Selesai">Selesai</option>
+                            <option value="Dalam Proses" selected="">Dalam Proses</option>
+                            <option value="Belum Mulai">Belum Mulai</option>
+                        </select>
+                    </div>
+                </div>
+            </div></div>
+<button class="mt-md w-full py-md border-2 border-dashed border-primary/30 dark:border-[#c3c0ff]/30 text-primary dark:text-[#c3c0ff] font-label-md text-label-md rounded-lg hover:bg-primary/5 dark:hover:bg-[#c3c0ff]/10 transition-colors flex items-center justify-center gap-sm" id="addPhaseBtn" type="button">
+<span class="material-symbols-outlined">add</span>
+                            Tambah Fase Baru
+                        </button>
+</div>
+<div class="flex items-center gap-md pt-md">
+<button class="flex-1 py-md border border-primary dark:border-[#c3c0ff] text-primary dark:text-[#c3c0ff] rounded-lg font-label-md text-label-md hover:bg-primary/5 dark:hover:bg-[#c3c0ff]/10 transition-all" type="button">Simpan Draft</button>
+<button class="flex-[2] py-md bg-primary dark:bg-[#4f46e5] text-on-primary rounded-lg font-label-md text-label-md shadow-lg shadow-primary/20 hover:opacity-90 transition-all" type="button">Unduh PDF</button>
+</div>
+</form>
+</section>
+<!-- Right: Document Preview Section -->
+<section class="lg:col-span-7 sticky top-24 self-start">
+<div class="flex justify-between items-center mb-md px-md">
+<span class="font-label-md text-label-md text-on-surface-variant flex items-center gap-xs">
+<span class="material-symbols-outlined text-[16px]">visibility</span>
+                        Live Preview
+                    </span>
+<div class="flex gap-sm">
+<button class="p-xs hover:bg-surface-container-high rounded transition-colors"><span class="material-symbols-outlined">zoom_in</span></button>
+<button class="p-xs hover:bg-surface-container-high rounded transition-colors"><span class="material-symbols-outlined">zoom_out</span></button>
+</div>
+</div>
+<!-- Document Paper -->
+<div class="document-canvas bg-white p-xl rounded-sm mx-auto overflow-hidden" id="documentCanvas">
+<div class="max-w-[600px] mx-auto font-serif">
+<div class="flex justify-between items-start border-b-2 border-primary/20 pb-lg mb-xl">
+<div>
+<h2 class="text-[28px] font-bold text-on-surface mb-xs" id="prevProjectName">Timeline Proyek</h2>
+<p class="text-on-surface-variant not-italic font-body-md italic" id="prevDates">Periode Kerja Belum Ditentukan</p>
+</div>
+<div class="text-right">
+<p class="font-bold text-primary text-[14px] uppercase tracking-widest">freelance_docs</p>
+<p class="text-[12px] text-on-surface-variant">Dokumen #TL-2024-001</p>
+</div>
+</div>
+<div class="space-y-xl" id="previewPhaseList">
+                    <div class="timeline-item relative pl-md timeline-line">
+                        <div class="flex items-start gap-md">
+                            <div class="mt-1 bg-white relative z-10">
+                                <span class="material-symbols-outlined text-secondary text-[22px]">pending</span>
+                            </div>
+                            <div class="flex-1">
+                                <div class="flex justify-between items-baseline mb-xs">
+                                    <h3 class="text-[18px] font-bold text-on-surface">Fase Baru</h3>
+                                    <span class="text-[13px] font-bold text-primary/80 italic">Minggu 1</span>
+                                </div>
+                                <p class="text-[14px] text-on-surface-variant leading-relaxed">Deskripsi belum ditambahkan.</p>
+                                <p class="text-[11px] font-bold uppercase tracking-wider mt-sm text-secondary">Dalam Proses</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item relative pl-md timeline-line">
+                        <div class="flex items-start gap-md">
+                            <div class="mt-1 bg-white relative z-10">
+                                <span class="material-symbols-outlined text-secondary text-[22px]">pending</span>
+                            </div>
+                            <div class="flex-1">
+                                <div class="flex justify-between items-baseline mb-xs">
+                                    <h3 class="text-[18px] font-bold text-on-surface">Fase Baru</h3>
+                                    <span class="text-[13px] font-bold text-primary/80 italic">Minggu 2</span>
+                                </div>
+                                <p class="text-[14px] text-on-surface-variant leading-relaxed">Deskripsi belum ditambahkan.</p>
+                                <p class="text-[11px] font-bold uppercase tracking-wider mt-sm text-secondary">Dalam Proses</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item relative pl-md timeline-line">
+                        <div class="flex items-start gap-md">
+                            <div class="mt-1 bg-white relative z-10">
+                                <span class="material-symbols-outlined text-secondary text-[22px]">pending</span>
+                            </div>
+                            <div class="flex-1">
+                                <div class="flex justify-between items-baseline mb-xs">
+                                    <h3 class="text-[18px] font-bold text-on-surface">Fase Baru</h3>
+                                    <span class="text-[13px] font-bold text-primary/80 italic">Minggu 3</span>
+                                </div>
+                                <p class="text-[14px] text-on-surface-variant leading-relaxed">Deskripsi belum ditambahkan.</p>
+                                <p class="text-[11px] font-bold uppercase tracking-wider mt-sm text-secondary">Dalam Proses</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+<div class="mt-section pt-xl border-t border-outline-variant/30 grid grid-cols-2 gap-xl">
+<div>
+<p class="text-[14px] font-bold mb-md">Pemberi Kerja</p>
+<div class="h-16 w-32 border-b border-on-surface/20"></div>
+<p class="text-[12px] text-on-surface-variant mt-sm">(Tanda Tangan)</p>
+</div>
+<div>
+<p class="text-[14px] font-bold mb-md">Freelancer</p>
+<div class="h-16 w-32 border-b border-on-surface/20"></div>
+<p class="text-[12px] text-on-surface-variant mt-sm">(Tanda Tangan)</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+</div>
+</main>
+<!-- Footer -->
+<footer class="bg-surface-container-lowest dark:bg-[#1a2332] border-t border-outline-variant dark:border-[#27313e] mt-section">
+<div class="flex flex-col md:flex-row justify-between items-center w-full px-lg py-xl max-w-container-max mx-auto gap-md">
+<div class="flex flex-col items-center md:items-start gap-xs">
+<span class="font-headline-md text-headline-md font-bold text-primary dark:text-[#c3c0ff]">FreelanceDocs</span>
+<p class="font-body-md text-body-md text-on-surface-variant dark:text-[#b0b8c8]">@ 2026 Created By Trisno Sanjaya</p>
+</div>
+<div class="flex gap-lg">
+<a class="font-label-md text-label-md text-on-surface-variant dark:text-[#b0b8c8] hover:text-primary dark:hover:text-[#c3c0ff] transition-colors" href="#">Kebijakan Privasi</a>
+<a class="font-label-md text-label-md text-on-surface-variant dark:text-[#b0b8c8] hover:text-primary dark:hover:text-[#c3c0ff] transition-colors" href="#">Syarat &amp; Ketentuan</a>
+<a class="font-label-md text-label-md text-on-surface-variant dark:text-[#b0b8c8] hover:text-primary dark:hover:text-[#c3c0ff] transition-colors" href="#">Kontak Kami</a>
+</div>
+</div>
+</footer>
+<script>
+        const phaseContainer = document.getElementById('phaseContainer');
+        const addPhaseBtn = document.getElementById('addPhaseBtn');
+        const timelineForm = document.getElementById('timelineForm');
+        const previewPhaseList = document.getElementById('previewPhaseList');
+        const prevProjectName = document.getElementById('prevProjectName');
+        const prevDates = document.getElementById('prevDates');
+
+        // Initial Phase
+        addPhase();
+
+        addPhaseBtn.addEventListener('click', () => addPhase());
+
+        function addPhase() {
+            const phaseDiv = document.createElement('div');
+            phaseDiv.className = "phase-item p-md border border-outline-variant rounded-lg bg-surface relative group transition-all hover:shadow-md";
+            phaseDiv.innerHTML = `
+                <button type="button" onclick="removePhase(this)" class="absolute -top-2 -right-2 bg-error text-on-error w-6 h-6 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                    <span class="material-symbols-outlined text-[16px]">close</span>
+                </button>
+                <div class="grid grid-cols-1 gap-md">
+                    <input type="text" placeholder="Nama Fase (cth: Research & Briefing)" class="phase-name-input w-full rounded-lg border-outline-variant focus:border-primary text-body-md" oninput="updatePreview()">
+                    <textarea placeholder="Deskripsi singkat kegiatan..." class="phase-desc-input w-full rounded-lg border-outline-variant focus:border-primary text-body-md h-20 resize-none" oninput="updatePreview()"></textarea>
+                    <div class="grid grid-cols-2 gap-md">
+                        <input type="text" placeholder="Waktu (cth: Minggu 1)" class="phase-time-input w-full rounded-lg border-outline-variant focus:border-primary text-body-md" oninput="updatePreview()">
+                        <select class="phase-status-input w-full rounded-lg border-outline-variant focus:border-primary text-body-md" onchange="updatePreview()">
+                            <option value="Selesai">Selesai</option>
+                            <option value="Dalam Proses" selected>Dalam Proses</option>
+                            <option value="Belum Mulai">Belum Mulai</option>
+                        </select>
+                    </div>
+                </div>
+            `;
+            phaseContainer.appendChild(phaseDiv);
+            updatePreview();
+        }
+
+        window.removePhase = function(btn) {
+            btn.parentElement.remove();
+            updatePreview();
+        }
+
+        document.getElementById('projectNameInput').addEventListener('input', updatePreview);
+        document.getElementById('startDateInput').addEventListener('change', updatePreview);
+        document.getElementById('endDateInput').addEventListener('change', updatePreview);
+
+        function updatePreview() {
+            // Project Header
+            const name = document.getElementById('projectNameInput').value || "Timeline Proyek";
+            const start = document.getElementById('startDateInput').value;
+            const end = document.getElementById('endDateInput').value;
+
+            prevProjectName.textContent = name;
+            prevDates.textContent = (start || end) ? `${start} sampai ${end}` : "Periode Kerja Belum Ditentukan";
+
+            // Phases
+            const phaseItems = document.querySelectorAll('.phase-item');
+            if (phaseItems.length === 0) {
+                previewPhaseList.innerHTML = `
+                    <div class="text-center py-20">
+                        <span class="material-symbols-outlined text-outline-variant text-[64px] block mb-md">pending_actions</span>
+                        <p class="text-on-surface-variant italic">Klik tombol "Tambah Fase Baru" untuk memulai.</p>
+                    </div>`;
+                return;
+            }
+
+            let html = '';
+            phaseItems.forEach((item, index) => {
+                const pName = item.querySelector('.phase-name-input').value || "Fase Baru";
+                const pDesc = item.querySelector('.phase-desc-input').value || "Deskripsi belum ditambahkan.";
+                const pTime = item.querySelector('.phase-time-input').value || `Minggu ${index + 1}`;
+                const pStatus = item.querySelector('.phase-status-input').value;
+
+                let statusColor = 'text-on-surface-variant';
+                let icon = 'radio_button_unchecked';
+                if (pStatus === 'Selesai') {
+                    statusColor = 'text-primary';
+                    icon = 'check_circle';
+                } else if (pStatus === 'Dalam Proses') {
+                    statusColor = 'text-secondary';
+                    icon = 'pending';
+                }
+
+                html += `
+                    <div class="timeline-item relative pl-md timeline-line">
+                        <div class="flex items-start gap-md">
+                            <div class="mt-1 bg-white relative z-10">
+                                <span class="material-symbols-outlined ${statusColor} text-[22px]">${icon}</span>
+                            </div>
+                            <div class="flex-1">
+                                <div class="flex justify-between items-baseline mb-xs">
+                                    <h3 class="text-[18px] font-bold text-on-surface">${pName}</h3>
+                                    <span class="text-[13px] font-bold text-primary/80 italic">${pTime}</span>
+                                </div>
+                                <p class="text-[14px] text-on-surface-variant leading-relaxed">${pDesc}</p>
+                                <p class="text-[11px] font-bold uppercase tracking-wider mt-sm ${statusColor}">${pStatus}</p>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+            previewPhaseList.innerHTML = html;
+        }
+    </script>
+
+
+
+
+</body></html>
+
+<!-- Kontrak Generator - freelance_docs -->
+<!DOCTYPE html><html class="dark" lang="id" style=""><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>freelance_docs - Buat Kontrak Profesional</title>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<!-- Google Fonts: Inter & Noto Serif for the Document -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=Noto+Serif:ital,wght@0,400;0,700;1,400&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "inverse-primary": "#c3c0ff",
+                        "surface-dim": "#d1dbec",
+                        "primary": "#3525cd",
+                        "error-container": "#ffdad6",
+                        "surface-container": "#e5eeff",
+                        "secondary-fixed": "#eaddff",
+                        "surface-tint": "#4d44e3",
+                        "on-error-container": "#93000a",
+                        "on-primary-container": "#dad7ff",
+                        "outline-variant": "#c7c4d8",
+                        "on-tertiary": "#ffffff",
+                        "on-tertiary-fixed-variant": "#7b2f00",
+                        "secondary-fixed-dim": "#d2bbff",
+                        "secondary": "#712ae2",
+                        "surface-bright": "#f8f9ff",
+                        "on-primary": "#ffffff",
+                        "surface-container-highest": "#d9e3f4",
+                        "primary-container": "#4f46e5",
+                        "on-secondary": "#ffffff",
+                        "on-primary-fixed-variant": "#3323cc",
+                        "tertiary-fixed": "#ffdbcc",
+                        "tertiary-container": "#a44100",
+                        "outline": "#777587",
+                        "surface": "#f8f9ff",
+                        "primary-fixed-dim": "#c3c0ff",
+                        "tertiary": "#7e3000",
+                        "on-background": "#121c28",
+                        "surface-container-low": "#eef4ff",
+                        "on-surface": "#121c28",
+                        "on-secondary-fixed-variant": "#5a00c6",
+                        "surface-container-high": "#dfe9fa",
+                        "on-tertiary-fixed": "#351000",
+                        "on-secondary-container": "#fffbff",
+                        "tertiary-fixed-dim": "#ffb695",
+                        "on-primary-fixed": "#0f0069",
+                        "on-surface-variant": "#464555",
+                        "on-error": "#ffffff",
+                        "surface-container-lowest": "#ffffff",
+                        "primary-fixed": "#e2dfff",
+                        "on-tertiary-container": "#ffd2be",
+                        "inverse-on-surface": "#eaf1ff",
+                        "secondary-container": "#8a4cfc",
+                        "background": "#f8f9ff",
+                        "surface-variant": "#d9e3f4",
+                        "on-secondary-fixed": "#25005a",
+                        "inverse-surface": "#27313e",
+                        "error": "#ba1a1a"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "xs": "4px",
+                        "section": "80px",
+                        "base": "4px",
+                        "xl": "40px",
+                        "sm": "8px",
+                        "container-max": "1280px",
+                        "lg": "24px",
+                        "gutter": "24px",
+                        "md": "16px"
+                    },
+                    "fontFamily": {
+                        "headline-lg": ["Inter", "sans-serif"],
+                        "body-lg": ["Inter", "sans-serif"],
+                        "label-md": ["Inter", "sans-serif"],
+                        "caption": ["Inter", "sans-serif"],
+                        "display-lg": ["Inter", "sans-serif"],
+                        "body-md": ["Inter", "sans-serif"],
+                        "headline-md": ["Inter", "sans-serif"],
+                        "document": ["Noto Serif", "serif"]
+                    },
+                    "fontSize": {
+                        "headline-lg-mobile": ["24px", {"lineHeight": "1.3", "fontWeight": "700"}],
+                        "headline-lg": ["32px", {"lineHeight": "1.3", "fontWeight": "700"}],
+                        "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                        "label-md": ["14px", {"lineHeight": "1.4", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                        "caption": ["12px", {"lineHeight": "1.4", "fontWeight": "400"}],
+                        "display-lg": ["48px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "body-md": ["16px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                        "headline-md": ["24px", {"lineHeight": "1.4", "fontWeight": "600"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .document-canvas {
+            min-height: 842px; /* A4 aspect ratio approximation */
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            position: relative;
+            overflow: hidden;
+        }
+        .watermark {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-45deg);
+            font-size: 8rem;
+            font-weight: 900;
+            opacity: 0.03;
+            pointer-events: none;
+            white-space: nowrap;
+            text-transform: uppercase;
+        }
+        /* Custom scrollbar for form area */
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #e5e7eb;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body class="bg-background dark:bg-[#121c28] font-body-md text-on-background dark:text-[#eaf1ff] antialiased overflow-hidden">
+<!-- Top Navigation Bar -->
+<header class="bg-surface dark:bg-[#1a2332] shadow-sm sticky top-0 z-50 border-b border-transparent dark:border-[#27313e]">
+<div class="flex justify-between items-center w-full px-lg md:px-xl py-md max-w-container-max mx-auto">
+<div class="flex items-center gap-md">
+<span class="font-headline-md text-headline-md font-bold text-primary dark:text-[#c3c0ff]">FreelanceDocs</span>
+<nav class="hidden md:flex items-center gap-lg ml-xl">
+<a class="text-on-surface-variant dark:text-[#b0b8c8] hover:text-primary dark:hover:text-[#c3c0ff] transition-colors font-label-md text-label-md" href="#">Home</a>
+<a class="text-primary dark:text-[#c3c0ff] border-b-2 border-primary dark:border-[#c3c0ff] pb-1 font-semibold font-label-md text-label-md" href="#">Dokumen</a>
+<a class="text-on-surface-variant dark:text-[#b0b8c8] hover:text-primary dark:hover:text-[#c3c0ff] transition-colors font-label-md text-label-md" href="#">Bantuan</a>
+</nav>
+</div>
+<div class="flex items-center gap-md">
+<button class="bg-primary-container dark:bg-[#4f46e5] text-white px-lg py-sm rounded-xl font-label-md text-label-md hover:opacity-90 active:scale-95 transition-all">
+                    Mulai Buat
+                </button>
+</div>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="h-[calc(100vh-72px)] flex flex-col md:flex-row overflow-hidden">
+<!-- Left Column: Form Section -->
+<section class="w-full md:w-[45%] lg:w-[40%] bg-surface dark:bg-[#1a2332] border-r border-outline-variant dark:border-[#27313e] flex flex-col h-full">
+<!-- Breadcrumbs & Stepper Header -->
+<div class="px-lg py-md border-b border-outline-variant dark:border-[#27313e] bg-surface-bright dark:bg-[#1f2937]">
+<div class="flex items-center gap-xs text-caption font-caption text-on-surface-variant dark:text-[#b0b8c8] mb-md">
+<span class="">Home</span>
+<span class="material-symbols-outlined text-[14px]">chevron_right</span>
+<span class="text-primary dark:text-[#c3c0ff] font-medium">Kontrak</span>
+</div>
+<!-- Stepper -->
+<div class="flex items-center justify-between gap-sm">
+<div class="flex flex-col items-center flex-1">
+<div class="w-8 h-8 rounded-full bg-primary dark:bg-[#4f46e5] text-white flex items-center justify-center font-bold text-sm mb-xs">1</div>
+<span class="text-caption font-medium text-primary dark:text-[#c3c0ff]">Data Pihak</span>
+</div>
+<div class="h-[2px] bg-outline-variant dark:bg-[#3d4a5c] flex-1 mb-6"></div>
+<div class="flex flex-col items-center flex-1">
+<div class="w-8 h-8 rounded-full bg-surface-container-highest dark:bg-[#3d4a5c] text-on-surface-variant dark:text-[#b0b8c8] flex items-center justify-center font-bold text-sm mb-xs">2</div>
+<span class="text-caption font-medium text-on-surface-variant dark:text-[#b0b8c8]">Detail Proyek</span>
+</div>
+<div class="h-[2px] bg-outline-variant dark:bg-[#3d4a5c] flex-1 mb-6"></div>
+<div class="flex flex-col items-center flex-1">
+<div class="w-8 h-8 rounded-full bg-surface-container-highest dark:bg-[#3d4a5c] text-on-surface-variant dark:text-[#b0b8c8] flex items-center justify-center font-bold text-sm mb-xs">3</div>
+<span class="text-caption font-medium text-on-surface-variant dark:text-[#b0b8c8]">Review</span>
+</div>
+</div>
+</div>
+<!-- Scrollable Form Container -->
+<div class="flex-1 overflow-y-auto custom-scrollbar p-lg space-y-xl">
+<div>
+<h1 class="font-headline-md text-headline-md text-on-background dark:text-[#eaf1ff] mb-sm">Mari buat dokumen Anda</h1>
+<p class="text-on-surface-variant dark:text-[#b0b8c8]">Lengkapi detail di bawah untuk menghasilkan draf kontrak yang sah secara hukum.</p>
+</div>
+<!-- Section: Identitas Pihak -->
+<div class="space-y-md">
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-primary dark:text-[#c3c0ff]">person_outline</span>
+<h2 class="font-headline-sm font-bold text-lg text-on-surface dark:text-[#eaf1ff]">Identitas Pihak</h2>
+</div>
+<div class="grid grid-cols-1 gap-md">
+<div class="space-y-xs">
+<label class="font-label-md text-label-md text-on-surface-variant dark:text-[#b0b8c8]">Nama Lengkap Freelancer</label>
+<input class="w-full px-md py-sm rounded-lg border border-outline-variant dark:border-[#3d4a5c] dark:bg-[#27313e] dark:text-[#eaf1ff] focus:ring-2 focus:ring-primary-container focus:border-primary outline-none transition-all" id="input-freelancer" placeholder="cth: Budi Santoso" type="text">
+</div>
+<div class="space-y-xs">
+<label class="font-label-md text-label-md text-on-surface-variant dark:text-[#b0b8c8]">Nama Lengkap Klien / Perusahaan</label>
+<input class="w-full px-md py-sm rounded-lg border border-outline-variant dark:border-[#3d4a5c] dark:bg-[#27313e] dark:text-[#eaf1ff] focus:ring-2 focus:ring-primary-container focus:border-primary outline-none transition-all" id="input-client" placeholder="cth: PT Maju Jaya" type="text">
+</div>
+</div>
+</div>
+<!-- Section: Lingkup Pekerjaan -->
+<div class="space-y-md">
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-primary">work_outline</span>
+<h2 class="font-headline-sm font-bold text-lg">Lingkup Pekerjaan</h2>
+</div>
+<div class="space-y-md">
+<div class="space-y-xs">
+<label class="font-label-md text-label-md text-on-surface-variant">Judul Proyek</label>
+<input class="w-full px-md py-sm rounded-lg border border-outline-variant focus:ring-2 focus:ring-primary-container focus:border-primary outline-none transition-all" id="input-project" placeholder="cth: Desain UI/UX Mobile App" type="text">
+</div>
+<div class="space-y-xs">
+<label class="font-label-md text-label-md text-on-surface-variant">Deskripsi Detail</label>
+<textarea class="w-full px-md py-sm rounded-lg border border-outline-variant focus:ring-2 focus:ring-primary-container focus:border-primary outline-none transition-all" id="input-description" placeholder="Jelaskan apa yang akan Anda kerjakan secara mendalam..." rows="4"></textarea>
+</div>
+</div>
+</div>
+<!-- Section: Durasi & Pembayaran -->
+<div class="space-y-md">
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-primary">payments</span>
+<h2 class="font-headline-sm font-bold text-lg">Durasi &amp; Pembayaran</h2>
+</div>
+<div class="grid grid-cols-2 gap-md">
+<div class="space-y-xs">
+<label class="font-label-md text-label-md text-on-surface-variant">Nilai Kontrak (Rp)</label>
+<input class="w-full px-md py-sm rounded-lg border border-outline-variant focus:ring-2 focus:ring-primary-container focus:border-primary outline-none transition-all" id="input-amount" placeholder="cth: 5.000.000" type="text">
+</div>
+<div class="space-y-xs">
+<label class="font-label-md text-label-md text-on-surface-variant">Tenggat Waktu</label>
+<input class="w-full px-md py-sm rounded-lg border border-outline-variant focus:ring-2 focus:ring-primary-container focus:border-primary outline-none transition-all" id="input-deadline" type="date">
+</div>
+</div>
+</div>
+<!-- Section: Klausul Tambahan -->
+<div class="space-y-md">
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-primary">gavel</span>
+<h2 class="font-headline-sm font-bold text-lg">Klausul Tambahan</h2>
+</div>
+<div class="space-y-sm">
+<label class="flex items-center gap-md p-md rounded-lg border border-outline-variant hover:bg-surface-container-low cursor-pointer transition-all">
+<input checked="" class="w-5 h-5 text-primary rounded border-outline-variant focus:ring-primary" type="checkbox">
+<div class="flex flex-col">
+<span class="font-medium text-body-md">Hak Cipta (Copyright)</span>
+<span class="text-caption text-on-surface-variant">Penyerahan penuh hak cipta setelah pelunasan.</span>
+</div>
+</label>
+<label class="flex items-center gap-md p-md rounded-lg border border-outline-variant hover:bg-surface-container-low cursor-pointer transition-all">
+<input checked="" class="w-5 h-5 text-primary rounded border-outline-variant focus:ring-primary" type="checkbox">
+<div class="flex flex-col">
+<span class="font-medium text-body-md">Kerahasiaan (Confidentiality)</span>
+<span class="text-caption text-on-surface-variant">Kedua pihak setuju untuk menjaga data sensitif.</span>
+</div>
+</label>
+<label class="flex items-center gap-md p-md rounded-lg border border-outline-variant hover:bg-surface-container-low cursor-pointer transition-all">
+<input class="w-5 h-5 text-primary rounded border-outline-variant focus:ring-primary" type="checkbox">
+<div class="flex flex-col">
+<span class="font-medium text-body-md">Revisi Terbatas</span>
+<span class="text-caption text-on-surface-variant">Maksimal 3 kali revisi minor.</span>
+</div>
+</label>
+</div>
+</div>
+</div>
+<!-- Footer Action -->
+<div class="p-lg bg-surface border-t border-outline-variant flex justify-between items-center">
+<button class="text-primary font-medium hover:underline">Simpan Draf</button>
+<button class="bg-primary text-white px-xl py-md rounded-xl font-bold shadow-lg hover:shadow-xl hover:translate-y-[-2px] transition-all">
+                    Selanjutnya
+                </button>
+</div>
+</section>
+<!-- Right Column: Document Preview Section -->
+<section class="flex-1 bg-surface-dim p-lg md:p-xl overflow-y-auto custom-scrollbar flex flex-col items-center">
+<div class="w-full max-w-[800px] mb-md flex justify-between items-center text-on-surface-variant">
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined">visibility</span>
+<span class="font-label-md text-label-md uppercase tracking-widest">Pratinjau Real-time</span>
+</div>
+<div class="flex items-center gap-md">
+<button class="p-sm rounded-full hover:bg-white/50 transition-colors"><span class="material-symbols-outlined">zoom_in</span></button>
+<button class="p-sm rounded-full hover:bg-white/50 transition-colors"><span class="material-symbols-outlined">file_download</span></button>
+<button class="p-sm rounded-full hover:bg-white/50 transition-colors"><span class="material-symbols-outlined">print</span></button>
+</div>
+</div>
+<!-- A4 Document Page -->
+<div class="document-canvas w-full max-w-[800px] bg-white p-20 font-document text-[#222]" id="document-preview">
+<div class="watermark">DRAFT KONTRAK</div>
+<header class="text-center mb-16">
+<h1 class="text-2xl font-bold uppercase underline decoration-2 underline-offset-4 mb-2">Perjanjian Kerja Sama Jasa</h1>
+<p class="text-sm italic">Nomor: FDX/{{new Date().getFullYear()}}/001</p>
+</header>
+<div class="space-y-8">
+<!-- Identity Section -->
+<section>
+<p class="mb-4">Perjanjian ini dibuat pada tanggal <span class="border-b border-dotted border-black px-4" id="view-date">25 Juni 2026</span>, oleh dan antara:</p>
+<div class="space-y-2 ml-4">
+<p class=""><strong>Pihak Pertama:</strong> <span class="border-b border-dotted border-black px-4 min-w-[200px] inline-block" id="view-freelancer">...</span> (Selanjutnya disebut sebagai "Penyedia Jasa")</p>
+<p class=""><strong>Pihak Kedua:</strong> <span class="border-b border-dotted border-black px-4 min-w-[200px] inline-block" id="view-client">...</span> (Selanjutnya disebut sebagai "Klien")</p>
+</div>
+</section>
+<!-- Scope Section -->
+<section>
+<h2 class="font-bold mb-2">Pasal 1: Lingkup Pekerjaan</h2>
+<p class="">Penyedia Jasa setuju untuk melaksanakan pekerjaan berupa <strong id="view-project">...</strong> dengan rincian sebagai berikut:</p>
+<p class="mt-2 text-sm leading-relaxed italic" id="view-description">... Deskripsi pekerjaan akan muncul di sini ...</p>
+</section>
+<!-- Payment Section -->
+<section>
+<h2 class="font-bold mb-2">Pasal 2: Nilai Kontrak &amp; Pembayaran</h2>
+<p class="">Klien menyetujui total nilai kontrak sebesar <strong>Rp <span id="view-amount" class="">0</span></strong> yang akan diselesaikan paling lambat pada tanggal <strong><span id="view-deadline" class="">...</span></strong>.</p>
+</section>
+<!-- Generic Clauses -->
+<section>
+<h2 class="font-bold mb-2">Pasal 3: Ketentuan Lainnya</h2>
+<ul class="list-decimal ml-6 space-y-1 text-sm">
+<li class="">Hak Cipta atas hasil karya akan menjadi milik Klien sepenuhnya setelah pelunasan dilakukan.</li>
+<li class="">Kedua belah pihak wajib menjaga kerahasiaan data yang dipertukarkan selama masa kerja.</li>
+<li class="">Perselisihan yang muncul akan diselesaikan secara musyawarah mufakat.</li>
+</ul>
+</section>
+<!-- Signature Section -->
+<section class="pt-16 flex justify-between items-start">
+<div class="text-center w-1/3">
+<p class="mb-20">Pihak Pertama,</p>
+<div class="border-b border-black w-full"></div>
+<p class="mt-2" id="view-freelancer-sig">...</p>
+</div>
+<div class="text-center w-1/3">
+<p class="mb-20">Pihak Kedua,</p>
+<div class="border-b border-black w-full"></div>
+<p class="mt-2" id="view-client-sig">...</p>
+</div>
+</section>
+</div>
+</div>
+<footer class="mt-xl text-center w-full max-w-[800px]">
+<p class="text-caption font-caption text-on-surface-variant">@ 2026 Created By Trisno Sanjaya</p>
+<div class="flex justify-center gap-lg mt-md">
+<a class="text-caption text-on-surface-variant hover:text-primary transition-colors" href="#">Kebijakan Privasi</a>
+<a class="text-caption text-on-surface-variant hover:text-primary transition-colors" href="#">Syarat &amp; Ketentuan</a>
+<a class="text-caption text-on-surface-variant hover:text-primary transition-colors" href="#">Kontak Kami</a>
+</div>
+</footer>
+</section>
+</main>
+<script>
+        // Real-time Update Logic
+        const inputs = {
+            freelancer: document.getElementById('input-freelancer'),
+            client: document.getElementById('input-client'),
+            project: document.getElementById('input-project'),
+            description: document.getElementById('input-description'),
+            amount: document.getElementById('input-amount'),
+            deadline: document.getElementById('input-deadline')
+        };
+
+        const views = {
+            freelancer: document.getElementById('view-freelancer'),
+            freelancerSig: document.getElementById('view-freelancer-sig'),
+            client: document.getElementById('view-client'),
+            clientSig: document.getElementById('view-client-sig'),
+            project: document.getElementById('view-project'),
+            description: document.getElementById('view-description'),
+            amount: document.getElementById('view-amount'),
+            deadline: document.getElementById('view-deadline'),
+            date: document.getElementById('view-date')
+        };
+
+        // Initialize today's date
+        const today = new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
+        views.date.textContent = today;
+
+        function updateView() {
+            views.freelancer.textContent = inputs.freelancer.value || '...';
+            views.freelancerSig.textContent = inputs.freelancer.value || '...';
+            views.client.textContent = inputs.client.value || '...';
+            views.clientSig.textContent = inputs.client.value || '...';
+            views.project.textContent = inputs.project.value || '...';
+            views.description.textContent = inputs.description.value || 'Deskripsi pekerjaan akan muncul di sini...';
+            views.amount.textContent = inputs.amount.value || '0';
+
+            if(inputs.deadline.value) {
+                const d = new Date(inputs.deadline.value);
+                views.deadline.textContent = d.toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
+            } else {
+                views.deadline.textContent = '...';
+            }
+        }
+
+        // Add event listeners to all inputs
+        Object.values(inputs).forEach(input => {
+            input.addEventListener('input', updateView);
+        });
+
+        // Small interaction for buttons
+        document.querySelectorAll('button').forEach(btn => {
+            btn.addEventListener('click', function() {
+                this.classList.add('scale-95', 'opacity-90');
+                setTimeout(() => this.classList.remove('scale-95', 'opacity-90'), 100);
+            });
+        });
+    </script>
+
+
+</body></html>
+
+<!-- BAST Generator - freelance_docs -->
+<!DOCTYPE html><html class="dark" lang="id"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>BAST Generator | freelance_docs</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&amp;family=Noto+Serif:ital,wght@0,400;0,700;1,400&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-primary": "#ffffff",
+                        "on-secondary": "#ffffff",
+                        "tertiary": "#7e3000",
+                        "primary-fixed-dim": "#c3c0ff",
+                        "secondary": "#712ae2",
+                        "secondary-fixed-dim": "#d2bbff",
+                        "surface-dim": "#d1dbec",
+                        "surface-bright": "#f8f9ff",
+                        "primary": "#3525cd",
+                        "on-error-container": "#93000a",
+                        "surface-container-low": "#eef4ff",
+                        "tertiary-fixed-dim": "#ffb695",
+                        "error-container": "#ffdad6",
+                        "tertiary-fixed": "#ffdbcc",
+                        "on-secondary-container": "#fffbff",
+                        "error": "#ba1a1a",
+                        "on-tertiary-container": "#ffd2be",
+                        "inverse-primary": "#c3c0ff",
+                        "on-secondary-fixed": "#25005a",
+                        "primary-fixed": "#e2dfff",
+                        "on-primary-container": "#dad7ff",
+                        "surface-container-high": "#dfe9fa",
+                        "surface-container": "#e5eeff",
+                        "outline-variant": "#c7c4d8",
+                        "inverse-surface": "#27313e",
+                        "on-tertiary-fixed-variant": "#7b2f00",
+                        "surface-container-lowest": "#ffffff",
+                        "on-primary-fixed-variant": "#3323cc",
+                        "on-surface": "#121c28",
+                        "on-error": "#ffffff",
+                        "surface-container-highest": "#d9e3f4",
+                        "on-surface-variant": "#464555",
+                        "on-tertiary-fixed": "#351000",
+                        "secondary-fixed": "#eaddff",
+                        "surface-variant": "#d9e3f4",
+                        "background": "#f8f9ff",
+                        "on-background": "#121c28",
+                        "outline": "#777587",
+                        "on-secondary-fixed-variant": "#5a00c6",
+                        "tertiary-container": "#a44100",
+                        "secondary-container": "#8a4cfc",
+                        "primary-container": "#4f46e5",
+                        "on-primary-fixed": "#0f0069",
+                        "surface-tint": "#4d44e3",
+                        "on-tertiary": "#ffffff",
+                        "surface": "#f8f9ff",
+                        "inverse-on-surface": "#eaf1ff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "lg": "24px",
+                        "gutter": "24px",
+                        "xs": "4px",
+                        "container-max": "1280px",
+                        "sm": "8px",
+                        "base": "4px",
+                        "md": "16px",
+                        "xl": "40px",
+                        "section": "80px"
+                    },
+                    "fontFamily": {
+                        "body-lg": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "label-md": ["Inter"],
+                        "body-md": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "caption": ["Inter"],
+                        "display-lg": ["Inter"],
+                        "headline-lg-mobile": ["Inter"],
+                        "serif": ["Noto Serif", "serif"]
+                    },
+                    "fontSize": {
+                        "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                        "headline-lg": ["32px", {"lineHeight": "1.3", "fontWeight": "700"}],
+                        "label-md": ["14px", {"lineHeight": "1.4", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                        "body-md": ["16px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                        "headline-md": ["24px", {"lineHeight": "1.4", "fontWeight": "600"}],
+                        "caption": ["12px", {"lineHeight": "1.4", "fontWeight": "400"}],
+                        "display-lg": ["48px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "headline-lg-mobile": ["24px", {"lineHeight": "1.3", "fontWeight": "700"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; background-color: #f8f9ff; }
+        .document-canvas {
+            min-height: 842px; /* A4 aspect ratio approximation */
+            width: 100%;
+            background: white;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
+        }
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #e5e7eb; border-radius: 10px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #d1d5db; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+    </style>
+</head>
+<body class="bg-surface dark:bg-[#121c28] text-on-surface dark:text-[#eaf1ff]">
+<!-- Top Navigation Bar -->
+<header class="sticky top-0 z-50 bg-surface dark:bg-[#1a2332] shadow-sm border-b border-transparent dark:border-[#27313e]">
+<nav class="flex justify-between items-center w-full px-lg md:px-xl py-md max-w-container-max mx-auto">
+<div class="flex items-center gap-xl">
+<div class="font-headline-md text-headline-md font-bold text-primary dark:text-primary-fixed-dim">FreelanceDocs</div>
+<div class="hidden md:flex items-center gap-lg">
+<a class="font-label-md text-label-md text-on-surface-variant dark:text-outline-variant hover:text-primary dark:hover:text-primary-fixed-dim transition-colors" href="#">Home</a>
+<a class="font-label-md text-label-md text-primary dark:text-primary-fixed-dim border-b-2 border-primary dark:border-primary-fixed-dim pb-1 font-semibold" href="#">Dokumen</a>
+<a class="font-label-md text-label-md text-on-surface-variant dark:text-outline-variant hover:text-primary dark:hover:text-primary-fixed-dim transition-colors" href="#">Bantuan</a>
+</div>
+</div>
+<button class="bg-primary-container text-on-primary font-label-md text-label-md px-lg py-sm rounded-lg hover:opacity-90 active:scale-95 transition-all">
+                Mulai Buat
+            </button>
+</nav>
+</header>
+<main class="min-h-screen flex flex-col">
+<!-- Breadcrumbs & Header -->
+<section class="w-full max-w-container-max mx-auto px-lg pt-lg">
+<nav class="flex items-center gap-sm text-on-surface-variant mb-md">
+<span class="material-symbols-outlined text-[20px]">home</span>
+<span class="font-label-md text-label-md">Home</span>
+<span class="material-symbols-outlined text-[16px]">chevron_right</span>
+<span class="font-label-md text-label-md font-semibold text-primary">BAST</span>
+</nav>
+<h1 class="font-headline-lg text-headline-lg text-on-surface dark:text-[#eaf1ff]">Buat Berita Acara Serah Terima</h1>
+<p class="font-body-md text-body-md text-on-surface-variant dark:text-[#b0b8c8] max-w-2xl mt-base">Dokumentasikan penyelesaian proyek Anda secara profesional untuk perlindungan hukum dan kejelasan administrasi.</p>
+</section>
+<!-- Main Content Area: Split Screen -->
+<section class="flex flex-col lg:flex-row flex-1 w-full max-w-container-max mx-auto gap-gutter px-lg py-xl">
+<!-- Left: Form Controls (5 Columns approx) -->
+<aside class="w-full lg:w-[40%] flex flex-col gap-lg">
+<!-- Stepper Progress -->
+<div class="flex items-center gap-base">
+<div class="h-1 bg-primary rounded-full flex-1"></div>
+<div class="h-1 bg-outline-variant rounded-full flex-1"></div>
+<div class="h-1 bg-outline-variant rounded-full flex-1"></div>
+</div>
+<!-- Form Card -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-lg shadow-sm">
+<form class="space-y-xl" id="bastForm">
+<!-- Pihak Freelancer (Pihak Pertama) -->
+<div class="space-y-md">
+<div class="flex items-center gap-sm text-primary">
+<span class="material-symbols-outlined">person</span>
+<h3 class="font-headline-md text-headline-md">Informasi Freelancer</h3>
+</div>
+<div class="grid grid-cols-1 gap-md">
+<div class="space-y-base">
+<label class="font-label-md text-label-md text-on-surface">Nama Lengkap</label>
+<input class="w-full px-md py-sm rounded-lg border-outline-variant focus:ring-primary focus:border-primary" id="freelancerName" placeholder="cth: Ahmad Freelancer" type="text">
+</div>
+<div class="space-y-base">
+<label class="font-label-md text-label-md text-on-surface">Alamat / Instansi</label>
+<input class="w-full px-md py-sm rounded-lg border-outline-variant focus:ring-primary focus:border-primary" id="freelancerAddress" placeholder="cth: Studio Desain Kreatif, Jakarta" type="text">
+</div>
+</div>
+</div>
+<!-- Pihak Klien (Pihak Kedua) -->
+<div class="space-y-md">
+<div class="flex items-center gap-sm text-secondary">
+<span class="material-symbols-outlined">corporate_fare</span>
+<h3 class="font-headline-md text-headline-md">Informasi Klien</h3>
+</div>
+<div class="grid grid-cols-1 gap-md">
+<div class="space-y-base">
+<label class="font-label-md text-label-md text-on-surface">Nama Klien / Perwakilan</label>
+<input class="w-full px-md py-sm rounded-lg border-outline-variant focus:ring-primary focus:border-primary" id="clientName" placeholder="cth: Ibu Budi Manager" type="text">
+</div>
+<div class="space-y-base">
+<label class="font-label-md text-label-md text-on-surface">Nama Perusahaan Klien</label>
+<input class="w-full px-md py-sm rounded-lg border-outline-variant focus:ring-primary focus:border-primary" id="clientCompany" placeholder="cth: PT Maju Jaya Bersama" type="text">
+</div>
+</div>
+</div>
+<!-- Info Project -->
+<div class="space-y-md">
+<div class="flex items-center gap-sm text-on-surface">
+<span class="material-symbols-outlined">assignment</span>
+<h3 class="font-headline-md text-headline-md">Detail Pekerjaan</h3>
+</div>
+<div class="grid grid-cols-1 gap-md">
+<div class="space-y-base">
+<label class="font-label-md text-label-md text-on-surface">Nama Proyek</label>
+<input class="w-full px-md py-sm rounded-lg border-outline-variant focus:ring-primary focus:border-primary" id="projectName" placeholder="cth: Pengembangan Website E-commerce" type="text">
+</div>
+<div class="grid grid-cols-2 gap-md">
+<div class="space-y-base">
+<label class="font-label-md text-label-md text-on-surface">Nomor Kontrak</label>
+<input class="w-full px-md py-sm rounded-lg border-outline-variant focus:ring-primary focus:border-primary" id="contractNumber" placeholder="cth: 001/CTR/2024" type="text">
+</div>
+<div class="space-y-base">
+<label class="font-label-md text-label-md text-on-surface">Tanggal Serah Terima</label>
+<input class="w-full px-md py-sm rounded-lg border-outline-variant focus:ring-primary focus:border-primary" id="completionDate" type="date">
+</div>
+</div>
+</div>
+</div>
+<!-- Deliverables -->
+<div class="space-y-md">
+<div class="flex items-center gap-sm text-on-surface">
+<span class="material-symbols-outlined">checklist</span>
+<h3 class="font-headline-md text-headline-md">Daftar Hasil (Deliverables)</h3>
+</div>
+<div class="space-y-base">
+<label class="font-label-md text-label-md text-on-surface">Rincian Pekerjaan</label>
+<textarea class="w-full px-md py-sm rounded-lg border-outline-variant focus:ring-primary focus:border-primary" id="deliverables" placeholder="Sebutkan item yang diserahkan, pisahkan dengan baris baru..." rows="4"></textarea>
+</div>
+<div class="space-y-base">
+<label class="font-label-md text-label-md text-on-surface">Catatan Tambahan</label>
+<textarea class="w-full px-md py-sm rounded-lg border-outline-variant focus:ring-primary focus:border-primary" id="notes" placeholder="cth: Termasuk garansi maintenance 1 bulan" rows="2"></textarea>
+</div>
+</div>
+<!-- Actions -->
+<div class="flex flex-col sm:flex-row gap-md pt-md">
+<button class="flex-1 border border-primary text-primary font-label-md text-label-md py-md rounded-lg hover:bg-surface-container-low transition-colors" type="button">
+                                Simpan Draft
+                            </button>
+<button class="flex-1 bg-primary text-on-primary font-label-md text-label-md py-md rounded-lg shadow-lg shadow-primary/20 hover:opacity-90 transition-all" type="button">
+                                Unduh PDF
+                            </button>
+</div>
+</form>
+</div>
+<!-- Tips Card -->
+<div class="bg-tertiary-fixed text-on-tertiary-fixed rounded-xl p-md flex gap-md items-start">
+<span class="material-symbols-outlined">lightbulb</span>
+<div>
+<p class="font-label-md text-label-md font-bold">Tips Profesional</p>
+<p class="font-caption text-caption opacity-80 mt-xs">Pastikan semua poin deliverables sudah diperiksa bersama sebelum menandatangani BAST.</p>
+</div>
+</div>
+</aside>
+<!-- Right: Document Preview (7 Columns approx) -->
+<section class="w-full lg:w-[60%] sticky top-[100px] h-[calc(100vh-160px)] overflow-y-auto custom-scrollbar bg-surface-container rounded-xl p-md lg:p-xl border border-outline-variant/30">
+<div class="flex justify-between items-center mb-md px-md">
+<span class="font-label-md text-label-md text-on-surface-variant">PREVIEW DOKUMEN</span>
+<div class="flex gap-sm">
+<button class="p-base hover:bg-surface-bright rounded-md text-on-surface-variant"><span class="material-symbols-outlined text-[20px]">zoom_in</span></button>
+<button class="p-base hover:bg-surface-bright rounded-md text-on-surface-variant"><span class="material-symbols-outlined text-[20px]">print</span></button>
+</div>
+</div>
+<!-- The "Paper" -->
+<div class="document-canvas p-xl md:p-[60px] font-serif text-[#1a1a1a] leading-relaxed mx-auto max-w-[800px] transition-all duration-700 opacity-100 translate-y-0">
+<div class="text-center mb-xl">
+<h2 class="text-[22px] font-bold uppercase border-b-2 border-black inline-block px-md pb-xs">Berita Acara Serah Terima</h2>
+<p class="text-[14px] mt-sm font-sans">Nomor: <span id="viewContractNumber" class="">...</span></p>
+</div>
+<div class="space-y-md text-[14px]">
+<p class="">Pada hari ini, tanggal <span class="font-bold underline" id="viewDate">__________</span>, bertempat di <span class="font-bold underline">_________________</span>, kami yang bertanda tangan di bawah ini:</p>
+<div class="pl-md space-y-sm">
+<div class="flex">
+<div class="w-32">Nama</div>
+<div class="w-4">:</div>
+<div class="font-bold" id="viewFreelancerName">__________________________</div>
+</div>
+<div class="flex">
+<div class="w-32">Alamat/Instansi</div>
+<div class="w-4">:</div>
+<div id="viewFreelancerAddress" class="">__________________________</div>
+</div>
+</div>
+<p class="">Selanjutnya disebut sebagai <strong>PIHAK PERTAMA (Freelancer)</strong>.</p>
+<div class="pl-md space-y-sm">
+<div class="flex">
+<div class="w-32">Nama</div>
+<div class="w-4">:</div>
+<div class="font-bold" id="viewClientName">__________________________</div>
+</div>
+<div class="flex">
+<div class="w-32">Perusahaan</div>
+<div class="w-4">:</div>
+<div id="viewClientCompany" class="">__________________________</div>
+</div>
+</div>
+<p class="">Selanjutnya disebut sebagai <strong>PIHAK KEDUA (Klien)</strong>.</p>
+</div>
+<div class="mt-xl text-[14px] space-y-md">
+<p class="">PIHAK PERTAMA dengan ini menyerahkan hasil pekerjaan kepada PIHAK KEDUA, dan PIHAK KEDUA menyatakan telah menerima hasil pekerjaan berupa:</p>
+<div class="px-md">
+<p class="font-bold mb-xs">Proyek: <span id="viewProjectName" class="">__________________________</span></p>
+<ul class="list-disc list-inside space-y-xs min-h-[60px]" id="viewDeliverables">
+<li class="">Pekerjaan Sesuai Kontrak</li>
+</ul>
+</div>
+<div class="bg-[#f9f9f9] p-md border border-dashed border-gray-300 italic text-[13px]">
+<span class="font-bold not-italic">Catatan:</span>
+<span id="viewNotes" class="">Tidak ada catatan tambahan.</span>
+</div>
+<p class="">Demikian Berita Acara Serah Terima ini dibuat dalam rangkap 2 (dua) yang masing-masing mempunyai kekuatan hukum yang sama untuk dipergunakan sebagaimana mestinya.</p>
+</div>
+<!-- Signatures -->
+<div class="mt-section grid grid-cols-2 text-[14px]">
+<div class="text-center">
+<p class="">Diserahkan Oleh,</p>
+<p class="font-bold">PIHAK PERTAMA</p>
+<div class="h-24"></div>
+<p class="font-bold underline" id="viewSignFreelancer">( _________________ )</p>
+</div>
+<div class="text-center">
+<p class="">Diterima Oleh,</p>
+<p class="font-bold">PIHAK KEDUA</p>
+<div class="h-24"></div>
+<p class="font-bold underline" id="viewSignClient">( _________________ )</p>
+</div>
+</div>
+</div>
+</section>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-surface-container-lowest dark:bg-surface-dim border-t border-outline-variant dark:border-outline mt-auto">
+<div class="flex flex-col md:flex-row justify-between items-center w-full px-lg py-xl max-w-container-max mx-auto gap-md">
+<div class="flex flex-col items-center md:items-start gap-xs">
+<span class="font-headline-md text-headline-md font-bold text-primary">FreelanceDocs</span>
+<p class="font-body-md text-body-md text-on-surface-variant text-center md:text-left">@ 2026 Created By Trisno Sanjaya</p>
+</div>
+<div class="flex gap-lg">
+<a class="font-label-md text-label-md text-on-surface-variant dark:text-outline-variant hover:text-primary dark:hover:text-primary-fixed-dim transition-colors" href="#">Kebijakan Privasi</a>
+<a class="font-label-md text-label-md text-on-surface-variant dark:text-outline-variant hover:text-primary dark:hover:text-primary-fixed-dim transition-colors" href="#">Syarat &amp; Ketentuan</a>
+<a class="font-label-md text-label-md text-on-surface-variant dark:text-outline-variant hover:text-primary dark:hover:text-primary-fixed-dim transition-colors" href="#">Kontak Kami</a>
+</div>
+</div>
+</footer>
+<script>
+        // Real-time Preview Logic
+        const inputs = [
+            'freelancerName', 'freelancerAddress', 'clientName',
+            'clientCompany', 'projectName', 'contractNumber',
+            'completionDate', 'deliverables', 'notes'
+        ];
+
+        const mappings = {
+            freelancerName: ['viewFreelancerName', 'viewSignFreelancer'],
+            freelancerAddress: ['viewFreelancerAddress'],
+            clientName: ['viewClientName', 'viewSignClient'],
+            clientCompany: ['viewClientCompany'],
+            projectName: ['viewProjectName'],
+            contractNumber: ['viewContractNumber'],
+            completionDate: ['viewDate'],
+            notes: ['viewNotes']
+        };
+
+        inputs.forEach(id => {
+            const el = document.getElementById(id);
+            if (!el) return;
+
+            el.addEventListener('input', () => {
+                const val = el.value.trim();
+
+                if (id === 'deliverables') {
+                    const list = document.getElementById('viewDeliverables');
+                    const items = val.split('\n').filter(i => i.trim() !== '');
+                    if (items.length > 0) {
+                        list.innerHTML = items.map(item => `<li>${item}</li>`).join('');
+                    } else {
+                        list.innerHTML = '<li>Pekerjaan Sesuai Kontrak</li>';
+                    }
+                    return;
+                }
+
+                const targetIds = mappings[id];
+                if (targetIds) {
+                    targetIds.forEach(targetId => {
+                        const target = document.getElementById(targetId);
+                        if (targetId.startsWith('viewSign')) {
+                            target.innerText = val ? `( ${val} )` : '( _________________ )';
+                        } else if (targetId === 'viewDate') {
+                            if (val) {
+                                const d = new Date(val);
+                                const options = { day: 'numeric', month: 'long', year: 'numeric' };
+                                target.innerText = d.toLocaleDateString('id-ID', options);
+                            } else {
+                                target.innerText = '__________';
+                            }
+                        } else {
+                            target.innerText = val || '__________________________';
+                        }
+                    });
+                }
+            });
+        });
+
+        // Simple scroll reveal for document
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('opacity-100', 'translate-y-0');
+                    entry.target.classList.remove('opacity-0', 'translate-y-4');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.document-canvas').forEach(el => {
+            el.classList.add('transition-all', 'duration-700', 'opacity-0', 'translate-y-4');
+            observer.observe(el);
+        });
+    </script>
+
+
+
+
+</body></html>

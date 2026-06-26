@@ -6,29 +6,38 @@ import Footer from "../components/Footer";
 import KontrakForm, { KontrakData } from "../components/KontrakForm";
 import KontrakPreview from "../components/KontrakPreview";
 import { saveDraft, loadDraft } from "../lib/storage";
+import DraftControls from "../components/DraftControls";
+
+const emptyData: KontrakData = {
+  quotationNo: "",
+  quotationDate: "",
+  freelancerName: "",
+  clientName: "",
+  clientCompany: "",
+  projectTitle: "",
+  projectDescription: "",
+  contractValue: "",
+  startDate: "",
+  deadline: "",
+  city: "",
+  bankName: "",
+  bankAccount: "",
+  bankHolder: "",
+  includeCopyright: true,
+  includeConfidentiality: true,
+  includeRevisionLimit: false,
+};
 
 export default function KontrakPage() {
-  const [kontrakData, setKontrakData] = useState<KontrakData>({
-    freelancerName: "",
-    clientName: "",
-    projectTitle: "",
-    projectDescription: "",
-    contractValue: "",
-    deadline: "",
-    includeCopyright: true,
-    includeConfidentiality: true,
-    includeRevisionLimit: false,
-  });
+  const [kontrakData, setKontrakData] = useState<KontrakData>(emptyData);
 
-  // Load draft on mount
   useEffect(() => {
     const draft = loadDraft<KontrakData>("kontrak");
     if (draft) {
-      setKontrakData(draft);
+      setKontrakData(prev => ({ ...prev, ...draft }));
     }
   }, []);
 
-  // Auto-save on data change (debounced)
   useEffect(() => {
     const timer = setTimeout(() => {
       saveDraft("kontrak", kontrakData);
@@ -41,7 +50,10 @@ export default function KontrakPage() {
     <>
       <Header />
       <main className="h-[calc(100vh-72px)] flex flex-col md:flex-row overflow-hidden">
-        <KontrakForm onUpdate={setKontrakData} />
+        <div className="fixed bottom-[24px] right-[24px] z-50">
+          <DraftControls type="kontrak" data={kontrakData} onReset={() => setKontrakData(emptyData)} />
+        </div>
+        <KontrakForm onUpdate={setKontrakData} data={kontrakData} />
         <KontrakPreview data={kontrakData} />
       </main>
       <Footer />

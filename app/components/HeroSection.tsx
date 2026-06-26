@@ -6,11 +6,17 @@ export default function HeroSection() {
       <div className="max-w-[1280px] mx-auto px-[24px] flex flex-col md:flex-row items-center gap-[40px]">
         {/* Left Content */}
         <div className="flex-1 text-center md:text-left z-10">
-          <h1 className="text-[48px] leading-[1.2] tracking-[-0.02em] font-bold md:text-[48px] text-on-surface mb-[16px]">
+          <h1
+            className="text-[48px] leading-[1.2] tracking-[-0.02em] font-bold md:text-[48px] text-on-surface mb-[16px]"
+            style={{ fontFamily: "var(--font-space-grotesk), sans-serif" }}
+          >
             Bikin dokumen project freelance dalam{" "}
             <span className="text-primary">hitungan menit.</span>
           </h1>
-          <p className="text-[18px] leading-[1.6] text-on-surface-variant mb-[40px] max-w-2xl">
+          <p
+            className="text-[18px] leading-[1.6] text-on-surface-variant mb-[40px] max-w-2xl"
+            style={{ fontFamily: "var(--font-space-grotesk), sans-serif" }}
+          >
             Quotation, Timeline, BAST, dan Kontrak yang rapi dan profesional.
             Fokus pada karya Anda, biar kami yang urus administrasinya.
           </p>
@@ -32,10 +38,10 @@ export default function HeroSection() {
           {/* Abstract document preview graphics */}
           <div className="absolute inset-0 flex items-center justify-center">
             {/* Background Card */}
-            <div className="w-64 h-80 bg-white rounded-lg shadow-xl transform translate-x-12 translate-y-8 z-0 opacity-40 animate-float-1"></div>
+            <div className="w-64 h-80 bg-surface-container-lowest rounded-lg shadow-xl transform translate-x-12 translate-y-8 z-0 opacity-40 animate-float-1"></div>
 
             {/* Front Card with Content */}
-            <div className="w-64 h-80 bg-white rounded-lg shadow-2xl transform z-10 flex flex-col p-[16px] border border-outline-variant animate-float-2">
+            <div className="w-64 h-80 bg-surface-container-lowest rounded-lg shadow-2xl transform z-10 flex flex-col p-[16px] border border-outline-variant animate-float-2">
               <div className="h-4 w-1/2 bg-surface-container-highest rounded mb-[16px]"></div>
               <div className="space-y-[8px] mb-[24px]">
                 <div className="h-2 w-full bg-surface-container rounded"></div>

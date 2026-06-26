@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@custom-variant dark (&:is(.dark *));
 
 /* Material Design 3 Color System */
 :root {
@@ -143,6 +144,17 @@
   /* Fonts */
   --font-sans: var(--font-inter);
   --font-serif: var(--font-noto-serif);
+  --font-space-grotesk: var(--font-space-grotesk);
+}
+
+*, *::before, *::after {
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    transition: none !important;
+  }
 }
 
 body {
@@ -172,12 +184,12 @@ body {
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb {
-  background: #e5e7eb;
+  background: var(--color-outline-variant);
   border-radius: 10px;
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-  background: #d1d5db;
+  background: var(--color-outline);
 }
 
 /* Timeline Line */
@@ -188,7 +200,7 @@ body {
   top: 24px;
   bottom: 0;
   width: 2px;
-  background-color: #e5e7eb;
+  background-color: var(--color-outline-variant);
 }
 
 .timeline-item:last-child .timeline-line::before {
@@ -214,6 +226,11 @@ body {
   --base-rotate: 3deg;
   animation: float 8s ease-in-out infinite;
   animation-delay: -2s;
+}
+
+/* Dark Mode Shadows */
+.dark .document-canvas {
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
 }
 
 /* Dark Mode Variables */

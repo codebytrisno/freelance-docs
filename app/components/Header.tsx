@@ -9,8 +9,8 @@ export default function Header() {
   const pathname = usePathname();
   const { theme, toggleTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
+  const [showDropdown, setShowDropdown] = useState(false);
 
-  // Prevent SSR mismatch
   useEffect(() => {
     setMounted(true);
   }, []);
@@ -22,6 +22,13 @@ export default function Header() {
     return pathname.startsWith(path);
   };
 
+  const docs = [
+    { href: "/quotation", label: "Quotation", icon: "description" },
+    { href: "/kontrak", label: "Kontrak", icon: "contract" },
+    { href: "/timeline", label: "Timeline", icon: "timeline" },
+    { href: "/bast", label: "BAST", icon: "fact_check" },
+  ];
+
   return (
     <header className="bg-surface shadow-sm sticky top-0 z-50">
       <nav className="flex justify-between items-center w-full px-[24px] md:px-[40px] py-[16px] max-w-[1280px] mx-auto">
@@ -29,6 +36,7 @@ export default function Header() {
           <Link
             href="/"
             className="text-[24px] leading-[1.4] font-semibold text-primary"
+            style={{ fontFamily: "var(--font-space-grotesk), sans-serif" }}
           >
             FreelanceDocs
           </Link>
@@ -43,39 +51,36 @@ export default function Header() {
             >
               Home
             </Link>
-            <div className="relative group">
+            <div
+              className="relative"
+              onMouseEnter={() => setShowDropdown(true)}
+              onMouseLeave={() => setShowDropdown(false)}
+            >
               <button className="text-[14px] leading-[1.4] tracking-[0.05em] font-medium text-on-surface-variant hover:text-primary transition-colors duration-200 flex items-center gap-1">
                 Dokumen
                 <span className="material-symbols-outlined text-[18px]">
                   expand_more
                 </span>
               </button>
-              <div className="hidden group-hover:block absolute top-full left-0 mt-2 bg-surface-container-lowest border border-outline-variant rounded-lg shadow-lg py-2 min-w-[200px]">
-                <Link
-                  href="/quotation"
-                  className="block px-4 py-2 text-[14px] text-on-surface hover:bg-surface-container-low transition-colors"
-                >
-                  📋 Quotation
-                </Link>
-                <Link
-                  href="/timeline"
-                  className="block px-4 py-2 text-[14px] text-on-surface hover:bg-surface-container-low transition-colors"
-                >
-                  📅 Timeline
-                </Link>
-                <Link
-                  href="/kontrak"
-                  className="block px-4 py-2 text-[14px] text-on-surface hover:bg-surface-container-low transition-colors"
-                >
-                  📝 Kontrak
-                </Link>
-                <Link
-                  href="/bast"
-                  className="block px-4 py-2 text-[14px] text-on-surface hover:bg-surface-container-low transition-colors"
-                >
-                  ✅ BAST
-                </Link>
-              </div>
+              {showDropdown && (
+                <div className="absolute top-full left-0 pt-2">
+                  <div className="bg-surface-container-lowest border border-outline-variant rounded-lg shadow-lg py-2 min-w-[200px]">
+                    {docs.map((doc) => (
+                      <Link
+                        key={doc.href}
+                        href={doc.href}
+                        className="flex items-center gap-3 px-4 py-2 text-[14px] text-on-surface hover:bg-surface-container-low transition-colors"
+                        onClick={() => setShowDropdown(false)}
+                      >
+                        <span className="material-symbols-outlined text-[18px] text-primary">
+                          {doc.icon}
+                        </span>
+                        {doc.label}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
             <Link
               href="#bantuan"

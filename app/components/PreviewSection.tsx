@@ -14,10 +14,16 @@ export default function PreviewSection() {
             <span className="text-primary text-[14px] leading-[1.4] tracking-[0.05em] font-bold">
               PREVIEW REAL-TIME
             </span>
-            <h2 className="text-[32px] leading-[1.3] font-bold text-on-surface">
+            <h2
+              className="text-[32px] leading-[1.3] font-bold text-on-surface"
+              style={{ fontFamily: "var(--font-space-grotesk), sans-serif" }}
+            >
               Lihat Dokumen Saat Anda Mengetik
             </h2>
-            <p className="text-[18px] leading-[1.6] text-on-surface-variant">
+            <p
+              className="text-[18px] leading-[1.6] text-on-surface-variant"
+              style={{ fontFamily: "var(--font-space-grotesk), sans-serif" }}
+            >
               Editor kami dirancang khusus untuk freelancer. Tak perlu lagi
               bingung dengan format Word yang berantakan. Isi formulir, lihat
               hasilnya seketika.
@@ -31,7 +37,7 @@ export default function PreviewSection() {
                   >
                     check_circle
                   </span>
-                  <span className="text-[16px] leading-[1.5]">{feature}</span>
+                  <span className="text-[16px] leading-[1.5]" style={{ fontFamily: "var(--font-space-grotesk), sans-serif" }}>{feature}</span>
                 </li>
               ))}
             </ul>

@@ -12,7 +12,7 @@ interface StorageItem<T> {
 }
 
 const STORAGE_PREFIX = "freelancedocs_";
-const STORAGE_VERSION = "1.0";
+const STORAGE_VERSION = "2.0";
 
 /**
  * Save document draft to localStorage
@@ -34,26 +34,35 @@ export function saveDraft<T>(type: DocumentType, data: T): boolean {
 }
 
 /**
- * Load document draft from localStorage
+ * Load document draft from localStorage with timestamp info
  */
 export function loadDraft<T>(type: DocumentType): T | null {
   try {
+    const info = getDraftInfo<T>(type);
+    return info?.data ?? null;
+  } catch (error) {
+    console.error(`Failed to load ${type} draft:`, error);
+    return null;
+  }
+}
+
+/**
+ * Get draft data and timestamp
+ */
+export function getDraftInfo<T>(type: DocumentType): { data: T; timestamp: number } | null {
+  try {
     const key = `${STORAGE_PREFIX}${type}`;
     const raw = localStorage.getItem(key);
-    
     if (!raw) return null;
-    
+
     const item: StorageItem<T> = JSON.parse(raw);
-    
-    // Version check - ignore old versions
     if (item.version !== STORAGE_VERSION) {
       deleteDraft(type);
       return null;
     }
-    
-    return item.data;
-  } catch (error) {
-    console.error(`Failed to load ${type} draft:`, error);
+
+    return { data: item.data, timestamp: item.timestamp };
+  } catch {
     return null;
   }
 }
