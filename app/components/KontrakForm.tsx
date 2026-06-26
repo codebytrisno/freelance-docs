@@ -86,8 +86,10 @@ export default function KontrakForm({ onUpdate, data: externalData }: KontrakFor
     let deadline = "";
     if (startDate && estimatedDays > 0) {
       const d = new Date(startDate + "T00:00:00");
-      d.setDate(d.getDate() + estimatedDays);
-      deadline = d.toISOString().split("T")[0];
+      if (!isNaN(d.getTime())) {
+        d.setDate(d.getDate() + estimatedDays);
+        deadline = d.toISOString().split("T")[0];
+      }
     }
 
     const descParts = platforms.flatMap((p: any) => {
