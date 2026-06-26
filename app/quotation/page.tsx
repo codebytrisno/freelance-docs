@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import QuotationForm, { QuotationData } from "../components/QuotationForm";
@@ -40,12 +40,25 @@ export default function QuotationPage() {
     }
   }, []);
 
+  const isFirstRender = useRef(true);
+  const latestQuotation = useRef(quotationData);
+  latestQuotation.current = quotationData;
+
   useEffect(() => {
-    const timer = setTimeout(() => {
-      saveDraft("quotation", quotationData);
-    }, 1000);
-    return () => clearTimeout(timer);
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+      return;
+    }
+    saveDraft("quotation", latestQuotation.current);
   }, [quotationData]);
+
+  useEffect(() => {
+    return () => {
+      if (!isFirstRender.current) {
+        saveDraft("quotation", latestQuotation.current);
+      }
+    };
+  }, []);
 
   const handleImport = (data: QuotationData) => {
     setQuotationData(data);

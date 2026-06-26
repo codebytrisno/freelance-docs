@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
@@ -29,13 +29,25 @@ export default function TimelinePage() {
     }
   }, []);
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      saveDraft("timeline", timelineData);
-    }, 1000);
+  const isFirstRender = useRef(true);
+  const latestTimeline = useRef(timelineData);
+  latestTimeline.current = timelineData;
 
-    return () => clearTimeout(timer);
+  useEffect(() => {
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+      return;
+    }
+    saveDraft("timeline", latestTimeline.current);
   }, [timelineData]);
+
+  useEffect(() => {
+    return () => {
+      if (!isFirstRender.current) {
+        saveDraft("timeline", latestTimeline.current);
+      }
+    };
+  }, []);
 
   return (
     <>

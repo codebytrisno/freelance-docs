@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
@@ -40,13 +40,25 @@ export default function KontrakPage() {
     }
   }, []);
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      saveDraft("kontrak", kontrakData);
-    }, 1000);
+  const isFirstRender = useRef(true);
+  const latestKontrak = useRef(kontrakData);
+  latestKontrak.current = kontrakData;
 
-    return () => clearTimeout(timer);
+  useEffect(() => {
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+      return;
+    }
+    saveDraft("kontrak", latestKontrak.current);
   }, [kontrakData]);
+
+  useEffect(() => {
+    return () => {
+      if (!isFirstRender.current) {
+        saveDraft("kontrak", latestKontrak.current);
+      }
+    };
+  }, []);
 
   return (
     <>

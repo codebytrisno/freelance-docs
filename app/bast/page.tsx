@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
@@ -38,14 +38,25 @@ export default function BastPage() {
     }
   }, []);
 
-  // Auto-save on data change (debounced)
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      saveDraft("bast", bastData);
-    }, 1000);
+  const isFirstRender = useRef(true);
+  const latestBast = useRef(bastData);
+  latestBast.current = bastData;
 
-    return () => clearTimeout(timer);
+  useEffect(() => {
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+      return;
+    }
+    saveDraft("bast", latestBast.current);
   }, [bastData]);
+
+  useEffect(() => {
+    return () => {
+      if (!isFirstRender.current) {
+        saveDraft("bast", latestBast.current);
+      }
+    };
+  }, []);
 
   return (
     <>
