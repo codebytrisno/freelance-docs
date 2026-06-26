@@ -4,42 +4,49 @@ Website generator dokumen profesional untuk freelancer Indonesia. Bikin Quotatio
 
 ## 🚀 Tech Stack
 
-- **Next.js 15** (App Router)
+- **Next.js 16** (App Router)
 - **TypeScript**
 - **Tailwind CSS v4**
 - **Material Design 3** (Color System + Icons)
-- **Google Fonts** (Inter + Noto Serif)
+- **Google Fonts** (Inter + Space Grotesk + Noto Serif)
+- **jsPDF** + **html2canvas** (PDF export)
+- **xlsx** (Excel export/import)
 
 ## 📁 Struktur Project
 
 ```
 freelance-docs/
 ├── app/
-│   ├── components/          # Shared components
-│   │   ├── Header.tsx       # Navigation bar dengan dropdown
-│   │   ├── Footer.tsx       # Footer dengan links
-│   │   ├── HeroSection.tsx  # Hero section untuk home
-│   │   ├── FeatureBento.tsx # 4 kartu fitur dokumen
-│   │   ├── PreviewSection.tsx
-│   │   ├── QuotationForm.tsx    # Form + state management
-│   │   ├── QuotationPreview.tsx # Live preview dokumen
+│   ├── components/
+│   │   ├── Header.tsx            # Navbar dengan navigasi
+│   │   ├── Footer.tsx            # Footer dengan links
+│   │   ├── Logo.tsx              # SVG logo (document + checkmark)
+│   │   ├── ThemeProvider.tsx     # Theme context + localStorage
+│   │   ├── HeroSection.tsx       # Hero section home
+│   │   ├── FeatureBento.tsx      # 4 kartu fitur dokumen
+│   │   ├── QuotationForm.tsx     # Form + state management
+│   │   ├── QuotationPreview.tsx  # Live preview dokumen
 │   │   ├── TimelineForm.tsx
 │   │   ├── TimelinePreview.tsx
 │   │   ├── KontrakForm.tsx
 │   │   ├── KontrakPreview.tsx
 │   │   ├── BastForm.tsx
 │   │   └── BastPreview.tsx
-│   ├── quotation/
-│   │   └── page.tsx         # Quotation generator page
-│   ├── timeline/
-│   │   └── page.tsx         # Timeline generator page
-│   ├── kontrak/
-│   │   └── page.tsx         # Kontrak generator page
-│   ├── bast/
-│   │   └── page.tsx         # BAST generator page
-│   ├── globals.css          # Global styles + Material Design 3 colors
-│   ├── layout.tsx           # Root layout dengan fonts
-│   └── page.tsx             # Home page
+│   ├── lib/
+│   │   ├── pdf.ts                # Multi-page PDF export + page numbers
+│   │   └── excel.ts              # Export/import Excel (.xlsx)
+│   ├── quotation/page.tsx
+│   ├── timeline/page.tsx
+│   ├── kontrak/page.tsx
+│   ├── bast/page.tsx
+│   ├── favicon.ico
+│   ├── globals.css               # Material Design 3 + global styles
+│   ├── layout.tsx                # Root layout + fonts + metadata
+│   ├── page.tsx                  # Home page
+│   ├── icon.tsx                  # 32x32 favicon (generated PNG)
+│   └── apple-icon.tsx            # 180x180 iOS icon (generated PNG)
+├── referensi/                    # Template dokumen referensi
+└── public/
 ```
 
 ## 🎨 Fitur
@@ -47,27 +54,59 @@ freelance-docs/
 ### ✅ Home Page
 - Hero section dengan animasi floating cards
 - 4 kartu fitur dokumen (Quotation, Timeline, Kontrak, BAST)
-- Preview section dengan screenshot
+- Breadcrumbs di semua halaman generator
+- Logo dengan document + checkmark SVG
 
 ### ✅ Quotation Generator
-- Form: data klien, item pekerjaan (dynamic rows), pembayaran
-- Live preview: format surat penawaran profesional
-- Kalkulasi otomatis: total, DP, subtotal
+- Form lengkap: No. Quotation, Tanggal, Nama Project, Developer, Client, Perusahaan, Masa Berlaku
+- Dynamic platform & fitur (tambah/hapus baris)
+- Detail penawaran: Teknologi, Harga per Jam, Jam Kerja/Hari, Termin, Maintenance, Bonus
+- Kalkulasi otomatis: Total Jam, Estimasi Hari, Total Harga
+- Live preview format surat penawaran
+- **Download Excel (.xlsx)** - format sesuai form dengan 4 section
+- **Import Excel (.xlsx)** - parse balik ke form
+- Data otomatis dipakai halaman Timeline (developer name) & BAST (nomor)
 
 ### ✅ Timeline Generator
-- Form: info project, fase kerja (add/remove dynamic)
-- Live preview: timeline visual dengan status icons
+- Form: info project + fase kerja (add/remove dynamic)
+- Nama Developer - bisa "Ambil dari Quotation"
 - Status tracking: Selesai, Dalam Proses, Belum Mulai
+- Live preview timeline dengan signature
+- Navigasi: Kembali ke Kontrak / Lanjut ke BAST
 
 ### ✅ Kontrak Generator
 - Form: identitas pihak, lingkup kerja, durasi, pembayaran
 - Klausul: hak cipta, kerahasiaan, revisi (checkbox)
-- Live preview: format surat perjanjian resmi
+- Tanggal otomatis dari Quotation
+- Multi-page PDF export dengan page numbers
+- Navigasi: Kembali ke Quotation / Lanjut ke Timeline
 
 ### ✅ BAST Generator
-- Form: freelancer, klien, project, deliverables
-- Live preview: berita acara serah terima resmi
-- Format: sesuai standar Indonesia
+- Form lengkap: BAST No, tanggal, client, project, deliverables
+- Auto-fill BAST number dari Quotation (`BAST/<quotationNo>`)
+- Warranty period & notes
+- QA checkmarks (green)
+- Multi-page PDF export (compact CSS otomatis pas export)
+- Page numbers di semua PDF
+- Navigasi: Kembali ke Timeline
+
+### ✅ PDF Export (Semua Dokumen)
+- jsPDF + html2canvas
+- Multi-page support (break di `<section>` boundaries)
+- Page numbers: `X / Y` (bottom-right, tiny font)
+- Quality: 0.92
+- Compact CSS otomatis untuk BAST agar fit 2 halaman
+
+### ✅ Excel Export/Import (Quotation)
+- Export: 4 section (Informasi Project, Platform & Fitur, Detail Penawaran, Ringkasan)
+- Import: parse dari file Excel balik ke form
+- All fields termasuk Jam Kerja/Hari, Bonus, Maintenance
+
+### ✅ UI Consistency
+- Semua halaman: layout flex form-preview, breadcrumbs, h1 seragam
+- Form: card `bg-surface-container-lowest`, input styling konsisten
+- Sticky form sidebar (desktop)
+- Material Symbols icons
 
 ## 🎯 Cara Pakai
 
@@ -86,42 +125,34 @@ npm start
 ### Lint & Type Check
 ```bash
 npm run lint
+npm run typecheck
 ```
 
 ## 🎨 Design System
 
 ### Colors (Material Design 3)
-- **Primary**: #3525cd (Indigo/Purple)
-- **Secondary**: #712ae2 (Purple)
-- **Tertiary**: #7e3000 (Orange)
-- **Surface**: #f8f9ff (Light gray-blue)
-- **Error**: #ba1a1a (Red)
+- **Primary**: `#3525cd` (Indigo/Purple)
+- **Secondary**: `#712ae2` (Purple)
+- **Tertiary**: `#7e3000` (Orange)
+- **Surface**: `#f8f9ff` (Light gray-blue)
+- **Error**: `#ba1a1a` (Red)
 
 ### Typography
-- **Sans-serif**: Inter (UI, body text)
-- **Serif**: Noto Serif (document preview)
+- **Sans-serif (UI)**: Inter + Space Grotesk
+- **Serif (document preview)**: Noto Serif
 - **Icons**: Material Symbols Outlined
 
-### Spacing Scale
-- xs: 4px
-- sm: 8px
-- md: 16px
-- lg: 24px
-- xl: 40px
-- gutter: 24px
-- section: 80px
+## 📝 Future Improvements
 
-## 📝 Fitur Yang Bisa Ditambah (Future)
-
-- [ ] PDF Export (jsPDF / react-pdf)
-- [ ] Save to LocalStorage / Backend
-- [ ] User Authentication (optional)
-- [ ] Template Library
 - [ ] Dark Mode
+- [ ] Save/load drafts from backend
+- [ ] User Authentication
+- [ ] Template Library
 - [ ] Multi-language (EN)
 - [ ] Email Integration
 - [ ] Digital Signature (e-signature)
 - [ ] Invoice Generator
+- [ ] Gantt chart visual timeline
 
 ## 📱 Responsive
 

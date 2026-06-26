@@ -7,23 +7,17 @@ export function exportToExcel(data: QuotationData, filename?: string): void {
 
   const cols = [
     { wch: 16 },
-    { wch: 36 },
+    { wch: 40 },
     { wch: 16 },
     { wch: 40 },
   ];
   ws["!cols"] = cols;
 
-  const refs: string[] = [];
   let r = 0;
 
-  function write(rowIdx: number, colIdx: number, value: string | number, opts?: { merge?: [number, number] }) {
+  function write(rowIdx: number, colIdx: number, value: string | number) {
     const cell = XLSX.utils.encode_cell({ r: rowIdx, c: colIdx });
-    ws[cell] = { t: typeof value === "number" ? "n" : "s", v: value, s: {} };
-    if (opts?.merge) {
-      const [endR, endC] = opts.merge;
-      ws["!merges"] = ws["!merges"] || [];
-      ws["!merges"].push({ s: { r: rowIdx, c: colIdx }, e: { r: endR, c: endC } });
-    }
+    ws[cell] = { t: typeof value === "number" ? "n" : "s", v: value };
   }
 
   function merge(startR: number, startC: number, endR: number, endC: number) {
@@ -31,21 +25,30 @@ export function exportToExcel(data: QuotationData, filename?: string): void {
     ws["!merges"].push({ s: { r: startR, c: startC }, e: { r: endR, c: endC } });
   }
 
-  // Row 0 - Title
+  const totalHours = data.platforms.reduce(
+    (s, p) => s + p.items.reduce((s2, it) => s2 + (it.estimatedHours || 0), 0),
+    0
+  );
+  const estimatedDays = data.workHoursPerDay > 0 ? Math.ceil(totalHours / data.workHoursPerDay) : 0;
+  const totalHarga = totalHours * data.hourlyRate;
+
+  // ── Title ──
   write(r, 0, "SYSTEM DEVELOPMENT QUOTATION");
   merge(r, 0, r, 3);
-  refs.push(XLSX.utils.encode_cell({ r, c: 0 }));
+  r++; r++;
+
+  // ── Informasi Project ──
+  write(r, 0, "Informasi Project");
+  merge(r, 0, r, 3);
   r++;
 
-  // Row 1 - Blank
-  r++;
-
-  // Info rows
   const infoRows: [string, string][] = [
-    ["Nomor", data.quotationNo],
+    ["No. Quotation", data.quotationNo],
     ["Tanggal", data.date ? new Date(data.date + "T00:00:00").toLocaleDateString("id-ID", { day: "numeric", month: "long", year: "numeric" }) : ""],
     ["Nama Project", data.projectName],
-    ["Client", data.clientName],
+    ["Nama Developer", data.freelancerName],
+    ["Perusahaan / Instansi", data.clientCompany],
+    ["Diwakili oleh", data.clientName],
     ["Masa Berlaku", data.validUntil ? new Date(data.validUntil + "T00:00:00").toLocaleDateString("id-ID", { day: "numeric", month: "long", year: "numeric" }) : ""],
   ];
 
@@ -55,19 +58,19 @@ export function exportToExcel(data: QuotationData, filename?: string): void {
     merge(r, 1, r, 3);
     r++;
   }
-
   r++;
 
-  // Table header
-  const headers = ["Platform", "Fitur Utama", "Estimasi Waktu (Jam)", "Fitur Detail"];
-  const headerRow = r;
+  // ── Platform & Fitur ──
+  write(r, 0, "Platform & Fitur");
+  merge(r, 0, r, 3);
+  r++;
+
+  const headers = ["Platform", "Fitur Utama", "Jam", "Detail"];
   for (let c = 0; c < headers.length; c++) {
     write(r, c, headers[c]);
   }
   r++;
 
-  // Data rows
-  const dataStartRow = r;
   for (const platform of data.platforms) {
     const platformStartRow = r;
     for (const item of platform.items) {
@@ -78,40 +81,50 @@ export function exportToExcel(data: QuotationData, filename?: string): void {
       write(r, 3, details.join("\n"));
       r++;
     }
-    const platformEndRow = r - 1;
     if (platform.items.length > 1) {
-      merge(platformStartRow, 0, platformEndRow, 0);
+      merge(platformStartRow, 0, r - 1, 0);
     }
   }
-  const dataEndRow = r - 1;
 
-  // Total row
-  const totalHours = data.platforms.reduce(
-    (s, p) => s + p.items.reduce((s2, it) => s2 + (it.estimatedHours || 0), 0),
-    0
-  );
   write(r, 0, "Total");
   merge(r, 0, r, 1);
   write(r, 2, totalHours);
   r++; r++;
 
-  // Summary section
-  const estimatedDays = data.workHoursPerDay > 0 ? Math.ceil(totalHours / data.workHoursPerDay) : 0;
-  const totalHarga = totalHours * data.hourlyRate;
-
-  write(r, 0, "Penawaran");
+  // ── Detail Penawaran ──
+  write(r, 0, "Detail Penawaran");
+  merge(r, 0, r, 3);
   r++;
 
   const summaryRows: [string, string][] = [
     ["Teknologi", data.technology],
-    ["Durasi Kerja (hari)", String(estimatedDays)],
-    ["Harga (Rp)", `Rp ${totalHarga.toLocaleString("id-ID")}`],
+    ["Harga per Jam", `Rp ${data.hourlyRate.toLocaleString("id-ID")}`],
+    ["Jam Kerja / Hari", `${data.workHoursPerDay} jam`],
     ["Termin Pembayaran", data.paymentTerms],
     ["Maintenance", data.maintenance],
     ["Bonus", data.bonus],
   ];
 
   for (const [label, value] of summaryRows) {
+    write(r, 0, label);
+    write(r, 1, value);
+    merge(r, 1, r, 3);
+    r++;
+  }
+  r++;
+
+  // ── Ringkasan ──
+  write(r, 0, "Ringkasan");
+  merge(r, 0, r, 3);
+  r++;
+
+  const ringkasanRows: [string, string][] = [
+    ["Total Jam", `${totalHours} jam`],
+    ["Estimasi Hari", `${estimatedDays} hari`],
+    ["Total Harga", `Rp ${totalHarga.toLocaleString("id-ID")}`],
+  ];
+
+  for (const [label, value] of ringkasanRows) {
     write(r, 0, label);
     write(r, 1, value);
     merge(r, 1, r, 3);
@@ -137,6 +150,8 @@ export async function importFromExcel(file: File): Promise<QuotationData> {
     date = "",
     projectName = "",
     clientName = "",
+    clientCompany = "",
+    freelancerName = "",
     validUntil = "";
 
   const platforms: { name: string; items: { title: string; estimatedHours: number; details: string }[] }[] = [];
@@ -159,11 +174,19 @@ export async function importFromExcel(file: File): Promise<QuotationData> {
 
     if (!a && !b && !c && !d) continue;
 
+    // Skip section headers
+    if (a === "Informasi Project") continue;
+    if (a === "Platform & Fitur") continue;
+    if (a === "Detail Penawaran") continue;
+    if (a === "Ringkasan") continue;
+
     // Detect info rows
-    if (a === "Nomor") { quotationNo = b; continue; }
+    if (a === "No. Quotation") { quotationNo = b; continue; }
     if (a === "Tanggal") { date = b; continue; }
     if (a === "Nama Project") { projectName = b; continue; }
-    if (a === "Client") { clientName = b; continue; }
+    if (a === "Nama Developer") { freelancerName = b; continue; }
+    if (a === "Perusahaan / Instansi") { clientCompany = b; continue; }
+    if (a === "Diwakili oleh") { clientName = b; continue; }
     if (a === "Masa Berlaku") { validUntil = b; continue; }
 
     // Detect header
@@ -189,15 +212,22 @@ export async function importFromExcel(file: File): Promise<QuotationData> {
 
     // Summary section
     if (a === "Teknologi") { technology = b; continue; }
-    if (a.startsWith("Durasi")) { continue; }
-    if (a.startsWith("Harga")) {
-      const num = b.replace(/[^0-9]/g, "");
-      hourlyRate = 0;
+    if (a === "Harga per Jam") {
+      hourlyRate = parseFloat(b.replace(/[^0-9]/g, "")) || 0;
+      continue;
+    }
+    if (a === "Jam Kerja / Hari") {
+      workHoursPerDay = parseFloat(b.replace(/[^0-9.]/g, "")) || 8;
       continue;
     }
     if (a === "Termin Pembayaran") { paymentTerms = b; continue; }
     if (a === "Maintenance") { maintenance = b; continue; }
     if (a === "Bonus") { bonus = b; continue; }
+
+    // Ringkasan rows
+    if (a === "Total Jam") continue;
+    if (a === "Estimasi Hari") continue;
+    if (a === "Total Harga") continue;
   }
 
   return {
@@ -205,8 +235,8 @@ export async function importFromExcel(file: File): Promise<QuotationData> {
     date,
     projectName,
     clientName,
-    clientCompany: "",
-    freelancerName: "",
+    clientCompany,
+    freelancerName,
     validUntil,
     platforms: platforms.length > 0 ? platforms : [{ name: "", items: [{ title: "", estimatedHours: 0, details: "" }] }],
     technology,

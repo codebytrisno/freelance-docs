@@ -124,10 +124,10 @@ export async function exportToPDF(
     const imgData = canvas.toDataURL("image/jpeg", quality);
     pdf.addImage(imgData, "JPEG", offsetX, 0, fitWidth, fitHeight);
 
-    // Page number
-    pdf.setFontSize(8);
+    // Page number (bottom right)
+    pdf.setFontSize(5);
     pdf.setTextColor("#777587");
-    pdf.text("1 / 1", pageWidth / 2, pageHeight - 8, { align: "center" });
+    pdf.text("1 / 1", pageWidth - 5, pageHeight - 5, { align: "right" });
 
     pdf.save(filename);
     return true;
@@ -201,16 +201,14 @@ function multiPageExport(
     const ctx = pageCanvas.getContext("2d")!;
     ctx.drawImage(canvas, 0, start, canvas.width, sliceHeight, 0, 0, canvas.width, sliceHeight);
 
-    // Draw page number
-    const footerHeight = 40 * (canvas.width / pageWidth); // ~40px in canvas pixels
-    ctx.fillStyle = "rgba(255,255,255,0.85)";
-    ctx.fillRect(0, sliceHeight - footerHeight, canvas.width, footerHeight);
+    // Draw page number (bottom right)
     ctx.fillStyle = "#777587";
-    ctx.font = `${Math.round(18 * (canvas.width / pageWidth))}px sans-serif`;
-    ctx.textAlign = "center";
-    ctx.textBaseline = "middle";
+    ctx.font = `${Math.round(8 * (canvas.width / pageWidth))}px sans-serif`;
+    ctx.textAlign = "right";
+    ctx.textBaseline = "bottom";
+    const marginPx = Math.round(8 * (canvas.width / pageWidth));
     const pageText = `${i + 1} / ${totalPages}`;
-    ctx.fillText(pageText, canvas.width / 2, sliceHeight - footerHeight / 2);
+    ctx.fillText(pageText, canvas.width - marginPx, sliceHeight - marginPx);
 
     const imgData = pageCanvas.toDataURL("image/jpeg", quality);
     pdf.addImage(imgData, "JPEG", 0, 0, pageWidth, imgHeightMm);

@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useTheme } from "./ThemeProvider";
+import Logo from "./Logo";
 
 export default function Header() {
   const pathname = usePathname();
@@ -33,12 +34,8 @@ export default function Header() {
     <header className="bg-surface shadow-sm sticky top-0 z-50">
       <nav className="flex justify-between items-center w-full px-[24px] md:px-[40px] py-[16px] max-w-[1280px] mx-auto">
         <div className="flex items-center gap-[40px]">
-          <Link
-            href="/"
-            className="text-[24px] leading-[1.4] font-semibold text-primary"
-            style={{ fontFamily: "var(--font-space-grotesk), sans-serif" }}
-          >
-            FreelanceDocs
+          <Link href="/" className="text-primary hover:opacity-80 transition-opacity">
+            <Logo />
           </Link>
           <div className="hidden md:flex items-center gap-[40px]">
             <Link
