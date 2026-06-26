@@ -70,21 +70,14 @@ export default function BastForm({ onUpdate }: BastFormProps) {
   };
 
   return (
-    <aside className="w-full lg:w-[40%] flex flex-col gap-[24px]">
-      {/* Stepper Progress */}
-      <div className="flex items-center gap-[4px]">
-        <div className="h-1 bg-primary rounded-full flex-1"></div>
-        <div className="h-1 bg-outline-variant rounded-full flex-1"></div>
-        <div className="h-1 bg-outline-variant rounded-full flex-1"></div>
-      </div>
-
+    <div className="w-full lg:w-[40%] space-y-[24px]">
       {/* Ambil dari Quotation */}
       <button
         type="button"
         onClick={handleAmbilQuotation}
         className="flex items-center gap-[8px] w-full px-[16px] py-[12px] bg-primary-container/50 text-primary font-medium rounded-xl border border-primary-container hover:bg-primary-container transition-all text-[14px] leading-[1.4] tracking-[0.05em]"
       >
-        <span className="material-symbols-outlined text-[18px]">download</span>
+        <span className="material-symbols-outlined text-[18px]">file_copy</span>
         Ambil dari Quotation
       </button>
 
@@ -93,17 +86,17 @@ export default function BastForm({ onUpdate }: BastFormProps) {
         <form className="space-y-[40px]">
           {/* Nomor & Tanggal BAST */}
           <div className="space-y-[16px]">
-            <div className="flex items-center gap-[8px] text-on-surface">
+            <div className="flex items-center gap-[8px] text-primary">
               <span className="material-symbols-outlined">description</span>
-              <h3 className="text-[24px] leading-[1.4] font-semibold">Identitas BAST</h3>
+              <h2 className="text-[18px] font-semibold">Identitas BAST</h2>
             </div>
             <div className="grid grid-cols-2 gap-[16px]">
               <div className="space-y-[4px]">
-                <label className="text-[14px] leading-[1.4] tracking-[0.05em] font-medium text-on-surface">Nomor BAST</label>
+                <label className="text-[14px] leading-[1.4] tracking-[0.05em] font-medium text-on-surface-variant">Nomor BAST</label>
                 <input type="text" className="w-full px-[16px] py-[8px] rounded-lg border-outline-variant focus:ring-primary focus:border-primary" placeholder="cth: BAST/001/06/2025" value={formData.bastNo} onChange={(e) => handleChange("bastNo", e.target.value)} />
               </div>
               <div className="space-y-[4px]">
-                <label className="text-[14px] leading-[1.4] tracking-[0.05em] font-medium text-on-surface">Tanggal BAST</label>
+                <label className="text-[14px] leading-[1.4] tracking-[0.05em] font-medium text-on-surface-variant">Tanggal BAST</label>
                 <input type="date" className="w-full px-[16px] py-[8px] rounded-lg border-outline-variant focus:ring-primary focus:border-primary" value={formData.bastDate} onChange={(e) => handleChange("bastDate", e.target.value)} />
               </div>
             </div>
@@ -111,17 +104,17 @@ export default function BastForm({ onUpdate }: BastFormProps) {
 
           {/* Quotation Reference */}
           <div className="space-y-[16px]">
-            <div className="flex items-center gap-[8px] text-on-surface">
+            <div className="flex items-center gap-[8px] text-primary">
               <span className="material-symbols-outlined">receipt</span>
-              <h3 className="text-[24px] leading-[1.4] font-semibold">Referensi Quotation</h3>
+              <h2 className="text-[18px] font-semibold">Referensi Quotation</h2>
             </div>
             <div className="grid grid-cols-2 gap-[16px]">
               <div className="space-y-[4px]">
-                <label className="text-[14px] leading-[1.4] tracking-[0.05em] font-medium text-on-surface">Nomor Quotation</label>
+                <label className="text-[14px] leading-[1.4] tracking-[0.05em] font-medium text-on-surface-variant">Nomor Quotation</label>
                 <input type="text" className="w-full px-[16px] py-[8px] rounded-lg border-outline-variant focus:ring-primary focus:border-primary" placeholder="Dari Quotation" value={formData.quotationNo} onChange={(e) => handleChange("quotationNo", e.target.value)} />
               </div>
               <div className="space-y-[4px]">
-                <label className="text-[14px] leading-[1.4] tracking-[0.05em] font-medium text-on-surface">Tanggal Quotation</label>
+                <label className="text-[14px] leading-[1.4] tracking-[0.05em] font-medium text-on-surface-variant">Tanggal Quotation</label>
                 <input type="date" className="w-full px-[16px] py-[8px] rounded-lg border-outline-variant focus:ring-primary focus:border-primary" value={formData.quotationDate} onChange={(e) => handleChange("quotationDate", e.target.value)} />
               </div>
             </div>
@@ -129,21 +122,21 @@ export default function BastForm({ onUpdate }: BastFormProps) {
 
           {/* Pihak Pertama (Klien) */}
           <div className="space-y-[16px]">
-            <div className="flex items-center gap-[8px] text-secondary">
+            <div className="flex items-center gap-[8px] text-primary">
               <span className="material-symbols-outlined">corporate_fare</span>
-              <h3 className="text-[24px] leading-[1.4] font-semibold">Pihak Pertama — Pemberi Kerja</h3>
+              <h2 className="text-[18px] font-semibold">Pihak Pertama — Pemberi Kerja</h2>
             </div>
             <div className="grid grid-cols-1 gap-[16px]">
               <div className="space-y-[4px]">
-                <label className="text-[14px] leading-[1.4] tracking-[0.05em] font-medium text-on-surface">Nama Perusahaan / Klien</label>
+                <label className="text-[14px] leading-[1.4] tracking-[0.05em] font-medium text-on-surface-variant">Nama Perusahaan / Klien</label>
                 <input type="text" className="w-full px-[16px] py-[8px] rounded-lg border-outline-variant focus:ring-primary focus:border-primary" placeholder="cth: PT Maju Jaya Bersama" value={formData.clientCompany} onChange={(e) => handleChange("clientCompany", e.target.value)} />
               </div>
               <div className="space-y-[4px]">
-                <label className="text-[14px] leading-[1.4] tracking-[0.05em] font-medium text-on-surface">Diwakili oleh</label>
+                <label className="text-[14px] leading-[1.4] tracking-[0.05em] font-medium text-on-surface-variant">Diwakili oleh</label>
                 <input type="text" className="w-full px-[16px] py-[8px] rounded-lg border-outline-variant focus:ring-primary focus:border-primary" placeholder="cth: Ibu Budi" value={formData.clientName} onChange={(e) => handleChange("clientName", e.target.value)} />
               </div>
               <div className="space-y-[4px]">
-                <label className="text-[14px] leading-[1.4] tracking-[0.05em] font-medium text-on-surface">Alamat</label>
+                <label className="text-[14px] leading-[1.4] tracking-[0.05em] font-medium text-on-surface-variant">Alamat</label>
                 <input type="text" className="w-full px-[16px] py-[8px] rounded-lg border-outline-variant focus:ring-primary focus:border-primary" placeholder="cth: Jl. Merdeka No. 123, Jakarta" value={formData.clientAddress} onChange={(e) => handleChange("clientAddress", e.target.value)} />
               </div>
             </div>
@@ -153,15 +146,15 @@ export default function BastForm({ onUpdate }: BastFormProps) {
           <div className="space-y-[16px]">
             <div className="flex items-center gap-[8px] text-primary">
               <span className="material-symbols-outlined">person</span>
-              <h3 className="text-[24px] leading-[1.4] font-semibold">Pihak Kedua — Penyedia Jasa</h3>
+              <h2 className="text-[18px] font-semibold">Pihak Kedua — Penyedia Jasa</h2>
             </div>
             <div className="grid grid-cols-1 gap-[16px]">
               <div className="space-y-[4px]">
-                <label className="text-[14px] leading-[1.4] tracking-[0.05em] font-medium text-on-surface">Nama Developer / Perusahaan</label>
+                <label className="text-[14px] leading-[1.4] tracking-[0.05em] font-medium text-on-surface-variant">Nama Developer / Perusahaan</label>
                 <input type="text" className="w-full px-[16px] py-[8px] rounded-lg border-outline-variant focus:ring-primary focus:border-primary" placeholder="cth: Mas Seno" value={formData.freelancerName} onChange={(e) => handleChange("freelancerName", e.target.value)} />
               </div>
               <div className="space-y-[4px]">
-                <label className="text-[14px] leading-[1.4] tracking-[0.05em] font-medium text-on-surface">Alamat</label>
+                <label className="text-[14px] leading-[1.4] tracking-[0.05em] font-medium text-on-surface-variant">Alamat</label>
                 <input type="text" className="w-full px-[16px] py-[8px] rounded-lg border-outline-variant focus:ring-primary focus:border-primary" placeholder="cth: Jl. Developer No. 45, Bandung" value={formData.freelancerAddress} onChange={(e) => handleChange("freelancerAddress", e.target.value)} />
               </div>
             </div>
@@ -169,21 +162,21 @@ export default function BastForm({ onUpdate }: BastFormProps) {
 
           {/* Deliverables */}
           <div className="space-y-[16px]">
-            <div className="flex items-center gap-[8px] text-on-surface">
+            <div className="flex items-center gap-[8px] text-primary">
               <span className="material-symbols-outlined">link</span>
-              <h3 className="text-[24px] leading-[1.4] font-semibold">Deliverables</h3>
+              <h2 className="text-[18px] font-semibold">Deliverables</h2>
             </div>
             <div className="grid grid-cols-1 gap-[16px]">
               <div className="space-y-[4px]">
-                <label className="text-[14px] leading-[1.4] tracking-[0.05em] font-medium text-on-surface">Nama Proyek</label>
+                <label className="text-[14px] leading-[1.4] tracking-[0.05em] font-medium text-on-surface-variant">Nama Proyek</label>
                 <input type="text" className="w-full px-[16px] py-[8px] rounded-lg border-outline-variant focus:ring-primary focus:border-primary" placeholder="cth: Pengembangan Sistem Informasi" value={formData.projectName} onChange={(e) => handleChange("projectName", e.target.value)} />
               </div>
               <div className="space-y-[4px]">
-                <label className="text-[14px] leading-[1.4] tracking-[0.05em] font-medium text-on-surface">Link Akses (Web)</label>
+                <label className="text-[14px] leading-[1.4] tracking-[0.05em] font-medium text-on-surface-variant">Link Akses (Web)</label>
                 <input type="url" className="w-full px-[16px] py-[8px] rounded-lg border-outline-variant focus:ring-primary focus:border-primary" placeholder="cth: https://sistem.klien.com" value={formData.systemUrl} onChange={(e) => handleChange("systemUrl", e.target.value)} />
               </div>
               <div className="space-y-[4px]">
-                <label className="text-[14px] leading-[1.4] tracking-[0.05em] font-medium text-on-surface">Link Download Aplikasi Mobile</label>
+                <label className="text-[14px] leading-[1.4] tracking-[0.05em] font-medium text-on-surface-variant">Link Download Aplikasi Mobile</label>
                 <input type="url" className="w-full px-[16px] py-[8px] rounded-lg border-outline-variant focus:ring-primary focus:border-primary" placeholder="cth: https://play.google.com/..." value={formData.appUrl} onChange={(e) => handleChange("appUrl", e.target.value)} />
               </div>
             </div>
@@ -191,42 +184,21 @@ export default function BastForm({ onUpdate }: BastFormProps) {
 
           {/* Garansi */}
           <div className="space-y-[16px]">
-            <div className="flex items-center gap-[8px] text-on-surface">
+            <div className="flex items-center gap-[8px] text-primary">
               <span className="material-symbols-outlined">shield</span>
-              <h3 className="text-[24px] leading-[1.4] font-semibold">Masa Garansi & Support</h3>
+              <h2 className="text-[18px] font-semibold">Masa Garansi & Support</h2>
             </div>
             <div className="space-y-[4px]">
-              <label className="text-[14px] leading-[1.4] tracking-[0.05em] font-medium text-on-surface">Periode Garansi (hari)</label>
+              <label className="text-[14px] leading-[1.4] tracking-[0.05em] font-medium text-on-surface-variant">Periode Garansi (hari)</label>
               <input type="number" min={0} className="w-full px-[16px] py-[8px] rounded-lg border-outline-variant focus:ring-primary focus:border-primary" placeholder="cth: 30" value={formData.warrantyPeriod || ""} onChange={(e) => handleChange("warrantyPeriod", parseInt(e.target.value) || 0)} />
             </div>
             <div className="space-y-[4px]">
-              <label className="text-[14px] leading-[1.4] tracking-[0.05em] font-medium text-on-surface">Catatan Tambahan</label>
+              <label className="text-[14px] leading-[1.4] tracking-[0.05em] font-medium text-on-surface-variant">Catatan Tambahan</label>
               <textarea className="w-full px-[16px] py-[8px] rounded-lg border-outline-variant focus:ring-primary focus:border-primary" placeholder="cth: Garansi tidak mencakup penambahan fitur baru" rows={3} value={formData.notes} onChange={(e) => handleChange("notes", e.target.value)} />
             </div>
           </div>
-
-          {/* Actions */}
-          <div className="flex flex-col sm:flex-row gap-[16px] pt-[16px]">
-            <button type="button" className="flex-1 border border-primary text-primary text-[14px] leading-[1.4] tracking-[0.05em] font-medium py-[16px] rounded-lg hover:bg-surface-container-low transition-colors">
-              Simpan Draft
-            </button>
-            <button type="button" className="flex-1 bg-primary text-on-primary text-[14px] leading-[1.4] tracking-[0.05em] font-medium py-[16px] rounded-lg shadow-lg shadow-primary/20 hover:opacity-90 transition-all">
-              Unduh PDF
-            </button>
-          </div>
         </form>
       </div>
-
-      {/* Tips Card */}
-      <div className="bg-tertiary-fixed text-on-tertiary-fixed rounded-xl p-[16px] flex gap-[16px] items-start">
-        <span className="material-symbols-outlined">lightbulb</span>
-        <div>
-          <p className="text-[14px] leading-[1.4] tracking-[0.05em] font-bold">Tips Profesional</p>
-          <p className="text-[12px] leading-[1.4] opacity-80 mt-[4px]">
-            Pastikan semua deliverables dan link akses sudah terverifikasi sebelum menandatangani BAST.
-          </p>
-        </div>
-      </div>
-    </aside>
+    </div>
   );
 }

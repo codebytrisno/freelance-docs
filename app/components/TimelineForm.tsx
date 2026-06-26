@@ -16,6 +16,7 @@ export interface TimelineData {
   quotationNo: string;
   projectName: string;
   clientName: string;
+  developerName: string;
   features: TimelineFeature[];
   totalWeeks: number;
 }
@@ -25,6 +26,7 @@ export default function TimelineForm({ onUpdate }: TimelineFormProps) {
     quotationNo: "",
     projectName: "",
     clientName: "",
+    developerName: "",
     features: [],
     totalWeeks: 4,
   });
@@ -59,6 +61,7 @@ export default function TimelineForm({ onUpdate }: TimelineFormProps) {
       quotationNo: quotation.quotationNo || "",
       projectName: quotation.projectName || "",
       clientName: quotation.clientName || "",
+      developerName: quotation.freelancerName || formData.developerName,
       features,
       totalWeeks,
     };
@@ -103,33 +106,23 @@ export default function TimelineForm({ onUpdate }: TimelineFormProps) {
   };
 
   return (
-    <section className="lg:col-span-5 space-y-[40px]">
-      <header>
-        <h1 className="text-[32px] leading-[1.3] font-bold text-on-surface mb-[4px]">
-          Buat Timeline Proyek
-        </h1>
-        <p className="text-on-surface-variant">
-          Mari buat dokumen timeline profesional untuk klien Anda.
-        </p>
-      </header>
-
-      <form className="space-y-[24px]">
-        {/* Project Info Card */}
-        <div className="bg-surface-container-lowest border border-outline-variant p-[24px] rounded-xl shadow-sm">
-          <div className="flex items-center justify-between mb-[16px]">
-            <h2 className="text-[24px] leading-[1.4] font-semibold flex items-center gap-[8px]">
-              <span className="material-symbols-outlined text-primary">info</span>
-              Informasi Proyek
-            </h2>
-            <button
-              type="button"
-              onClick={loadFromQuotation}
-              className="flex items-center gap-[4px] text-[12px] leading-[1.4] tracking-[0.05em] font-medium text-primary hover:opacity-80 transition-opacity"
-            >
-              <span className="material-symbols-outlined text-[16px]">file_copy</span>
-              Ambil dari Quotation
-            </button>
-          </div>
+    <div className="w-full lg:w-[40%] space-y-[24px]">
+      <button
+        type="button"
+        onClick={loadFromQuotation}
+        className="flex items-center gap-[8px] w-full px-[16px] py-[12px] bg-primary-container/50 text-primary font-medium rounded-xl border border-primary-container hover:bg-primary-container transition-all text-[14px] leading-[1.4] tracking-[0.05em]"
+      >
+        <span className="material-symbols-outlined text-[18px]">file_copy</span>
+        Ambil dari Quotation
+      </button>
+      <div className="bg-surface-container-lowest border border-outline-variant rounded-xl p-[24px] shadow-sm">
+        <form className="space-y-[24px]">
+          {/* Project Info */}
+          <div className="space-y-[16px]">
+            <div className="flex items-center gap-[8px] text-primary">
+              <span className="material-symbols-outlined">info</span>
+              <h2 className="text-[18px] font-semibold">Informasi Proyek</h2>
+            </div>
           <div className="space-y-[16px]">
             <div className="flex flex-col gap-[4px]">
               <label className="text-[14px] leading-[1.4] tracking-[0.05em] font-medium text-on-surface-variant">
@@ -137,7 +130,7 @@ export default function TimelineForm({ onUpdate }: TimelineFormProps) {
               </label>
               <input
                 type="text"
-                className="w-full rounded-lg border-outline-variant focus:border-primary focus:ring-4 focus:ring-primary/10"
+                className="w-full px-[16px] py-[8px] rounded-lg border-outline-variant focus:ring-primary focus:border-primary"
                 placeholder="cth: 082025/1"
                 value={formData.quotationNo}
                 onChange={(e) => handleChange("quotationNo", e.target.value)}
@@ -149,7 +142,7 @@ export default function TimelineForm({ onUpdate }: TimelineFormProps) {
               </label>
               <input
                 type="text"
-                className="w-full rounded-lg border-outline-variant focus:border-primary focus:ring-4 focus:ring-primary/10"
+                className="w-full px-[16px] py-[8px] rounded-lg border-outline-variant focus:ring-primary focus:border-primary"
                 placeholder="cth: Pembuatan Sistem Blog"
                 value={formData.projectName}
                 onChange={(e) => handleChange("projectName", e.target.value)}
@@ -161,10 +154,22 @@ export default function TimelineForm({ onUpdate }: TimelineFormProps) {
               </label>
               <input
                 type="text"
-                className="w-full rounded-lg border-outline-variant focus:border-primary focus:ring-4 focus:ring-primary/10"
+                className="w-full px-[16px] py-[8px] rounded-lg border-outline-variant focus:ring-primary focus:border-primary"
                 placeholder="cth: Mas Aji"
                 value={formData.clientName}
                 onChange={(e) => handleChange("clientName", e.target.value)}
+              />
+            </div>
+            <div className="flex flex-col gap-[4px]">
+              <label className="text-[14px] leading-[1.4] tracking-[0.05em] font-medium text-on-surface-variant">
+                Nama Developer
+              </label>
+              <input
+                type="text"
+                className="w-full px-[16px] py-[8px] rounded-lg border-outline-variant focus:ring-primary focus:border-primary"
+                placeholder="cth: Mas Seno"
+                value={formData.developerName}
+                onChange={(e) => handleChange("developerName", e.target.value)}
               />
             </div>
             <div className="flex flex-col gap-[4px]">
@@ -175,7 +180,7 @@ export default function TimelineForm({ onUpdate }: TimelineFormProps) {
                 type="number"
                 min={1}
                 max={52}
-                className="w-full rounded-lg border-outline-variant focus:border-primary focus:ring-4 focus:ring-primary/10"
+                className="w-full px-[16px] py-[8px] rounded-lg border-outline-variant focus:ring-primary focus:border-primary"
                 value={formData.totalWeeks}
                 onChange={(e) => handleChange("totalWeeks", Math.max(1, parseInt(e.target.value) || 1))}
               />
@@ -183,14 +188,12 @@ export default function TimelineForm({ onUpdate }: TimelineFormProps) {
           </div>
         </div>
 
-        {/* Features Section */}
-        <div className="bg-surface-container-lowest border border-outline-variant p-[24px] rounded-xl shadow-sm">
-          <div className="flex justify-between items-center mb-[16px]">
-            <h2 className="text-[24px] leading-[1.4] font-semibold flex items-center gap-[8px]">
-              <span className="material-symbols-outlined text-primary">list_alt</span>
-              Fitur / Pekerjaan
-            </h2>
-          </div>
+          {/* Features Section */}
+          <div className="space-y-[16px]">
+            <div className="flex items-center gap-[8px] text-primary">
+              <span className="material-symbols-outlined">list_alt</span>
+              <h2 className="text-[18px] font-semibold">Fitur / Pekerjaan</h2>
+            </div>
 
           {formData.features.length === 0 ? (
             <div className="text-center py-[40px] text-on-surface-variant">
@@ -263,23 +266,9 @@ export default function TimelineForm({ onUpdate }: TimelineFormProps) {
             <span className="material-symbols-outlined">add</span>
             Tambah Fitur Baru
           </button>
-        </div>
-
-        <div className="flex items-center gap-[16px] pt-[16px]">
-          <button
-            type="button"
-            className="flex-1 py-[16px] border border-primary text-primary rounded-lg text-[14px] leading-[1.4] tracking-[0.05em] font-medium hover:bg-primary/5 transition-all"
-          >
-            Simpan Draft
-          </button>
-          <button
-            type="button"
-            className="flex-[2] py-[16px] bg-primary text-on-primary rounded-lg text-[14px] leading-[1.4] tracking-[0.05em] font-medium shadow-lg shadow-primary/20 hover:opacity-90 transition-all"
-          >
-            Unduh PDF
-          </button>
-        </div>
-      </form>
-    </section>
+          </div>
+        </form>
+      </div>
+    </div>
   );
 }

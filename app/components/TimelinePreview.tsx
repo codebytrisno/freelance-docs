@@ -101,6 +101,10 @@ export default function TimelinePreview({ data }: TimelinePreviewProps) {
                 <td className="font-bold text-on-surface-variant align-top">Client</td>
                 <td className="text-on-surface">: {data.clientName || "-"}</td>
               </tr>
+              <tr>
+                <td className="font-bold text-on-surface-variant align-top">Developer</td>
+                <td className="text-on-surface">: {data.developerName || "-"}</td>
+              </tr>
             </tbody>
           </table>
 
@@ -218,9 +222,9 @@ export default function TimelinePreview({ data }: TimelinePreviewProps) {
                 <p className="text-[13px]">{data.clientName || <span className="text-on-surface-variant italic">(Nama Klien)</span>}</p>
               </div>
               <div className="text-center flex-1">
-                <p className="font-bold text-[13px] mb-[72px] font-serif">Freelancer</p>
+                <p className="font-bold text-[13px] mb-[72px] font-serif">Developer</p>
                 <div className="border-b border-on-surface/40 w-full mb-[4px]"></div>
-                <p className="text-[13px]"><span className="text-on-surface-variant italic">(Nama Anda)</span></p>
+                <p className="text-[13px]">{data.developerName || <span className="text-on-surface-variant italic">(Nama Developer)</span>}</p>
               </div>
             </div>
           </div>
