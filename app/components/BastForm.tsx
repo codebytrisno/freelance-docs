@@ -55,13 +55,15 @@ export default function BastForm({ onUpdate }: BastFormProps) {
       return;
     }
 
+    const qNo = quotation.quotationNo || "";
     const newData: BastData = {
       ...formData,
+      bastNo: qNo ? `BAST/${qNo}` : formData.bastNo,
       freelancerName: quotation.freelancerName || formData.freelancerName,
       clientName: quotation.clientName || formData.clientName,
       clientCompany: quotation.clientCompany || formData.clientCompany,
       projectName: quotation.projectName || formData.projectName,
-      quotationNo: quotation.quotationNo || formData.quotationNo,
+      quotationNo: qNo || formData.quotationNo,
       quotationDate: quotation.date || formData.quotationDate,
     };
 

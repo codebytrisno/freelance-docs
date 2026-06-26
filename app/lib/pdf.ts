@@ -115,14 +115,20 @@ export async function exportToPDF(
     // Single page — scale to fit
     const imgWidth = pageWidth;
     const fullImgHeight = (canvas.height * imgWidth) / canvas.width;
-    const scale = Math.min(1, pageHeight / fullImgHeight);
-    const fitWidth = imgWidth * scale;
-    const fitHeight = fullImgHeight * scale;
+    const fitScale = Math.min(1, pageHeight / fullImgHeight);
+    const fitWidth = imgWidth * fitScale;
+    const fitHeight = fullImgHeight * fitScale;
     const offsetX = (pageWidth - fitWidth) / 2;
 
     const pdf = new jsPDF({ orientation, unit: "mm", format });
     const imgData = canvas.toDataURL("image/jpeg", quality);
     pdf.addImage(imgData, "JPEG", offsetX, 0, fitWidth, fitHeight);
+
+    // Page number
+    pdf.setFontSize(8);
+    pdf.setTextColor("#777587");
+    pdf.text("1 / 1", pageWidth / 2, pageHeight - 8, { align: "center" });
+
     pdf.save(filename);
     return true;
   } catch (error) {
@@ -180,7 +186,9 @@ function multiPageExport(
 
   const pdf = new jsPDF({ orientation, unit: "mm", format });
 
-  for (let i = 0; i < pageSlices.length; i++) {
+  const totalPages = pageSlices.length;
+
+  for (let i = 0; i < totalPages; i++) {
     if (i > 0) pdf.addPage();
 
     const { start, end } = pageSlices[i];
@@ -192,6 +200,17 @@ function multiPageExport(
     pageCanvas.height = sliceHeight;
     const ctx = pageCanvas.getContext("2d")!;
     ctx.drawImage(canvas, 0, start, canvas.width, sliceHeight, 0, 0, canvas.width, sliceHeight);
+
+    // Draw page number
+    const footerHeight = 40 * (canvas.width / pageWidth); // ~40px in canvas pixels
+    ctx.fillStyle = "rgba(255,255,255,0.85)";
+    ctx.fillRect(0, sliceHeight - footerHeight, canvas.width, footerHeight);
+    ctx.fillStyle = "#777587";
+    ctx.font = `${Math.round(18 * (canvas.width / pageWidth))}px sans-serif`;
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+    const pageText = `${i + 1} / ${totalPages}`;
+    ctx.fillText(pageText, canvas.width / 2, sliceHeight - footerHeight / 2);
 
     const imgData = pageCanvas.toDataURL("image/jpeg", quality);
     pdf.addImage(imgData, "JPEG", 0, 0, pageWidth, imgHeightMm);
